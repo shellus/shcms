@@ -39,7 +39,9 @@ class Test extends Command
     public function fire()
     {
 
-
+        $post = \App\Model\Post::where('to_local','=','0') -> update(['to_local'=>'1']);
+        $this -> info($post -> id);
+        die();
         \App\Model\Post::where('id','>=',\App\Model\SiteConfig::get('post_image_to_local'))->chunk(200, function($posts)
         {
             foreach ($posts as $post)
@@ -60,6 +62,8 @@ class Test extends Command
         $err_count = 0;
         $rel_count = 0;
         $suc_count = 0;
+
+
 
         $post->content = preg_replace_callback("/<img.*?src=\"(.+?)\".*?>/ism", function ($data)
         use($post,&$sum_count,&$abs_count,&$err_count,&$rel_count,&$suc_count) {

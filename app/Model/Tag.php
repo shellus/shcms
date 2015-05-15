@@ -1,15 +1,9 @@
 <?php namespace App\Model;
 
-
-class Tag extends Option {
-
+class Tag extends Option{
+    use Scope\TagTrait;
 	protected $table='options';
-    /**
-     * Save a new model and return the instance.
-     *
-     * @param  array  $attributes
-     * @return static
-     */
+    /*
     public static function create(array $attributes)
     {
         $attributes['type'] = 'tag';
@@ -24,4 +18,5 @@ class Tag extends Option {
 
         return $instance->newQuery() -> where('type', 'tag')->get($columns);
     }
+    */
 }

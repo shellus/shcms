@@ -18,6 +18,17 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+Route::get('/test', function(){
+    DB::listen(function($sql, $bindings, $time)
+    {
+        dump($sql);
+    });
+    $data = \App\Model\Tag::find(68262);
+    dump($data);
+
+    //return $data;
+});
+
 
 Route::get('post/search', 'PostController@search');
 Route::get('post/random', 'PostController@random');
