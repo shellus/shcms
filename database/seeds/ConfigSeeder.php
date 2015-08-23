@@ -20,12 +20,12 @@ class ConfigSeeder extends Seeder {
         $options = [
             [
                 'name' => 'title',
-                'value' => '色情网站',
+                'value' => 'shcms',
                 'title' => '网站标题',
             ],
             [
                 'name' => 'author',
-                'value' => '没有人',
+                'value' => 'shellus',
                 'title' => '作者',
             ],
             [
@@ -45,8 +45,7 @@ class ConfigSeeder extends Seeder {
             ],
         ];
         foreach($options as $option){
-            $option['type'] = 'site';
-            \App\Model\Option::create($option);
+            \App\Model\Config::create($option);
         }
     }
 

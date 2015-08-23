@@ -2,8 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class SiteConfig extends Option {
-    protected $table="options";
+class Config extends Model {
 
     public static function get($key){
         return self::where('type', 'site')->where('name', $key) -> first() -> value;
@@ -20,6 +19,5 @@ class SiteConfig extends Option {
 
         return $model -> save()?$model -> value:'';
     }
-
 
 }

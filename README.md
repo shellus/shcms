@@ -18,9 +18,11 @@ cd shcms
 
 chmod -R 777 storage 
 
-vim .env 
+vim .env #编辑数据库连接信息
 
-php artisan migrate 
+php artisan migrate
+
+php artisan db:seed ＃导入基本配置，例如网站标题
 
 ```
 ### 待办

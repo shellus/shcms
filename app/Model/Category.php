@@ -1,6 +1,5 @@
 <?php namespace App\Model;
 
-class Tag extends Meta{
-    use Scope\TagTrait;
+class Category extends Meta{
 	protected $table='metas';
 }

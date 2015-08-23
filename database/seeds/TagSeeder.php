@@ -19,12 +19,12 @@ class TagSeeder extends Seeder {
 
         $options = [
             [
-                'name' => 'siwa',
-                'title' => '丝袜'
+                'name' => 'php',
+                'title' => 'php'
             ],
             [
-                'name' => 'yuzu',
-                'title' => '玉足'
+                'name' => 'site',
+                'title' => '网站'
             ],
         ];
         foreach($options as $option){

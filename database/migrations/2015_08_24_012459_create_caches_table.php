@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOptionPostTable extends Migration {
+class CreateCachesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,11 @@ class CreateOptionPostTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('option_post', function(Blueprint $table)
+		Schema::create('caches', function(Blueprint $table)
 		{
-            $table->integer('post_id')->unsigned();
-            $table->integer('option_id')->unsigned();
-            $table->primary(array('post_id', 'option_id'));
+			$table->string('key')->unique();
+			$table->text('value');
+			$table->integer('expiration');
 			$table->timestamps();
 		});
 	}
@@ -28,7 +28,7 @@ class CreateOptionPostTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('option_post');
+		Schema::drop('caches');
 	}
 
 }

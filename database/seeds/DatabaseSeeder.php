@@ -15,14 +15,12 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
 
-        /*
+
         $this->call('UserSeeder');
 		$this->call('ConfigSeeder');
         $this->call('TagSeeder');
         $this->call('CategorySeeder');
         $this->call('PostSeeder');
-        */
-
 
 	}
 }
