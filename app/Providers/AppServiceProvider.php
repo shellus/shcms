@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\SiteConfig;
 use Illuminate\Support\ServiceProvider;
+use Cache;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        
     }
 
     /**

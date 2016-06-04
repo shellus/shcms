@@ -3,7 +3,7 @@
 @extends('layout')
 @section('head')
 
-    <title>{{ \App\SiteConfig::whereName('site_title')->first()->value }} - 首页</title>
+    <title>{{ config('system.site_title') }} - 首页</title>
     <style>
         .panel-body {
             height: 400px;

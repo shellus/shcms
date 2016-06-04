@@ -13,6 +13,6 @@ class IndexController extends Controller
         return view('index');
     }
     public function getTest(){
-        return view('welcome');
+        return User::firstOrFail();
     }
 }
