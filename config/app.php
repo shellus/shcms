@@ -2,6 +2,7 @@
 
 return [
 
+    'version' => env('APP_VERSION', 'version not found'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -122,8 +123,8 @@ return [
     */
 
     'providers' => [
+        Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -159,6 +160,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
 
+
     ],
 
     /*
@@ -173,6 +175,7 @@ return [
     */
 
     'aliases' => [
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         
         'App' => Illuminate\Support\Facades\App::class,

@@ -14,21 +14,22 @@ class SiteConfigLoadProvider extends ServiceProvider
      */
     public function boot()
     {
-        $configs = Cache::get('configs_all', function() {
-            return SiteConfig::all();
-        });
+        $configs = SiteConfig::all();
+//        $configs = Cache::get('configs_all', function() {
+//            return SiteConfig::all();
+//        });
         foreach ($configs as $config){
             app('config') -> set($config -> type .'.'. $config -> name, $config -> value);
         }
     }
 
     /**
-     * Register the application services.
+     * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
-        //
+        
     }
 }

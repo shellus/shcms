@@ -12,13 +12,15 @@ class ArticlesSeeder extends Seeder
     public function run()
     {
         $default_category = \App\Category::create(['title' => '默认分类']);
+        $default_tag = \App\Tag::create(['title' => 'IT']);
+
         $default_user = \App\User::first();
 
 
 
         $data_article = [
             'title' => '欢迎使用shcms, 希望你会喜欢',
-            'body' => "当前版本是:".config('env.version')."，并且不兼容之前的版本，无论是程序架构，还是设计思路，都已经焕然一新，希望你会喜欢shcms的新生。",
+            'body' => "当前版本是:".config('app.version')."，并且不兼容之前的版本，无论是程序架构，还是设计思路，都已经焕然一新，希望你会喜欢shcms的新生。",
         ];
         $article = \App\Article::create($data_article);
         $article -> categorys() -> attach($default_category);

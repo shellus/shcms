@@ -12,7 +12,8 @@
         "doctrine/dbal": "^2.5",
         "anlutro/curl": "^1.4",
         "shellus/test-composer": "dev-master",
-        "predis/predis": "^1.0"
+        "predis/predis": "^1.0",
+        "barryvdh/laravel-debugbar": "^2.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
