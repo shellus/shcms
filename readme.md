@@ -1,8 +1,8 @@
 # shcms
 
-description todo
+一个基于laravel5.2的cms程序
 
-## Usage
+## 使用
 
 ```bash
 
@@ -19,14 +19,14 @@ php artisan db:seed
 
 ```
 
-## Document
+## 文档
 
-todo
+暂无
 
-## TODO
+## 待办
 
-todo
+商品模块
 
-## License
+## 开源协议
 
 shcms is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
