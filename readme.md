@@ -4,11 +4,22 @@ description todo
 
 ## Usage
 
-todo
+```bash
+
+git clone git@github.com:shellus/shcms.git
+cd shcms
+composer install
+cp .env.example .env
+#edit .env change database connect info
+
+php artisan migrate
+php artisan db:seed
+
+```
 
 ## Document
 
-Ttodo
+todo
 
 ## TODO
 
