@@ -8,9 +8,11 @@ description todo
 
 git clone git@github.com:shellus/shcms.git
 cd shcms
-composer install
+
 cp .env.example .env
 #edit .env change database connect info
+
+composer install
 
 php artisan migrate
 php artisan db:seed
