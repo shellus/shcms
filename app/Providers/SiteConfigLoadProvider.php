@@ -14,12 +14,14 @@ class SiteConfigLoadProvider extends ServiceProvider
      */
     public function boot()
     {
-        $configs = SiteConfig::all();
-//        $configs = Cache::get('configs_all', function() {
-//            return SiteConfig::all();
-//        });
-        foreach ($configs as $config){
-            app('config') -> set($config -> type .'.'. $config -> name, $config -> value);
+
+        // TODO 执行数据库迁移时，此处会报错, 所以不运行在cli模式。
+        //SQLSTATE[42S02]: Base table or view not found: 1146 Table 'shcms2.site_configs' doesn't exist
+        if(!\App::runningInConsole()){
+            $configs = SiteConfig::all();
+            foreach ($configs as $config){
+                app('config') -> set($config -> type .'.'. $config -> name, $config -> value);
+            }
         }
     }
 
@@ -30,6 +32,6 @@ class SiteConfigLoadProvider extends ServiceProvider
      */
     public function register()
     {
-        
+
     }
 }
