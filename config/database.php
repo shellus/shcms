@@ -65,7 +65,7 @@ return [
             'strict' => false,
             'engine' => null,
             'options'   => array(
-                PDO::ATTR_PERSISTENT => true,
+//                PDO::ATTR_PERSISTENT => true,
             ),
         ],
 
