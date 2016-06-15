@@ -31,6 +31,9 @@ composer install
 php artisan migrate
 php artisan db:seed
 
+php artisan vendor:publish --provider="SleepingOwl\Admin\AdminServiceProvider" --tag="config"
+#用来推送admin需要的资源文件到public文件夹
+
 ```
 
 ## 文档

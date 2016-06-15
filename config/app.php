@@ -153,13 +153,13 @@ return [
         /*
          * Application Service Providers...
          */
+        SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
+
         App\Providers\SiteConfigLoadProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
-
 
     ],
 
@@ -176,7 +176,6 @@ return [
 
     'aliases' => [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
