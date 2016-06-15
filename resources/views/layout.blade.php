@@ -56,29 +56,13 @@
         <div class="col-xs-12 col-md-3 side">
             <h2>右侧</h2>
             <hr>
-            <div id="tag-cloud" style="height: 400px"></div>
         </div>
     </div>
 
 </div>
 
 <script src="/jquery/dist/jquery.min.js"></script>
-<script src="/js/jqcloud-1.0.4.js"></script>
 <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
-<script>
-    var tags = {!! \App\Tag::all() !!};
-
-    var word_array = [];
-    for(var i in tags){
-        word_array.push({
-            text:tags[i]['title'],
-            weight: 3
-        });
-    }
-    $(function() {
-        $("#tag-cloud").jQCloud(word_array);
-    });
-</script>
 
 @yield('foot')
 </body>
