@@ -5,6 +5,12 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Cache;
 use App\SiteConfig;
+
+/**
+ * Class SiteConfigLoadProvider
+ * @package App\Providers
+ * 载入site_configs表中的配置，并合并到laravel config中
+ */
 class SiteConfigLoadProvider extends ServiceProvider
 {
     /**
@@ -15,9 +21,7 @@ class SiteConfigLoadProvider extends ServiceProvider
     public function boot()
     {
 
-        // TODO 执行数据库迁移时，此处会报错, 所以不运行在cli模式。
-        //SQLSTATE[42S02]: Base table or view not found: 1146 Table 'shcms2.site_configs' doesn't exist
-        if(!\App::runningInConsole()){
+        if(env('DB_CONFIG', false) && \Schema::hasTable('site_configs')){
             $configs = SiteConfig::all();
             foreach ($configs as $config){
                 app('config') -> set($config -> type .'.'. $config -> name, $config -> value);
