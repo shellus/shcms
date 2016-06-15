@@ -42,11 +42,21 @@ class Tag extends Meta
             $builder->where('type', '=', 'tag');
         });
 
-        static::creating(function ($user) {
-            $user -> type = 'tag';
+        static::creating(function ($tag) {
+            $tag -> type = 'tag';
         });
     }
     public function childs(){
         return $this->hasMany('App\Tag', 'parent_id', 'id');
+    }
+    public function showUrl(){
+        return route('tag.index',['id' => $this->id]);
+    }
+    public function articleUrl(){
+        return route('article.tag.index',[$this->slug?:$this->id]);
+    }
+    public function articles()
+    {
+        return $this->belongsToMany('App\Article','article_meta','meta_id','article_id');
     }
 }
