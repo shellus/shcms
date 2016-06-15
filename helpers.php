@@ -6,6 +6,18 @@
  * Time: 14:56
  */
 
+
+if (! function_exists('self_user_id_field')) {
+    /**
+     * Generate a CSRF token form field.
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    function self_user_id_field()
+    {
+        return new \Illuminate\Support\HtmlString('<input type="hidden" name="user_id" value="' . Auth::user()->id . '">');
+    }
+}
 /**
  * @param $url
  * @param string $method
