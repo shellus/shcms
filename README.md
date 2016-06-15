@@ -1,4 +1,4 @@
-# shcms
+# shcms （已经停止开发，请使用v2.0.0分支）
 
 ###一个基于laravel的cms系统。
  
