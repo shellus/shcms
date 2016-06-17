@@ -155,6 +155,8 @@ return [
          */
         SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
 
+
+        App\Providers\LogicLogServiceProvider::class,
         App\Providers\SiteConfigLoadProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
@@ -175,6 +177,7 @@ return [
     */
 
     'aliases' => [
+        'LogicLog' => App\Providers\Facades\LogicLog::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         
         'App' => Illuminate\Support\Facades\App::class,
