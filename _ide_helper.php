@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.35 on 2016-06-15.
+ * Generated for Laravel 5.2.35 on 2016-06-17.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -9,6 +9,471 @@
 
 namespace {
     exit("This file should not be included, only analyzed by your IDE");
+
+    class LogicLog extends \App\Providers\Facades\LogicLog{
+        
+        /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getName(){
+            return \Monolog\Logger::getName();
+        }
+        
+        /**
+         * Return a new cloned instance with the name changed
+         *
+         * @return static 
+         * @static 
+         */
+        public static function withName($name){
+            return \Monolog\Logger::withName($name);
+        }
+        
+        /**
+         * Pushes a handler on to the stack.
+         *
+         * @param \Monolog\HandlerInterface $handler
+         * @return $this 
+         * @static 
+         */
+        public static function pushHandler($handler){
+            return \Monolog\Logger::pushHandler($handler);
+        }
+        
+        /**
+         * Pops a handler from the stack
+         *
+         * @return \Monolog\HandlerInterface 
+         * @static 
+         */
+        public static function popHandler(){
+            return \Monolog\Logger::popHandler();
+        }
+        
+        /**
+         * Set handlers, replacing all existing ones.
+         * 
+         * If a map is passed, keys will be ignored.
+         *
+         * @param \Monolog\HandlerInterface[] $handlers
+         * @return $this 
+         * @static 
+         */
+        public static function setHandlers($handlers){
+            return \Monolog\Logger::setHandlers($handlers);
+        }
+        
+        /**
+         * 
+         *
+         * @return \Monolog\HandlerInterface[] 
+         * @static 
+         */
+        public static function getHandlers(){
+            return \Monolog\Logger::getHandlers();
+        }
+        
+        /**
+         * Adds a processor on to the stack.
+         *
+         * @param callable $callback
+         * @return $this 
+         * @static 
+         */
+        public static function pushProcessor($callback){
+            return \Monolog\Logger::pushProcessor($callback);
+        }
+        
+        /**
+         * Removes the processor on top of the stack and returns it.
+         *
+         * @return callable 
+         * @static 
+         */
+        public static function popProcessor(){
+            return \Monolog\Logger::popProcessor();
+        }
+        
+        /**
+         * 
+         *
+         * @return callable[] 
+         * @static 
+         */
+        public static function getProcessors(){
+            return \Monolog\Logger::getProcessors();
+        }
+        
+        /**
+         * Control the use of microsecond resolution timestamps in the 'datetime'
+         * member of new records.
+         * 
+         * Generating microsecond resolution timestamps by calling
+         * microtime(true), formatting the result via sprintf() and then parsing
+         * the resulting string via \DateTime::createFromFormat() can incur
+         * a measurable runtime overhead vs simple usage of DateTime to capture
+         * a second resolution timestamp in systems which generate a large number
+         * of log events.
+         *
+         * @param bool $micro True to use microtime() to create timestamps
+         * @static 
+         */
+        public static function useMicrosecondTimestamps($micro){
+            return \Monolog\Logger::useMicrosecondTimestamps($micro);
+        }
+        
+        /**
+         * Adds a log record.
+         *
+         * @param int $level The logging level
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addRecord($level, $message, $context = array()){
+            return \Monolog\Logger::addRecord($level, $message, $context);
+        }
+        
+        /**
+         * Adds a log record at the DEBUG level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addDebug($message, $context = array()){
+            return \Monolog\Logger::addDebug($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the INFO level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addInfo($message, $context = array()){
+            return \Monolog\Logger::addInfo($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the NOTICE level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addNotice($message, $context = array()){
+            return \Monolog\Logger::addNotice($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the WARNING level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addWarning($message, $context = array()){
+            return \Monolog\Logger::addWarning($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the ERROR level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addError($message, $context = array()){
+            return \Monolog\Logger::addError($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the CRITICAL level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addCritical($message, $context = array()){
+            return \Monolog\Logger::addCritical($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the ALERT level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addAlert($message, $context = array()){
+            return \Monolog\Logger::addAlert($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the EMERGENCY level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function addEmergency($message, $context = array()){
+            return \Monolog\Logger::addEmergency($message, $context);
+        }
+        
+        /**
+         * Gets all supported logging levels.
+         *
+         * @return array Assoc array with human-readable level names => level codes.
+         * @static 
+         */
+        public static function getLevels(){
+            return \Monolog\Logger::getLevels();
+        }
+        
+        /**
+         * Gets the name of the logging level.
+         *
+         * @param int $level
+         * @return string 
+         * @static 
+         */
+        public static function getLevelName($level){
+            return \Monolog\Logger::getLevelName($level);
+        }
+        
+        /**
+         * Converts PSR-3 levels to Monolog ones if necessary
+         *
+         * @param string|int  Level number (monolog) or name (PSR-3)
+         * @return int 
+         * @static 
+         */
+        public static function toMonologLevel($level){
+            return \Monolog\Logger::toMonologLevel($level);
+        }
+        
+        /**
+         * Checks whether the Logger has a handler that listens on the given level
+         *
+         * @param int $level
+         * @return Boolean 
+         * @static 
+         */
+        public static function isHandling($level){
+            return \Monolog\Logger::isHandling($level);
+        }
+        
+        /**
+         * Adds a log record at an arbitrary level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param mixed $level The log level
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function log($level, $message, $context = array()){
+            return \Monolog\Logger::log($level, $message, $context);
+        }
+        
+        /**
+         * Adds a log record at the DEBUG level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function debug($message, $context = array()){
+            return \Monolog\Logger::debug($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the INFO level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function info($message, $context = array()){
+            return \Monolog\Logger::info($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the NOTICE level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function notice($message, $context = array()){
+            return \Monolog\Logger::notice($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the WARNING level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function warn($message, $context = array()){
+            return \Monolog\Logger::warn($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the WARNING level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function warning($message, $context = array()){
+            return \Monolog\Logger::warning($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the ERROR level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function err($message, $context = array()){
+            return \Monolog\Logger::err($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the ERROR level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function error($message, $context = array()){
+            return \Monolog\Logger::error($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the CRITICAL level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function crit($message, $context = array()){
+            return \Monolog\Logger::crit($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the CRITICAL level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function critical($message, $context = array()){
+            return \Monolog\Logger::critical($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the ALERT level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function alert($message, $context = array()){
+            return \Monolog\Logger::alert($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the EMERGENCY level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function emerg($message, $context = array()){
+            return \Monolog\Logger::emerg($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the EMERGENCY level.
+         * 
+         * This method allows for compatibility with common interfaces.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function emergency($message, $context = array()){
+            return \Monolog\Logger::emergency($message, $context);
+        }
+        
+        /**
+         * Set the timezone to be used for the timestamp of log records.
+         * 
+         * This is stored globally for all Logger instances
+         *
+         * @param \DateTimeZone $tz Timezone object
+         * @static 
+         */
+        public static function setTimezone($tz){
+            return \Monolog\Logger::setTimezone($tz);
+        }
+        
+    }
+
 
     class Debugbar extends \Barryvdh\Debugbar\Facade{
         
@@ -2692,7 +3157,7 @@ namespace {
          * @static 
          */
         public static function increment($key, $value = 1){
-            return \Illuminate\Cache\RedisStore::increment($key, $value);
+            return \Illuminate\Cache\FileStore::increment($key, $value);
         }
         
         /**
@@ -2704,7 +3169,7 @@ namespace {
          * @static 
          */
         public static function decrement($key, $value = 1){
-            return \Illuminate\Cache\RedisStore::decrement($key, $value);
+            return \Illuminate\Cache\FileStore::decrement($key, $value);
         }
         
         /**
@@ -2714,38 +3179,27 @@ namespace {
          * @static 
          */
         public static function flush(){
-            \Illuminate\Cache\RedisStore::flush();
+            \Illuminate\Cache\FileStore::flush();
         }
         
         /**
-         * Get the Redis connection instance.
+         * Get the Filesystem instance.
          *
-         * @return \Predis\ClientInterface 
+         * @return \Illuminate\Filesystem\Filesystem 
          * @static 
          */
-        public static function connection(){
-            return \Illuminate\Cache\RedisStore::connection();
+        public static function getFilesystem(){
+            return \Illuminate\Cache\FileStore::getFilesystem();
         }
         
         /**
-         * Set the connection name to be used.
+         * Get the working directory of the cache.
          *
-         * @param string $connection
-         * @return void 
+         * @return string 
          * @static 
          */
-        public static function setConnection($connection){
-            \Illuminate\Cache\RedisStore::setConnection($connection);
-        }
-        
-        /**
-         * Get the Redis database instance.
-         *
-         * @return \Illuminate\Redis\Database 
-         * @static 
-         */
-        public static function getRedis(){
-            return \Illuminate\Cache\RedisStore::getRedis();
+        public static function getDirectory(){
+            return \Illuminate\Cache\FileStore::getDirectory();
         }
         
         /**
@@ -2755,18 +3209,7 @@ namespace {
          * @static 
          */
         public static function getPrefix(){
-            return \Illuminate\Cache\RedisStore::getPrefix();
-        }
-        
-        /**
-         * Set the cache key prefix.
-         *
-         * @param string $prefix
-         * @return void 
-         * @static 
-         */
-        public static function setPrefix($prefix){
-            \Illuminate\Cache\RedisStore::setPrefix($prefix);
+            return \Illuminate\Cache\FileStore::getPrefix();
         }
         
     }
@@ -7113,10 +7556,11 @@ namespace {
          * @param mixed $data
          * @param string $queue
          * @return mixed 
+         * @throws \Exception|\Throwable
          * @static 
          */
         public static function push($job, $data = '', $queue = null){
-            return \Illuminate\Queue\RedisQueue::push($job, $data, $queue);
+            return \Illuminate\Queue\SyncQueue::push($job, $data, $queue);
         }
         
         /**
@@ -7129,7 +7573,7 @@ namespace {
          * @static 
          */
         public static function pushRaw($payload, $queue = null, $options = array()){
-            return \Illuminate\Queue\RedisQueue::pushRaw($payload, $queue, $options);
+            return \Illuminate\Queue\SyncQueue::pushRaw($payload, $queue, $options);
         }
         
         /**
@@ -7143,21 +7587,7 @@ namespace {
          * @static 
          */
         public static function later($delay, $job, $data = '', $queue = null){
-            return \Illuminate\Queue\RedisQueue::later($delay, $job, $data, $queue);
-        }
-        
-        /**
-         * Release a reserved job back onto the queue.
-         *
-         * @param string $queue
-         * @param string $payload
-         * @param int $delay
-         * @param int $attempts
-         * @return void 
-         * @static 
-         */
-        public static function release($queue, $payload, $delay, $attempts){
-            \Illuminate\Queue\RedisQueue::release($queue, $payload, $delay, $attempts);
+            return \Illuminate\Queue\SyncQueue::later($delay, $job, $data, $queue);
         }
         
         /**
@@ -7168,62 +7598,7 @@ namespace {
          * @static 
          */
         public static function pop($queue = null){
-            return \Illuminate\Queue\RedisQueue::pop($queue);
-        }
-        
-        /**
-         * Delete a reserved job from the queue.
-         *
-         * @param string $queue
-         * @param string $job
-         * @return void 
-         * @static 
-         */
-        public static function deleteReserved($queue, $job){
-            \Illuminate\Queue\RedisQueue::deleteReserved($queue, $job);
-        }
-        
-        /**
-         * Migrate the delayed jobs that are ready to the regular queue.
-         *
-         * @param string $from
-         * @param string $to
-         * @return void 
-         * @static 
-         */
-        public static function migrateExpiredJobs($from, $to){
-            \Illuminate\Queue\RedisQueue::migrateExpiredJobs($from, $to);
-        }
-        
-        /**
-         * Get the underlying Redis instance.
-         *
-         * @return \Illuminate\Redis\Database 
-         * @static 
-         */
-        public static function getRedis(){
-            return \Illuminate\Queue\RedisQueue::getRedis();
-        }
-        
-        /**
-         * Get the expiration time in seconds.
-         *
-         * @return int|null 
-         * @static 
-         */
-        public static function getExpire(){
-            return \Illuminate\Queue\RedisQueue::getExpire();
-        }
-        
-        /**
-         * Set the expiration time in seconds.
-         *
-         * @param int|null $seconds
-         * @return void 
-         * @static 
-         */
-        public static function setExpire($seconds){
-            \Illuminate\Queue\RedisQueue::setExpire($seconds);
+            return \Illuminate\Queue\SyncQueue::pop($queue);
         }
         
         /**
@@ -7237,7 +7612,7 @@ namespace {
          */
         public static function pushOn($queue, $job, $data = ''){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\RedisQueue::pushOn($queue, $job, $data);
+            return \Illuminate\Queue\SyncQueue::pushOn($queue, $job, $data);
         }
         
         /**
@@ -7252,7 +7627,7 @@ namespace {
          */
         public static function laterOn($queue, $delay, $job, $data = ''){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\RedisQueue::laterOn($queue, $delay, $job, $data);
+            return \Illuminate\Queue\SyncQueue::laterOn($queue, $delay, $job, $data);
         }
         
         /**
@@ -7266,7 +7641,7 @@ namespace {
          */
         public static function bulk($jobs, $data = '', $queue = null){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\RedisQueue::bulk($jobs, $data, $queue);
+            return \Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
         }
         
         /**
@@ -7278,7 +7653,7 @@ namespace {
          */
         public static function setContainer($container){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\RedisQueue::setContainer($container);
+            \Illuminate\Queue\SyncQueue::setContainer($container);
         }
         
         /**
@@ -7290,7 +7665,7 @@ namespace {
          */
         public static function setEncrypter($crypt){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\RedisQueue::setEncrypter($crypt);
+            \Illuminate\Queue\SyncQueue::setEncrypter($crypt);
         }
         
     }
