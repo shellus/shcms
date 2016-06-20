@@ -36,7 +36,7 @@ php artisan migrate
 
 php artisan db:seed
 
-
+```
 
 可选执行
 
