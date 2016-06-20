@@ -36,9 +36,13 @@ php artisan migrate
 
 php artisan db:seed
 
+
+
+可选执行
+
 > 如果你使用redis，请执行 `composer require predis/predis`
 
-```
+> 如果看到权限不足（permission denied），请执行 `chmod -R 777 storage/`
 
 ## 文档
 
