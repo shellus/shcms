@@ -21,18 +21,22 @@
 ```bash
 
 git clone git@github.com:shellus/shcms.git
+
 cd shcms
 
 cp .env.example .env
+
+php artisan key:generate
+
 #edit .env change database connect info
 
 composer install
 
 php artisan migrate
+
 php artisan db:seed
 
-php artisan vendor:publish --provider="SleepingOwl\Admin\AdminServiceProvider" --tag="config"
-#用来推送admin需要的资源文件到public文件夹
+> 如果你使用redis，请执行 `composer require predis/predis`
 
 ```
 
