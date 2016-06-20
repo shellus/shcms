@@ -11,6 +11,8 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
+
+        /*
         $perms = [
             'access_site' => \App\Permission::create([
                 'name' => 'access_site',
@@ -60,6 +62,8 @@ class UsersSeeder extends Seeder
                 'description' => '内容编辑人员，可以创建内容，修改内容',
             ]),
         ];
+         */
+
         $users = [
             'shellus' => \App\User::create([
                 'name' => 'shellus',
@@ -75,6 +79,7 @@ class UsersSeeder extends Seeder
             ]),
         ];
 
+        /*
         $roles['default'] -> perms() -> saveMany([
             $perms['access_site'],
             $perms['article_create'],
@@ -94,6 +99,7 @@ class UsersSeeder extends Seeder
         $users['shellus'] -> roles() -> save($roles['editer']);
         $users['temp'] -> roles() -> save($roles['default']);
         // $users
+        */
         
     }
 }

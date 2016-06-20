@@ -3,14 +3,8 @@
 namespace App;
 
 use App\ModelTrait\ModelHelperTrait;
-use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Http\UploadedFile;
-use League\Flysystem\File;
-use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Local;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * App\User
@@ -69,7 +63,7 @@ class User extends Authenticatable
     public function displayName(){
         return $this -> name;
     }
-    public function setAvatar(\Symfony\Component\HttpFoundation\File\UploadedFile $file){
+    public function setAvatar(UploadedFile $file){
         $path = 'abatar/' . $file -> getClientOriginalName();
         $result = \Storage::disk('public')->put(
             $path,
@@ -80,12 +74,6 @@ class User extends Authenticatable
         return $result;
     }
     public function getAvatar(){
-//        $filesystem = new FilesystemAdapter(new Local());
-//        $filesystem -> put(
-//            $this -> avatar,
-//        );
-//
-//        $filesystem -> get()
         \Storage::disk('local')->put($this -> avatar, \Storage::disk('public')->get($this -> avatar));
         $storagePath  = \Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . $this -> avatar;
         return \Image::make($storagePath)->fit(100, 100)->response('jpg');
