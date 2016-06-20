@@ -7,14 +7,8 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "zizaco/entrust": "5.2.x-dev",
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5",
-        "anlutro/curl": "^1.4",
-        "shellus/test-composer": "dev-master",
-        "predis/predis": "^1.0",
-        "barryvdh/laravel-debugbar": "^2.2",
-        "laravelrus/sleepingowl": "4.*@dev",
         "intervention/image": "^2.3"
     },
     "require-dev": {
