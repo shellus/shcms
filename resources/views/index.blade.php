@@ -2,8 +2,6 @@
 
 @extends('layout')
 @section('head')
-
-    <title>{{ config('system.site_title') }} - 首页</title>
     <style>
         .panel-body {
             height: 400px;

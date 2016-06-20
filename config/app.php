@@ -3,6 +3,7 @@
 return [
 
     'version' => env('APP_VERSION', 'version not found'),
+    'site_title' => env('SITE_TITLE', 'shcms'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -123,7 +124,6 @@ return [
     */
 
     'providers' => [
-        Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
@@ -153,7 +153,6 @@ return [
         /*
          * Application Service Providers...
          */
-        SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
         App\Providers\LogicLogServiceProvider::class,
@@ -178,7 +177,6 @@ return [
 
     'aliases' => [
         'LogicLog' => App\Providers\Facades\LogicLog::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         
         'App' => Illuminate\Support\Facades\App::class,

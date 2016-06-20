@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <title>{{ config('app.site_title') }} - 首页</title>
     @yield('head')
 </head>
 <body>
@@ -36,7 +37,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">
-                            <span class="label label-info">{{ Auth::user()->roleName() }}</span>
                             {{ Auth::user()->displayName() }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
