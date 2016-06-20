@@ -3,7 +3,13 @@
 namespace App;
 
 use App\ModelTrait\ModelHelperTrait;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\UploadedFile;
+use League\Flysystem\File;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Adapter\Local;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 /**
@@ -36,7 +42,6 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  */
 class User extends Authenticatable
 {
-    use EntrustUserTrait;
     use ModelHelperTrait;
     /**
      * The attributes that are mass assignable.
@@ -61,19 +66,31 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Article');
     }
-    public function getRoleName(){
-
-    }
     public function displayName(){
-        return $this -> display_name;
+        return $this -> name;
     }
-    public function roleName(){
-        try{
-            $name = $this -> roles[0] -> display_name;
-        }catch (\Exception $err){
-            throw new \Exception('the User not role');
-        }
-        return $name;
+    public function setAvatar(\Symfony\Component\HttpFoundation\File\UploadedFile $file){
+        $path = 'abatar/' . $file -> getClientOriginalName();
+        $result = \Storage::disk('public')->put(
+            $path,
+            file_get_contents($file->getRealPath())
+        );
+        $this -> avatar = $path;
+        $this -> save();
+        return $result;
     }
-
+    public function getAvatar(){
+//        $filesystem = new FilesystemAdapter(new Local());
+//        $filesystem -> put(
+//            $this -> avatar,
+//        );
+//
+//        $filesystem -> get()
+        \Storage::disk('local')->put($this -> avatar, \Storage::disk('public')->get($this -> avatar));
+        $storagePath  = \Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . $this -> avatar;
+        return \Image::make($storagePath)->fit(100, 100)->response('jpg');
+    }
+    public function getAvatarUrl(){
+        return route('avatar.get',['user' => $this]);
+    }
 }

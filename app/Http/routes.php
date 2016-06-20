@@ -34,12 +34,22 @@ Route::post('password/reset', 'Auth\PasswordController@reset');
 //
 //});
 
+Route::get('user/edit', [
+    'as' => 'user.edit',
+    'uses' => 'UserController@edit',
+    'middleware' => 'auth',
+]);
 // User Home Routes...
 Route::post('user/avatar', [
     'as' => 'avatar.store',
     'uses' => 'UserController@updateAvatar',
     'middleware' => 'auth',
 ]);
+Route::get('user/avatar/{user}', [
+    'as' => 'avatar.get',
+    'uses' => 'UserController@getAvatar',
+]);
+
 
 // --------------------- Data Model Routes ---------------------
 

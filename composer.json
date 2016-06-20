@@ -14,7 +14,8 @@
         "shellus/test-composer": "dev-master",
         "predis/predis": "^1.0",
         "barryvdh/laravel-debugbar": "^2.2",
-        "laravelrus/sleepingowl": "4.*@dev"
+        "laravelrus/sleepingowl": "4.*@dev",
+        "intervention/image": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

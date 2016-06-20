@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ControllerTrait\RestControllerTrait;
 use App\Http\Requests;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserController extends Controller
 {
@@ -13,21 +14,22 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this -> model = new User();
+        $this -> model = \Auth::user();
     }
 
-    public function updateAvatar(Request $request, \Storage $storage)
+    public function updateAvatar(Request $request)
     {
-        $user_id = $request['user_id'];
-        $user = User::findOrFail($user_id);
+        $file = $request->file('avatar');
+        $this -> model -> setAvatar($file);
+        return '头像上传成功';
+    }
+    public function getAvatar(Request $request, User $user)
+    {
+        return $user -> getAvatar();
+    }
+    public function edit()
+    {
+        return view('user/edit', ['model' => $this -> model, 'submit_url' => route('avatar.store')]);
+    }
 
-        dump($user);
-        dd($request->file('avatar') -> getBasename());
-        $storage -> disk('public')->put('',file_get_contents($request->file('avatar')->getRealPath()));
-    }
-    public function edit($id)
-    {
-        $data = $this -> model -> findOrFail($id);
-        return view('user/edit', ['model' => $data, 'submit_url' => route('avatar.store')]);
-    }
 }

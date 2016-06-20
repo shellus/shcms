@@ -154,7 +154,7 @@ return [
          * Application Service Providers...
          */
         SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
-
+        Intervention\Image\ImageServiceProvider::class,
 
         App\Providers\LogicLogServiceProvider::class,
         App\Providers\SiteConfigLoadProvider::class,
@@ -179,6 +179,7 @@ return [
     'aliases' => [
         'LogicLog' => App\Providers\Facades\LogicLog::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
         
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
