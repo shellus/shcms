@@ -41,9 +41,10 @@ php artisan db:seed
 可选执行
 
 > 如果你使用redis，请执行 `composer require predis/predis` 
+
 并修改 `.env` 文件中的`CACHE_DRIVER` `SESSION_DRIVER` `QUEUE_DRIVER` 值为`redis`
 
-> 如果看到权限不足（permission denied），请执行 `chmod -R 777 storage/`
+> 如果看到权限不足（permission denied）的提示，请执行 `chmod -R 777 storage/`
 
 ## 文档
 
