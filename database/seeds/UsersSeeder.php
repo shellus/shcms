@@ -65,17 +65,10 @@ class UsersSeeder extends Seeder
          */
 
         $users = [
-            'shellus' => \App\User::create([
-                'name' => 'shellus',
-                'display_name' => '葛佳祥',
-                'email' => 'shellus@endaosi.com',
-                'password' => bcrypt('a7245810'),
-            ]),
-
             'temp' => \App\User::create([
-                'name' => 'temp',
-                'email' => 'temp@temp.com',
-                'password' => bcrypt('temp'),
+                'name' => 'developer',
+                'email' => 'developer@shcms.localhost',
+                'password' => bcrypt('developer'),
             ]),
         ];
 
