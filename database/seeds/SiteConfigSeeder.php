@@ -13,7 +13,7 @@ class SiteConfigSeeder extends Seeder
     {
         
         \App\SiteConfig::create([
-            'type' => 'system',
+            'type' => 'app',
             'title' => '网站标题',
             'name' => 'site_title',
             'value' => 'shcms',
