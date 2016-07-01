@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,7 +11,6 @@
 |
 */
 // --------------------- System Routes ---------------------
-
 // Index Routes
 Route::get('/', ['as' => 'index','uses' => 'IndexController@getIndex']);
 Route::get('/test', ['as' => 'test','uses' => 'IndexController@getTest']);
@@ -28,6 +28,11 @@ Route::post('register', ['as' => 'post_register', 'uses' => 'Auth\AuthController
 Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
 Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 Route::post('password/reset', 'Auth\PasswordController@reset');
+
+
+// OAuth
+Route::get('/oauth/authorize/{type}', ['as' => 'get_oauth_login', 'uses' => 'Auth\OAuthController@getAuthorize']);
+Route::get('/oauth/access_token/{type}', ['as' => 'get_oauth_callback', 'uses' => 'Auth\OAuthController@postAccessToken']);
 
 // permission require
 //Route::group(['middleware' => ['auth','permission:access_site']], function () {

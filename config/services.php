@@ -34,5 +34,14 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
-
+    'qq' => [
+        'client_id'          => env('QQ_CLIENT_ID'),
+        'client_secret'      => env('QQ_CLIENT_SECRET'),
+        'redirect'           => env('QQ_REDIRECT'),
+    ],
+    'github' => [
+        'client_id'          => env('GITHUB_CLIENT_ID'),
+        'client_secret'      => env('GITHUB_CLIENT_SECRET'),
+        'redirect'           => env('GITHUB_REDIRECT'),
+    ],
 ];
