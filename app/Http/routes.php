@@ -69,3 +69,27 @@ Route::get('/tag/{slug_or_id}', ['as' => 'article.tag.index','uses' => 'ArticleC
 Route::resource('/tag', 'TagController');
 Route::resource('/category', 'CategoryController');
 Route::resource('/file', 'FileController');
+
+
+// --------------------- API Routes ---------------------
+
+Route::post('oauth/access_token', function() {
+    return Response::json(\Authorizer::issueAccessToken());
+});
+
+//Route::group(['prefix' => 'api'], function() {
+//    Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function() {
+//        Route::resource('/article', App\Http\Controllers\Api\ArticleController::class);
+//    });
+//});
+//
+//DingoRoute::version('v1', function ($api) {
+//        DingoRoute::post('login', App\Http\Controllers\Api\AuthController::class . '@postLogin');
+//        DingoRoute::resource('article', App\Http\Controllers\Api\ArticleController::class);
+//});
+
+
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', [], function ($api) {
+    $api->resource('article', App\Http\Controllers\Api\ArticleController::class);
+});
