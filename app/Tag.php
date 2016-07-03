@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\Tag autoLimitScope()
  * @method static \Illuminate\Database\Query\Builder|\App\Tag autoOrderScope()
  * @method static \Illuminate\Database\Query\Builder|\App\Tag autoEqualFields($fields)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Article[] $articles
  */
 class Tag extends Meta
 {

@@ -157,11 +157,6 @@ return [
         Dingo\Api\Provider\LaravelServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
-        LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
-        LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
-        App\Providers\OAuthServiceProvider::class,
-        
-
         App\Providers\LogicLogServiceProvider::class,
         App\Providers\SiteConfigLoadProvider::class,
         App\Providers\AppServiceProvider::class,
@@ -188,7 +183,6 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'DingoRoute' => Dingo\Api\Facade\Route::class,
         'DingoApi' => Dingo\Api\Facade\API::class,
-        'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
         
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

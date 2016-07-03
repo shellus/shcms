@@ -33,6 +33,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @method static \Illuminate\Database\Query\Builder|\App\User autoLimitScope()
  * @method static \Illuminate\Database\Query\Builder|\App\User autoOrderScope()
  * @method static \Illuminate\Database\Query\Builder|\App\User autoEqualFields($fields)
+ * @property string $avatar
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAvatar($value)
  */
 class User extends Authenticatable
 {
