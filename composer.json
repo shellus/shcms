@@ -10,9 +10,7 @@
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5",
         "intervention/image": "^2.3",
-        "overtrue/socialite": "^1.0",
-        "dingo/api": "1.0.*@dev",
-        "tymon/jwt-auth": "^0.5.9"
+        "overtrue/socialite": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

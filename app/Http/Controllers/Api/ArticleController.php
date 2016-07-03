@@ -12,7 +12,6 @@ class ArticleController extends Controller
 {
     public function __construct()
     {
-        $this -> middleware('api.auth');
     }
     public function index(){
         return Article::paginate();

@@ -70,16 +70,3 @@ Route::resource('/tag', 'TagController');
 Route::resource('/category', 'CategoryController');
 Route::resource('/file', 'FileController');
 
-
-// --------------------- API Routes ---------------------
-
-/** @var Dingo\Api\Routing\Router $api */
-$api = app('Dingo\Api\Routing\Router');
-$api->version('v1', [], function (Dingo\Api\Routing\Router $api) {
-    $api->post('login', App\Http\Controllers\Api\AuthController::class . '@postLogin');
-
-    $api->group(['middleware' => 'api.auth'], function(Dingo\Api\Routing\Router $api) {
-        $api->resource('article', App\Http\Controllers\Api\ArticleController::class);
-    });
-
-});

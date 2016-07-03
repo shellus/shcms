@@ -154,8 +154,6 @@ return [
          * Application Service Providers...
          */
         Intervention\Image\ImageServiceProvider::class,
-        Dingo\Api\Provider\LaravelServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         App\Providers\LogicLogServiceProvider::class,
         App\Providers\SiteConfigLoadProvider::class,
@@ -180,10 +178,7 @@ return [
     'aliases' => [
         'LogicLog' => App\Providers\Facades\LogicLog::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'DingoRoute' => Dingo\Api\Facade\Route::class,
-        'DingoApi' => Dingo\Api\Facade\API::class,
-        
+
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
