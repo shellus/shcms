@@ -43,4 +43,8 @@ class Category extends Meta
             $user -> type = 'category';
         });
     }
+    public function articles()
+    {
+        return $this->belongsToMany('App\Article','article_meta','meta_id','article_id');
+    }
 }
