@@ -48,18 +48,23 @@
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="container body-content">
     <div class="row">
         <div class="col-xs-12 col-md-9 main">
             @yield('content')
         </div>
         <div class="col-xs-12 col-md-3 side">
-            <h2>右侧</h2>
+            <h3>右侧</h3>
             <hr>
         </div>
     </div>
-
 </div>
+<footer>
+    <div class="container">
+        娃娃脾气.版权所有
+    </div>
+
+</footer>
 
 <script src="/jquery/dist/jquery.min.js"></script>
 <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
