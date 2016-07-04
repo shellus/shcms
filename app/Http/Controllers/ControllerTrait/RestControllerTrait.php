@@ -9,8 +9,14 @@
 namespace App\Http\Controllers\ControllerTrait;
 
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
+/**
+ * Class RestControllerTrait
+ * @package App\Http\Controllers\ControllerTrait
+ *  * @property Model $model
+ */
 trait RestControllerTrait
 {
     /**
