@@ -70,3 +70,13 @@ Route::resource('/tag', 'TagController');
 Route::resource('/category', 'CategoryController');
 Route::resource('/file', 'FileController');
 
+
+// --------------------- API Routes ---------------------
+
+Route::group(['prefix' => '/api/',], function () {
+    Route::post('login', App\Http\Controllers\Api\AuthController::class . '@postLogin');
+
+    Route::group(['middleware' => 'api.auth'], function() {
+        Route::resource('article', App\Http\Controllers\Api\ArticleController::class);
+    });
+});

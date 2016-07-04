@@ -35,6 +35,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @method static \Illuminate\Database\Query\Builder|\App\User autoEqualFields($fields)
  * @property string $avatar
  * @method static \Illuminate\Database\Query\Builder|\App\User whereAvatar($value)
+ * @property string $api_token
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereApiToken($value)
  */
 class User extends Authenticatable
 {

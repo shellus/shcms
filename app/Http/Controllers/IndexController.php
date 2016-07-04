@@ -13,6 +13,9 @@ class IndexController extends Controller
         return view('index');
     }
     public function getTest(){
+        view('index') ->setPath('');
+
+
         \LogicLog::info(Request::getClientIp() . '访问了测试接口');
         return ['ok'];
     }
