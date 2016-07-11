@@ -13,7 +13,7 @@
 // --------------------- System Routes ---------------------
 // Index Routes
 Route::get('/', ['as' => 'index','uses' => 'IndexController@getIndex']);
-Route::get('/test', ['as' => 'test','uses' => 'IndexController@getTest']);
+Route::get('/test', ['as' => 'test','uses' => 'TestController@getTest']);
 
 // Auth Routes...
 Route::get('login', ['as' => 'get_login', 'uses' => 'Auth\AuthController@showLoginForm']);
@@ -60,13 +60,13 @@ Route::get('user/avatar/{user}', [
 
 // Article Routes...
 
-Route::resource('/article', 'ArticleController');
-Route::get('/article/{slug_or_id}', ['as' => 'article.index','uses' => 'ArticleController@index']);
-
 Route::get('/article/{article_id}/{tag_id}', ['as' => 'article.tag.add','uses' => 'ArticleController@getTagAdd']);
-Route::get('/tag/{slug_or_id}', ['as' => 'article.tag.index','uses' => 'ArticleController@getTag']);
+Route::get('/article/{slug_or_id}', ['as' => 'article.index','uses' => 'ArticleController@index']);
+Route::resource('/article', 'ArticleController');
 
+Route::get('/tag/{slug_or_id}', ['as' => 'article.tag.index','uses' => 'ArticleController@getTag']);
 Route::resource('/tag', 'TagController');
+
 Route::resource('/category', 'CategoryController');
 Route::resource('/file', 'FileController');
 
