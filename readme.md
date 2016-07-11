@@ -1,6 +1,6 @@
 # shcms
 
-一个基于laravel5.2的cms程序，官网在：[github.io](https://shellus.github.io/shcms)
+一个基于laravel5.2最佳实践的cms程序，使用众多现代web开发特性。
 
 ## 特色
  - 内容分类
