@@ -15,4 +15,12 @@ class CategoryController extends Controller
     {
         $this -> model = new Category();
     }
+
+    public function index(){
+        return view('category.list',[
+            'list_type' => 'default',
+            'title' => '内容列表',
+            'models' => $this -> model -> paginate()
+        ]);
+    }
 }

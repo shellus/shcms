@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\Category autoLimitScope()
  * @method static \Illuminate\Database\Query\Builder|\App\Category autoOrderScope()
  * @method static \Illuminate\Database\Query\Builder|\App\Category autoEqualFields($fields)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Article[] $articles
  */
 class Category extends Meta
 {
@@ -46,5 +47,8 @@ class Category extends Meta
     public function articles()
     {
         return $this->belongsToMany('App\Article','article_meta','meta_id','article_id');
+    }
+    public function getRouteUrl(){
+        return route('article.index', ['slug_or_id' => $this]);
     }
 }
