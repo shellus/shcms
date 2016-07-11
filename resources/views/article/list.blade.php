@@ -10,12 +10,12 @@
 				<div class="panel-heading">列表</div>
 				<div class="panel-body">
                     <ul>
-                    @foreach ($model as $article)
-                        <li><a href="{{ $article->showUrl() }}">{{ $article->title }}</a></li>
+                    @foreach ($models as $model)
+                        <li><a href="{{ $model->getRouteUrl() }}">{{ $model->title }}</a></li>
                     @endforeach
                     </ul>
 				</div>
-                {!! $model -> render() !!}
+                {!! $models -> render() !!}
 			</div>
 		</div>
 	</div>
