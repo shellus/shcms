@@ -44,13 +44,11 @@ class Article extends Model
         'user.display_name',
     ];
 
-    public function showUrl(){
-        return route('article.show',['id' => $this->id]);
-    }
     public function user()
     {
         return $this->belongsTo('App\User');
     }
+
     public function categorys()
     {
         return $this->belongsToMany('App\Category','article_meta','article_id','meta_id');
@@ -62,7 +60,7 @@ class Article extends Model
     public static function getNewList($limit = 10){
         return static::take($limit) -> get();
     }
-    public function getRouteUrl(){
+    public function showUrl(){
         return route('article.show', $this);
     }
 }

@@ -17,11 +17,20 @@ class ArticleController extends Controller
     {
         $this -> model = new Article();
     }
-    public function index($slug_or_id){
+    public function index($slug_or_category_id){
+        if($slug_or_category_id){
+            if(is_numeric($slug_or_category_id)){
+                    \App\Category::findOrFail($slug_or_category_id)
+                    -> articles;
+            }else{
+
+            }
+        }
+
         return view('article.list',[
             'list_type' => 'default',
             'title' => '内容列表',
-            'model' => $this -> model -> paginate()
+            'models' => $this -> model -> paginate()
         ]);
     }
     public function show($id)

@@ -11,7 +11,7 @@
 				<div class="panel-body">
                     <ul>
                     @foreach ($models as $model)
-                        <li><a href="{{ $model->getRouteUrl() }}">{{ $model->title }}</a></li>
+                        <li><a href="{{ $model->showUrl() }}">{{ $model->title }}</a></li>
                     @endforeach
                     </ul>
 				</div>
