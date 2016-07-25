@@ -1,0 +1,23 @@
+{
+  "name": "shcms",
+  "homepage": "https://github.com/shellus/shcms",
+  "authors": [
+    "shellus <shellus@endaosi.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#^2.3.5",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.3"
+  }
+}
