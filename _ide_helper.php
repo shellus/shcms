@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.39 on 2016-07-03.
+ * Generated for Laravel 5.2.39 on 2016-07-12.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -523,6 +523,159 @@ namespace {
          */
         public static function cache($callback, $lifetime = null, $returnObj = false){
             return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
+        }
+        
+    }
+
+
+    class Breadcrumbs extends \DaveJamesMiller\Breadcrumbs\Facade{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function register($name, $callback){
+            return \DaveJamesMiller\Breadcrumbs\Manager::register($name, $callback);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function exists($name = null){
+            return \DaveJamesMiller\Breadcrumbs\Manager::exists($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function generate($name = null){
+            return \DaveJamesMiller\Breadcrumbs\Manager::generate($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function generateArray($name, $params = array()){
+            return \DaveJamesMiller\Breadcrumbs\Manager::generateArray($name, $params);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function generateIfExists($name = null){
+            return \DaveJamesMiller\Breadcrumbs\Manager::generateIfExists($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function generateIfExistsArray($name, $params = array()){
+            return \DaveJamesMiller\Breadcrumbs\Manager::generateIfExistsArray($name, $params);
+        }
+        
+        /**
+         * 
+         *
+         * @deprecated Since 3.0.0
+         * @see generateIfExistsArray
+         * @static 
+         */
+        public static function generateArrayIfExists(){
+            return \DaveJamesMiller\Breadcrumbs\Manager::generateArrayIfExists();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function render($name = null){
+            return \DaveJamesMiller\Breadcrumbs\Manager::render($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function renderArray($name, $params = array()){
+            return \DaveJamesMiller\Breadcrumbs\Manager::renderArray($name, $params);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function renderIfExists($name = null){
+            return \DaveJamesMiller\Breadcrumbs\Manager::renderIfExists($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function renderIfExistsArray($name, $params = array()){
+            return \DaveJamesMiller\Breadcrumbs\Manager::renderIfExistsArray($name, $params);
+        }
+        
+        /**
+         * 
+         *
+         * @deprecated Since 3.0.0
+         * @see renderIfExistsArray
+         * @static 
+         */
+        public static function renderArrayIfExists(){
+            return \DaveJamesMiller\Breadcrumbs\Manager::renderArrayIfExists();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setCurrentRoute($name){
+            return \DaveJamesMiller\Breadcrumbs\Manager::setCurrentRoute($name);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setCurrentRouteArray($name, $params = array()){
+            return \DaveJamesMiller\Breadcrumbs\Manager::setCurrentRouteArray($name, $params);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function clearCurrentRoute(){
+            return \DaveJamesMiller\Breadcrumbs\Manager::clearCurrentRoute();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setView($view){
+            return \DaveJamesMiller\Breadcrumbs\Manager::setView($view);
         }
         
     }

@@ -154,6 +154,8 @@ return [
          * Application Service Providers...
          */
         Intervention\Image\ImageServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+        KodiComponents\Navigation\NavigationServiceProvider::class,
 
         App\Providers\LogicLogServiceProvider::class,
         App\Providers\SiteConfigLoadProvider::class,
@@ -178,6 +180,7 @@ return [
     'aliases' => [
         'LogicLog' => App\Providers\Facades\LogicLog::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

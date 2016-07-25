@@ -10,7 +10,9 @@
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5",
         "intervention/image": "^2.3",
-        "overtrue/socialite": "^1.0"
+        "overtrue/socialite": "^1.0",
+        "davejamesmiller/laravel-breadcrumbs": "^3.0",
+        "kodicomponents/navigation": "^0.5.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

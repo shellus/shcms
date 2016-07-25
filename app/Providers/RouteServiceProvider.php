@@ -64,5 +64,10 @@ class RouteServiceProvider extends ServiceProvider
             require app_path('Http/routes-api.php');
         });
 
+        $router->group([
+            'prefix' => '/admin',
+        ], function ($router) {
+            require app_path('Http/routes-admin.php');
+        });
     }
 }

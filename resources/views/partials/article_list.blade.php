@@ -1,7 +1,7 @@
 <ul>
     @foreach($articles as $article)
     <li>
-        <a href="{{ $article -> getRouteUrl() }}">
+        <a href="{{ $article -> showUrl() }}">
             {{ $article -> title }}
         </a>
     </li>

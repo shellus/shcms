@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <title>{{ config('app.site_title') }} - 首页</title>
     @yield('head')
@@ -66,8 +66,8 @@
 
 </footer>
 
-<script src="/jquery/dist/jquery.min.js"></script>
-<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 @yield('foot')
 </body>
