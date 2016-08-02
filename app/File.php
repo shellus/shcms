@@ -35,12 +35,14 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class File extends Model
 {
-    private $path = '/home/shellus/ftp/sex/app/upload/';
-    
     public function downResponse(){
-        return new BinaryFileResponse($this -> path . $this -> save_path);
+        $temp_path = tempnam(sys_get_temp_dir(), $this->id);
+        file_put_contents($temp_path, \Storage::disk('public')->get($this -> full_path));
+        return new BinaryFileResponse($temp_path);
     }
-
+    public function showUrl(){
+        return route('file.show',$this -> id);
+    }
     /**
      * @param $imageBinary
      * @param string $path

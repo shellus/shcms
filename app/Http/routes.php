@@ -70,6 +70,9 @@ Route::resource('/tag', 'TagController');
 Route::resource('/category', 'CategoryController');
 Route::resource('/file', 'FileController');
 
+// Shop Routes...
+Route::resource('/item', 'ItemController');
+
 
 // --------------------- API Routes ---------------------
 
