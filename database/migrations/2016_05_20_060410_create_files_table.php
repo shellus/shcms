@@ -14,12 +14,11 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('article_id') -> unsigned();
             $table->string('title');
-            $table->string('filename');
+
             $table->string('mime_type');
             $table->string('size'); // 字节
-            $table->string('value'); // TODO 转换完成后删除
+            $table->string('filename');
             /**
              * 相对路径
              * 不包含文件名
@@ -29,6 +28,8 @@ class CreateFilesTable extends Migration
              *
              */
             $table->string('save_path');
+            $table->string('full_path');
+
             $table->string('description'); // 图集使用的
 
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -39,4 +40,34 @@ class File extends Model
     public function downResponse(){
         return new BinaryFileResponse($this -> path . $this -> save_path);
     }
+
+    /**
+     * @param $imageBinary
+     * @param string $path
+     * @param string $ext
+     * @return static
+     * @throws \Exception
+     */
+    public static function createFormBinary($imageBinary, $path = 'uploads', $ext = 'jpg'){
+        $save_path = $path;
+        $filename = Str::quickRandom() . '.' . $ext;
+
+        $full_path = $save_path . '/' . $filename;
+        $result = \Storage::disk('public')->put($full_path, $imageBinary);
+
+        if(!$result){
+            throw new \Exception('storage save fail!');
+        }
+
+        return self::create([
+            'filename' => $filename,
+            'save_path' => $save_path,
+            'full_path' => $full_path,
+            'title' => $filename,
+            'description' => '',
+            'size' => \Storage::disk('public')->size($full_path),
+            'mime_type' => \Storage::disk('public')->mimeType($full_path),
+        ]);
+    }
+
 }
