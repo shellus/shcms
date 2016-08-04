@@ -71,7 +71,7 @@ Route::resource('/category', 'CategoryController');
 Route::resource('/file', 'FileController');
 
 // Shop Routes...
-Route::resource('/item', 'ItemController');
+Route::resource('/goods', 'ItemController');
 
 
 // --------------------- API Routes ---------------------

@@ -15,6 +15,6 @@ class IndexController extends Controller
         return view('admin.layout',['content'=>'ok']);
     }
     public function test(){
-        User::latest()
+//        User::latest()
     }
 }

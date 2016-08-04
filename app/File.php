@@ -32,6 +32,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @method static \Illuminate\Database\Query\Builder|\App\File whereValue($value)
  * @method static \Illuminate\Database\Query\Builder|\App\File whereSavePath($value)
  * @method static \Illuminate\Database\Query\Builder|\App\File whereDescription($value)
+ * @property string $full_path
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereFullPath($value)
  */
 class File extends Model
 {
