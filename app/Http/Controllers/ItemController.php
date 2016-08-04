@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Item;
-use Illuminate\Http\Request;
 
-use App\Http\Requests;
 
 class ItemController extends Controller
 {
@@ -16,8 +14,19 @@ class ItemController extends Controller
      */
     public function index()
     {
+        $query = (new Item) -> getQuery();
+
+        if(request('s')){
+            $query -> where('title', 'LIKE', '%'.request('s').'%');
+        }
+
+        /** @var \Illuminate\Database\Query\Builder $query */
+        $models = Item::setQuery($query) -> paginate();
+
+        $models -> appends(\Request::except('page'));
+
         return view('item/list', [
-            'models' => Item::paginate(),
+            'models' => $models,
             'title' => '商品列表',
         ]);
     }
