@@ -36,7 +36,14 @@
                 </ul>
                 <ul class="list-inline">
                     <li>
-                        <button  type="button" class="btn btn-primary btn-lg">加入购物车</button>
+                        <form method="post" action="{{ route('shop_cart.store') }}">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="goods_id" value="{{ $model->id }}">
+                            <input type="number" name="quantity" value="1">
+
+                            <button type="submit" class="btn btn-primary btn-lg">加入购物车</button>
+                        </form>
+
                     </li>
                     <li>
                         <button type="button" class="btn btn-primary btn-lg">立即购买</button>

@@ -61,10 +61,6 @@ class ItemController extends Controller
     public function show($id)
     {
         $model = Item::find($id);
-//        dd($model -> files -> first() -> showUrl());
-        dd($model -> image);
-
-
 
         return view('item/show', [
             'model' => $model,
