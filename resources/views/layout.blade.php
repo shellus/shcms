@@ -27,6 +27,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="/">首页</a></li>
+                <li><a href="{{ route('goods.index') }}">商品</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -40,6 +41,7 @@
                             {{ Auth::user()->displayName() }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('user.edit') }}">编辑资料</a></li>
                             <li><a href="{{ url('/logout') }}">退出</a></li>
                         </ul>
                     </li>

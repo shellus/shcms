@@ -44,6 +44,12 @@ Route::get('user/edit', [
     'uses' => 'UserController@edit',
     'middleware' => 'auth',
 ]);
+Route::post('user/edit', [
+    'as' => 'user.update',
+    'uses' => 'UserController@update',
+    'middleware' => 'auth',
+]);
+
 // User Home Routes...
 Route::post('user/avatar', [
     'as' => 'avatar.store',

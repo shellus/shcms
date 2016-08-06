@@ -34,7 +34,13 @@ class UserController extends Controller
     }
     public function edit()
     {
-        return view('user/edit', ['title' => '修改用户资料', 'model' => $this -> model, 'submit_url' => route('avatar.store')]);
+        return view('user/edit', ['title' => '修改用户资料', 'model' => $this -> model]);
     }
+    public function update(Request $request)
+    {
+        \Auth::user() -> update($request -> except('email', 'name'));
+        return '资料更新成功';
+    }
+
 
 }

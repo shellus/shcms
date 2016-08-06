@@ -34,6 +34,14 @@ class AuthController extends Controller
 
         return view('auth.login',['title' => '登陆']);
     }
+    public function showRegistrationForm()
+    {
+        if (property_exists($this, 'registerView')) {
+            return view($this->registerView);
+        }
+
+        return view('auth.register',['title' => '注册']);
+    }
     /**
      * Where to redirect users after login / registration.
      *
@@ -85,6 +93,7 @@ class AuthController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'display_name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
