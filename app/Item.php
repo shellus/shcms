@@ -39,6 +39,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Item whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read mixed $image
  */
 class Item extends Model
 {
@@ -47,7 +48,11 @@ class Item extends Model
         return $this->belongsToMany('App\File');
     }
     public function showUrl(){
-        return 'https://item.taobao.com/item.htm?spm=a3109.6190702.1998615668.161.dx9tga&id=' . $this -> slug;
-//        return route('item.show',$this -> id);
+//        return 'https://item.taobao.com/item.htm?spm=a3109.6190702.1998615668.161.dx9tga&id=' . $this -> slug;
+        return route('goods.show',$this -> id);
+    }
+    public function getImageAttribute()
+    {
+        return $this -> files -> first() -> showUrl();
     }
 }

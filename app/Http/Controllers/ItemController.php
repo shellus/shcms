@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Item;
-
+use \Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
@@ -12,7 +12,7 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $query = (new Item) -> getQuery();
 
@@ -23,7 +23,7 @@ class ItemController extends Controller
         /** @var \Illuminate\Database\Query\Builder $query */
         $models = Item::setQuery($query) -> paginate();
 
-        $models -> appends(\Request::except('page'));
+        $models -> appends($request -> except('page'));
 
         return view('item/list', [
             'models' => $models,
@@ -60,7 +60,16 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = Item::find($id);
+//        dd($model -> files -> first() -> showUrl());
+        dd($model -> image);
+
+
+
+        return view('item/show', [
+            'model' => $model,
+            'title' => $model -> title,
+        ]);
     }
 
     /**

@@ -10,6 +10,6 @@ class IndexController extends Controller
     
     public function getIndex()
     {
-        return view('index');
+        return view('index',['title' => '首页']);
     }
 }

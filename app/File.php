@@ -37,28 +37,64 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class File extends Model
 {
+    protected $fillable = [
+        'filename',
+        'save_path',
+        'full_path',
+        'title',
+        'description',
+        'size',
+        'mime_type',
+    ];
     public function downResponse(){
+        return new BinaryFileResponse($this -> downToLocal());
+    }
+    public function downToLocal(){
         $temp_path = tempnam(sys_get_temp_dir(), $this->id);
-        file_put_contents($temp_path, \Storage::disk('public')->get($this -> full_path));
-        return new BinaryFileResponse($temp_path);
+        $is_success = file_put_contents($temp_path, \Storage::disk('public')->get($this -> full_path));
+        return $temp_path;
     }
     public function showUrl(){
         return route('file.show',$this -> id);
     }
+
+
+    public static function createFormFilePath($file_path, $path = '', $ext = 'jpg'){
+        $save_path = $path;
+        $filename = Str::quickRandom() . '.' . $ext;
+
+        $full_path = $save_path . '/' . $filename;
+        $f_context = fopen($file_path, 'r');
+        $result = \Storage::disk('public')->put($full_path, $f_context);
+        fclose($f_context);
+        if(!$result){
+            throw new \Exception('storage save fail!');
+        }
+
+        return self::create([
+            'filename' => $filename,
+            'save_path' => $save_path,
+            'full_path' => $full_path,
+            'title' => $filename,
+            'description' => '',
+            'size' => \Storage::disk('public')->size($full_path),
+            'mime_type' => \Storage::disk('public')->mimeType($full_path),
+        ]);
+    }
+
     /**
      * @param $imageBinary
      * @param string $path
      * @param string $ext
-     * @return static
+     * @return File
      * @throws \Exception
      */
-    public static function createFormBinary($imageBinary, $path = 'uploads', $ext = 'jpg'){
+    public static function createFormBinary($imageBinary, $path = '', $ext = 'jpg'){
         $save_path = $path;
         $filename = Str::quickRandom() . '.' . $ext;
 
         $full_path = $save_path . '/' . $filename;
         $result = \Storage::disk('public')->put($full_path, $imageBinary);
-
         if(!$result){
             throw new \Exception('storage save fail!');
         }

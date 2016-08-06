@@ -23,6 +23,17 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    public function showLoginForm()
+    {
+        $view = property_exists($this, 'loginView')
+            ? $this->loginView : 'auth.authenticate';
+
+        if (view()->exists($view)) {
+            return view($view);
+        }
+
+        return view('auth.login',['title' => '登陆']);
+    }
     /**
      * Where to redirect users after login / registration.
      *

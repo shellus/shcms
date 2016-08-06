@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-    <title>{{ config('app.site_title') }} - 首页</title>
+    <title>{{ $title }} - {{ config('app.site_title') }}</title>
     @yield('head')
 </head>
 <body>

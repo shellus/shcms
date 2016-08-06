@@ -33,10 +33,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @method static \Illuminate\Database\Query\Builder|\App\User autoLimitScope()
  * @method static \Illuminate\Database\Query\Builder|\App\User autoOrderScope()
  * @method static \Illuminate\Database\Query\Builder|\App\User autoEqualFields($fields)
- * @property string $avatar
  * @method static \Illuminate\Database\Query\Builder|\App\User whereAvatar($value)
  * @property string $api_token
  * @method static \Illuminate\Database\Query\Builder|\App\User whereApiToken($value)
+ * @property integer $avatar_id
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAvatarId($value)
+ * @property-read \App\File $avatar
  */
 class User extends Authenticatable
 {
@@ -64,25 +66,22 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Article');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar(){
+        return $this->belongsTo('App\File');
+    }
     public function displayName(){
         return $this -> name;
     }
-    public function setAvatar(UploadedFile $file){
-        $path = 'abatar/' . $file -> getClientOriginalName();
-        $result = \Storage::disk('public')->put(
-            $path,
-            file_get_contents($file->getRealPath())
-        );
-        $this -> avatar = $path;
-        $this -> save();
-        return $result;
-    }
+
     public function getAvatar(){
-        \Storage::disk('local')->put($this -> avatar, \Storage::disk('public')->get($this -> avatar));
-        $storagePath  = \Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . $this -> avatar;
-        return \Image::make($storagePath)->fit(100, 100)->response('jpg');
+        return \Image::make($this -> avatar -> downToLocal())->fit(100, 100)->response('jpg');
     }
     public function getAvatarUrl(){
-        return route('avatar.get',['user' => $this]);
+        return route('avatar.get',$this);
     }
+
 }
