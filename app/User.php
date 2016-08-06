@@ -74,7 +74,7 @@ class User extends Authenticatable
         return $this->belongsTo('App\File');
     }
     public function displayName(){
-        return $this -> name;
+        return $this -> display_name;
     }
 
     public function getAvatar(){

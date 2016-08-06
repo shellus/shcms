@@ -70,7 +70,31 @@
 
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+@if(session('success'))
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="mySmallModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">成功</h4>
+                </div>
+                <div class="modal-body">
+                    {{ session('success') }}
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ route('shop_cart.index') }}" class="btn btn-primary">去购物车</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">好的</button>
+                </div>
 
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $( function(){
+            $('#mySmallModalLabel').modal();
+        } )
+    </script>
+@endif
 @yield('foot')
+
 </body>
 </html>
