@@ -34,6 +34,22 @@
                     <li>现价：{{ $model -> discount_price }}</li>
                     <li>已售：{{ $model -> current_sell_out }}</li>
                 </ul>
+                <ul>
+                    @foreach($model -> goods_spec_types as $spec_type)
+                    <li>
+                        {{ $spec_type -> title }}:
+                        <ul class="list-inline" style="display: inline">
+                            @foreach($spec_type -> goods_specs as $spec)
+                                <li>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="spec_type_{{ $spec_type -> id }}" id="spec_{{ $spec -> id }}" value="spec_{{ $spec -> id }}"> {{ $spec -> title }}
+                                    </label>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                    @endforeach
+                </ul>
                 <ul class="list-inline">
                     <li>
                         <form method="post" action="{{ route('shop_cart.store') }}">
