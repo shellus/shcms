@@ -46,7 +46,6 @@ class ShopCart extends Model
             }
         }
 
-        dd('ok');
 
         $model = new static($attributes);
 
