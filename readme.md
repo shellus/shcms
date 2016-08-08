@@ -2,6 +2,12 @@
 
 一个基于laravel5.2最佳实践的cms程序，使用众多现代web开发特性。
 
+## 在线DEMO
+
+香港1M带宽
+
+http://shcms.endaosi.com/
+
 ## 特色
  - 内容分类
  
