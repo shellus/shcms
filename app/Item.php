@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Item whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read mixed $image
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\GoodsSpecType[] $goods_spec_types
  */
 class Item extends Model
 {
