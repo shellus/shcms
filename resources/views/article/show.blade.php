@@ -21,7 +21,7 @@
         add:
     <ul class="list-inline">
         @foreach (\App\Tag::all() as $tag)
-            <li><a title="{{ $tag -> description }}" href="{{ route('article.tag.add',[$model->id, $tag->id]) }}"><span class="label label-info">{{ $tag->title }}</span></a></li>
+            <li><a title="{{ $tag -> description }}" href="{{ route('tag.add_to_article',[$model->id, $tag->id]) }}"><span class="label label-info">{{ $tag->title }}</span></a></li>
         @endforeach
     </ul>
     <form class="form-inline" style="display: inline-block" action="{{ route('tag.store') }}" method="post">

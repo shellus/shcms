@@ -21,7 +21,7 @@ class ShopCartController extends Controller
 //            dump($item -> goods -> showUrl());
 //        }
         return view('shop_cart/list', [
-            'models' => ShopCart::whereUserId(\Auth::user()->id) -> get(),
+            'models' => ShopCart::whereUserId(\Auth::user()->id) -> orderBy('id', 'desc') -> get(),
         ]);
     }
 

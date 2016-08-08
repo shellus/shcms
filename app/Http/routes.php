@@ -66,10 +66,10 @@ Route::get('user/avatar/{user}', [
 
 // Article Routes...
 
-Route::get('/article/{article_id}/{tag_id}', ['as' => 'article.tag.add','uses' => 'ArticleController@getTagAdd']);
-Route::get('/article/{slug_or_id}', ['as' => 'article.index','uses' => 'ArticleController@index']);
 Route::resource('/article', 'ArticleController');
 
+
+Route::get('/tag/{id}/{tag_id}', ['as' => 'tag.add_to_article','uses' => 'ArticleController@getTagAdd']);
 Route::get('/tag/{slug_or_id}', ['as' => 'article.tag.index','uses' => 'ArticleController@getTag']);
 Route::resource('/tag', 'TagController');
 

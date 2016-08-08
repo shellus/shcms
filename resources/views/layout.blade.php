@@ -26,8 +26,10 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="/">首页</a></li>
+                <li><a href="{{ route('index') }}">首页</a></li>
+                <li><a href="{{ route('article.index') }}">文章</a></li>
                 <li><a href="{{ route('goods.index') }}">商品</a></li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

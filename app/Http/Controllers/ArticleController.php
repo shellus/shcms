@@ -17,15 +17,15 @@ class ArticleController extends Controller
     {
         $this -> model = new Article();
     }
-    public function index($slug_or_category_id){
-        if($slug_or_category_id){
-            if(is_numeric($slug_or_category_id)){
-                    \App\Category::findOrFail($slug_or_category_id)
-                    -> articles;
-            }else{
-
-            }
-        }
+    public function index(){
+//        if($slug_or_category_id){
+//            if(is_numeric($slug_or_category_id)){
+//                    \App\Category::findOrFail($slug_or_category_id)
+//                    -> articles;
+//            }else{
+//
+//            }
+//        }
 
         return view('article.list',[
             'list_type' => 'default',
