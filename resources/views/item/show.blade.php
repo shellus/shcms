@@ -34,6 +34,7 @@
                     <li>现价：{{ $model -> discount_price }}</li>
                     <li>已售：{{ $model -> current_sell_out }}</li>
                 </ul>
+                <form method="post" action="{{ route('shop_cart.store') }}">
                 <ul>
                     @foreach($model -> goods_spec_types as $spec_type)
                     <li>
@@ -42,7 +43,7 @@
                             @foreach($spec_type -> goods_specs as $spec)
                                 <li>
                                     <label class="radio-inline">
-                                        <input type="radio" name="spec_type_{{ $spec_type -> id }}" id="spec_{{ $spec -> id }}" value="spec_{{ $spec -> id }}"> {{ $spec -> title }}
+                                        <input type="radio" name="spec_type_{{ $spec_type -> id }}" id="spec_{{ $spec -> id }}" value="{{ $spec -> id }}"> {{ $spec -> title }}
                                     </label>
                                 </li>
                             @endforeach
@@ -52,19 +53,20 @@
                 </ul>
                 <ul class="list-inline">
                     <li>
-                        <form method="post" action="{{ route('shop_cart.store') }}">
+
                             {!! csrf_field() !!}
                             <input type="hidden" name="goods_id" value="{{ $model->id }}">
                             <input type="number" name="quantity" value="1">
 
                             <button type="submit" class="btn btn-primary btn-lg">加入购物车</button>
-                        </form>
+
 
                     </li>
                     <li>
                         <button type="button" class="btn btn-primary btn-lg">立即购买</button>
                     </li>
                 </ul>
+                </form>
             </div>
 
 

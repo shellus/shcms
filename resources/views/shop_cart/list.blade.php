@@ -18,7 +18,7 @@
                         <li>
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#">
+                                    <a href="{{ $model -> goods -> showUrl() }}">
                                         <img width="100" height="100" src="{{ $model -> goods -> files -> first() -> showUrl() }}" alt="...">
                                     </a>
                                 </div>

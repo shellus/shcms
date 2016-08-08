@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Item;
 use App\ShopCart;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,8 @@ class ShopCartController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request -> only(['goods_id', 'quantity']);
+        $data = $request -> all();
+
         $data['user_id'] = \Auth::user() -> id;
         ShopCart::create($data);
 

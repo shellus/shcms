@@ -78,15 +78,10 @@ Route::resource('/file', 'FileController');
 
 // Shop Routes...
 Route::resource('/goods', 'ItemController');
-Route::resource('/shop_cart', 'ShopCartController');
 
-
-// --------------------- API Routes ---------------------
-
-Route::group(['prefix' => '/api/',], function () {
-    Route::post('login', App\Http\Controllers\Api\AuthController::class . '@postLogin');
-
-    Route::group(['middleware' => 'api.auth'], function() {
-        Route::resource('article', App\Http\Controllers\Api\ArticleController::class);
-    });
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::resource('/shop_cart', 'ShopCartController', ['only' => ['index','destroy','store']]);
 });
+
+
