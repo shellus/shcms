@@ -88,10 +88,6 @@ goods_attribute 商品属性 描述商品，且可以用来做属性搜索。
 
 暂无
 
-## 待办
-
-商品模块
-
 ## 开源协议
 
 shcms is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
