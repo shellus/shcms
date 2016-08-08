@@ -1,4 +1,5 @@
 @extends('layout')
+@title('购物车')
 @section('head')
     <style>
         .shop-cart-list>li{

@@ -1,5 +1,5 @@
 @extends('layout')
-
+@title(trans('auth.register_title'))
 @section('content')
 <div class="container-fluid">
 	<div class="row">

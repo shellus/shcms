@@ -1,7 +1,4 @@
 @extends('layout')
-@section('head')
-    <title>{{ config('system.site_title') }} - {{ $title }}</title>
-@endsection
 @section('content')
 <div class="container-fluid">
 	<div class="row">

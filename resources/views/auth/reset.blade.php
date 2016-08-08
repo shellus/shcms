@@ -1,5 +1,5 @@
 @extends('layout')
-
+@title('Reset Password')
 @section('content')
 <div class="container-fluid">
 	<div class="row">

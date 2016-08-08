@@ -1,6 +1,6 @@
 @extends('layout')
+@title('商品列表')
 @section('head')
-    <title>{{ config('system.site_title') }} - {{ $title }}</title>
     <style>
 
         .search-box>input{

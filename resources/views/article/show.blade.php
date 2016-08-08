@@ -1,4 +1,5 @@
 @extends('layout')
+@title($model->title)
 @section('head')
     <style>
         article img{

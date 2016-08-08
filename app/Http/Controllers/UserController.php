@@ -34,7 +34,7 @@ class UserController extends Controller
     }
     public function edit()
     {
-        return view('user/edit', ['title' => '修改用户资料', 'model' => $this -> model]);
+        return view('user/edit', ['model' => $this -> model]);
     }
     public function update(Request $request)
     {

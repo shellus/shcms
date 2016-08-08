@@ -1,11 +1,7 @@
 
 
 @extends('layout')
-@section('head')
-    <style>
-
-    </style>
-@endsection
+@title('首页')
 @section('content')
 
     <h3>最新记录</h3>

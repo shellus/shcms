@@ -10,6 +10,8 @@ use App\Http\Requests;
 class TestController extends Controller
 {
     public function getTest(Request $request){
+        
+
         return view('test');
     }
 }

@@ -22,7 +22,6 @@ class ShopCartController extends Controller
 //        }
         return view('shop_cart/list', [
             'models' => ShopCart::whereUserId(\Auth::user()->id) -> get(),
-            'title' => '购物车',
         ]);
     }
 

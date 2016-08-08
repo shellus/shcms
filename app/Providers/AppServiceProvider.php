@@ -16,6 +16,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \Blade::directive('title', function($expression) {
+            return "<?php \$title={$expression}; ?>";
+        });
+
         $navigation = new Navigation([
             [
                 'title' => 'Test',

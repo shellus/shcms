@@ -1,7 +1,5 @@
 @extends('layout')
-@section('head')
-    <title>{{ config('system.site_title') }} - {{ $title }}</title>
-@endsection
+@title('文章分类')
 @section('content')
 <div class="container-fluid">
 	<div class="row">

@@ -1,5 +1,5 @@
 @extends('layout')
-
+@title('修改用户资料')
 @section('content')
 <div class="container-fluid">
 	<div class="row">

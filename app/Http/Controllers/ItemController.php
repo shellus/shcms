@@ -27,7 +27,6 @@ class ItemController extends Controller
 
         return view('item/list', [
             'models' => $models,
-            'title' => '商品列表',
         ]);
     }
 
@@ -64,7 +63,6 @@ class ItemController extends Controller
 
         return view('item/show', [
             'model' => $model,
-            'title' => $model -> title,
         ]);
     }
 
