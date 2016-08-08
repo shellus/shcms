@@ -69,7 +69,7 @@ php artisan db:seed
 
 > 如果看到权限不足（permission denied）的提示，请执行 `chmod -R 777 storage/`
 
-## 约定与定于
+## 约定与定义
 
 user 网站用户
 
