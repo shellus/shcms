@@ -17,6 +17,10 @@ body{
     color: #d0d0d0;
     background-color: transparent;
 }
+.modal-content {
+    background-color: #494949;
+    border-radius: 0;
+}
 .thumbnail {
     background-color: #494949;
     border-radius: 0;
