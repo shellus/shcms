@@ -6,7 +6,8 @@
 
     <h3>最新记录</h3>
     <hr>
-    <div class="new_articles-list">
+    (采集thinkphp.cn到articles表，作为测试数据 : )
+    <div class="new_article-list">
         @include('partials.article_list',['articles' => \App\Article::getNewList()])
     </div>
 @endsection

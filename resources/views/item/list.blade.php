@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <form method="GET" action="{{ route('goods.index') }}">
                     <div class="input-group input-group-lg search-box">
-                        <input type="text" class="form-control" name="s" value="{{ request('s') }}" placeholder="大家都在搜 路由器">
+                        <input type="text" class="form-control" name="s" value="{{ request('s') }}" placeholder="大家都在搜 手机">
                       <span class="input-group-btn">
                         <button class="btn btn-default" type="submit">搜索</button>
                       </span>

@@ -6,13 +6,13 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">列表</div>
 				<div class="panel-body">
-                    <ul>
-                    @foreach ($models as $model)
-                        <li><a href="{{ $model->showUrl() }}">{{ $model->title }}</a></li>
-                    @endforeach
-                    </ul>
+                    <div class="article-list">
+                        @include('partials.article_list',['articles' => $models])
+                    </div>
 				</div>
-                {!! $models -> render() !!}
+                <div class="text-center">
+                    {!! $models -> render() !!}
+                </div>
 			</div>
 		</div>
 	</div>

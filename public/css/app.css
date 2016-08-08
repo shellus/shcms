@@ -1,15 +1,72 @@
+
+/*-----------------全局样式-----------------*/
+body{
+    color: #fff;
+    background-color: #343434;
+}
+.navbar-default {
+    background-color: #2b2b2b;;
+    border-radius: 0;
+    border-color: transparent;
+    border-bottom-color: #525252;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: #d0d0d0;
+    background-color: transparent;
+}
+.thumbnail {
+    background-color: #494949;
+    border-radius: 0;
+}
+.thumbnail .caption {
+    padding: 9px;
+    color: #fff;
+}
+a {
+    color: #b9d3e9;
+}
+a:focus, a:hover {
+    color: #77beff;
+}
+.panel-default {
+    border-color: #4e4e4e;
+    background-color: #494949;
+}
+.panel-footer{
+    background-color: transparent;
+
+}
+.form-control {
+    background-color: #d7d7d7;
+}
+.pagination>li>a, .pagination>li>span {
+    background-color: #d7d7d7;
+}
+.pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
+    background-color: #d7d7d7;
+}
+button, input, optgroup, select, textarea {
+    color: #000;
+}
+
+/*-----------------内容区块样式-----------------*/
+
 .body-content{
     min-height: 1000px;
 }
 
-.new_articles-list a {
+.new_article-list a {
     font-size: 1.2em;
     line-height: 2em;
 }
-body{
-    font-size: 14px;
-    line-height: 1.42857143;
+.article-list a {
+    font-size: 1.1em;
+    line-height: 1.8em;
 }
+
 .nav{
     font-size: 1.4em;
 }

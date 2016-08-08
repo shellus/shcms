@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <title>{{ $title }} - {{ config('app.site_title') }}</title>
+    <style>
+
+    </style>
     @yield('head')
 </head>
 <body>
@@ -43,6 +46,7 @@
                             {{ Auth::user()->displayName() }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('shop_cart.index') }}">购物车</a></li>
                             <li><a href="{{ route('user.edit') }}">编辑资料</a></li>
                             <li><a href="{{ url('/logout') }}">退出</a></li>
                         </ul>
@@ -60,12 +64,13 @@
         <div class="col-xs-12 col-md-3 side">
             <h3>右侧</h3>
             <hr>
+            (推荐系统，TODO : )
         </div>
     </div>
 </div>
 <footer>
     <div class="container">
-        娃娃脾气.版权所有
+        <a href="https://shellus.github.io/">shellus</a> .版权所有
     </div>
 
 </footer>
