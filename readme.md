@@ -72,11 +72,17 @@ php artisan db:seed
 ## 约定与定于
 
 user 网站用户
+
 article 文章
+
 goods/item 商品
+
 shop_cart 购物车
+
 goods_spec 商品规格，如 颜色 套餐，和价格关联。不同规格可以有不同的价格
+
 goods_attribute 商品属性 描述商品，且可以用来做属性搜索。
+
 
 ## 文档
 
