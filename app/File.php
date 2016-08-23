@@ -55,7 +55,8 @@ class File extends Model
         return $temp_path;
     }
     public function showUrl(){
-        return route('file.show',$this -> id);
+        // return route('file.show',$this -> id); 动态输出
+        return url('uploads/' . $this -> full_path);
     }
 
 
