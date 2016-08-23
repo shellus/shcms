@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
                 ],
             ],
             [
-                'title' => 'Test1',
+                'title' => 'Index1',
                 'icon' => 'fa fa-user',
                 'priority' => 600,
                 'url' => 'http://site.com',

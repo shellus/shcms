@@ -65,6 +65,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $router->group([
+            'middleware' => 'web',
             'prefix' => '/admin',
         ], function ($router) {
             require app_path('Http/routes-admin.php');
