@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="/bootstrap-3.3.0-dist/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -19,9 +19,61 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+
+    <style>
+        footer {
+            color: #777;
+            padding: 30px 0;
+            border-top: 1px solid #e5e5e5;
+            margin-top: 70px;
+            margin-bottom: 40px;
+        }
+        pre.inline{
+            display: inline;
+            padding: 0 10px;
+            margin: 0;
+        }
+        .sql-dumper{
+            border: 1px solid #f5e79e;
+            margin: 10px;
+        }
+        .debug-bar{
+            position: fixed;
+            bottom: 0px;
+            padding: 5px;
+            z-index: 999;
+            width: 100%;
+            background-color: #2b2b2b;
+            color: #a8b6c5;
+        }
+    </style>
+
+
     @yield('header')
 </head>
 <body>
+<div class="debug-bar">
+    <div class="container">
+                <div id="collapseOne" class="panel-collapse collapse sql-dumper" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body text-left">
+                        <ul>
+                            @foreach(getQueryLog()['sqls'] as $key => $query)
+                                <li>
+                                    {{ $key }} . <pre class="inline"><code>{{ $query['sql'] }}</code></pre> in {{ $query['time'] }}  ms.
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <p>
+                    sql count {{ count(getQueryLog()['sqls']) }} in {{ getQueryLog()['total_time'] }} ms.
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        detail
+                    </a>
+                </p>
+    </div>
+</div>
+
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -80,7 +132,24 @@
 
     @yield('content')
 
+    <footer class="text-center">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    没有版权.随便抄袭
+
+
+                </div>
+            </div>
+        </div>
+
+    </footer>
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    <script src="/jquery-2.2.4/dist/jquery.min.js"></script>
+    <script src="/bootstrap-3.3.0-dist/dist/js/bootstrap.min.js"></script>
+
+@yield('footer')
 </body>
 </html>

@@ -6,8 +6,14 @@
  * Time: 4:20
  */
 function getQueryLog(){
-    $querys = \DB::getQueryLog();
-    $returns = [];
+    static $querys;
+    if (!$querys){
+        $querys = \DB::getQueryLog();
+    }
+    $returns = [
+        'total_time' => 0,
+        'sqls' => [],
+    ];
     /** @var \Illuminate\Database\Events\QueryExecuted $query */
     foreach ($querys as $query){
         $return['sql'] = $query['query'];
@@ -16,7 +22,8 @@ function getQueryLog(){
         }
         $return['bindings'] = $query['bindings'];
         $return['time'] = $query['time'];
-        $returns[] = $return;
+        $returns['sqls'][] = $return;
+        $returns['total_time'] += $query['time'];
     }
     return $returns;
 }

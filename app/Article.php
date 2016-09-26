@@ -45,6 +45,32 @@ class Article extends Model
     }
 
 
+    public static function getByRandom($count){
+        $total = Article::count();
+        $randoms = [];
+        $ids = [];
+
+        $articles = [];
+
+
+        do{
+            $randoms[] = rand(0, $total);
+        }while ($count --> 1);
+
+        $all_ids = \Cache::rememberForever('all_ids', function() {
+            return \DB::select('select `id` from `articles`;');
+        });
+
+        foreach ($randoms as $random){
+            $ids[] = $all_ids[$random] -> id;
+        }
+
+//        $articles = Article::limit(10) -> orderByRaw('RAND()') -> get();
+
+        $articles = Article::whereIn('id', $randoms) -> get(['id', 'title']);
+
+        return $articles;
+    }
     public function next(){
 
         if ($this -> next === null){

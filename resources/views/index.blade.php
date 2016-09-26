@@ -3,6 +3,8 @@
     <style>
         #articles{
             line-height: 2em;
+            height: 400px;
+            overflow: hidden;
         }
     </style>
 @endsection
@@ -14,22 +16,52 @@
                     <div class="panel-heading">无穷无尽，请随心点击</div>
 
                     <div class="panel-body">
-                        <ul id="articles">
-                        @foreach($articles as $article)
+                        <script type="application/html" id="articles-tmpl">
                             <li>
-                                <a href="{{ $article -> showUrl() }}">{{ $article['title'] }} length {{ strlen($article['body']) }}</a>
+                                <a href="{url}">{title}</a>
                             </li>
-                        @endforeach
+                        </script>
+                        <ul id="articles" class="list-inline">
+                            @foreach($articles as $article)
+                                <li>
+                                    <a href="{{ $article -> showUrl() }}">{{ $article['title'] }}</a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <hr>
-    @foreach(getQueryLog() as $query)
-        <pre>
-            {{ $query['sql'] }} in {{ $query['time'] }}
-        </pre>
-    @endforeach
+@endsection
+@section('footer')
+    <script>
+        $(function () {
+            var articles = [];
+            fetch(function () {
+                setInterval(function () {
+                    var article = articles.shift();
+
+                    if(articles.length < 5){
+                        fetch(function(){console.log('又拉来一批')});
+                    }
+                    var url = 'http://shcms-v3.localhost/api/article/' + article.id;
+                    var title = article.title;
+                    var html = $("#articles-tmpl").html();
+                    var el = html.replace('{url}', url).replace('{title}', title)
+                    $('#articles').append(el);
+                    $('#articles').scrollTop( $('#articles')[0].scrollHeight);
+                }, 100)
+            });
+
+            function fetch(callback) {
+                $.ajax('/api/article', {
+                    success: function (data) {
+                        articles = articles.concat(data);
+                        callback();
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

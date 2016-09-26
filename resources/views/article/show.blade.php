@@ -36,12 +36,4 @@
         </div>
 
     </div>
-    <hr>
-
-    <hr>
-    @foreach(getQueryLog() as $query)
-        <pre>
-            {{ $query['sql'] }} in {{ $query['time'] }}
-        </pre>
-    @endforeach
 @endsection
