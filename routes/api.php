@@ -13,8 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
+/** @var Route $router */
+
+
+Route::get('/api/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::resource('article','Api\ArticleController');
+Route::resource('/article','Api\ArticleController');

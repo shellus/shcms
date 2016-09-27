@@ -15,6 +15,18 @@ Route::get('/', 'IndexController@index');
 
 Auth::routes();
 
-Route::resource('article', 'ArticleController');
 
-Route::get('/home', 'HomeController@index');
+Route::group([
+    'middleware' => 'auth',
+], function ($router) {
+    Route::get('/article/search', 'ArticleController@search');
+    Route::get('/article/reading', 'ArticleController@reading');
+    Route::resource('/article', 'ArticleController');
+
+    Route::resource('/category', 'CategoryController');
+
+    Route::get('/home', 'HomeController@index');
+});
+
+
+

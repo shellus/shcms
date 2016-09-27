@@ -1,8 +1,12 @@
 @extends('layouts.app')
 @section('header')
     <style>
-        #articles{
-            line-height: 2em;
+        .panel-footer {
+            padding: 10px 15px;
+            background-color: inherit;
+        }
+        .pagination {
+            margin: 10px 0;
         }
     </style>
 @endsection
@@ -27,6 +31,9 @@
                             @endforeach
                         </ul>
                     </div>
+                    <div class="panel-footer">
+                        {!! $articles->links() !!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,32 +41,5 @@
 @endsection
 @section('footer')
     <script>
-//        $(function () {
-//            var articles = [];
-//            fetch(function () {
-//                setInterval(function () {
-//                    var article = articles.shift();
-//
-//                    if(articles.length < 5){
-//                        fetch(function(){console.log('又拉来一批')});
-//                    }
-//                    var url = 'http://shcms-v3.localhost/article/' + article.id;
-//                    var title = article.title;
-//                    var html = $("#articles-tmpl").html();
-//                    var el = html.replace('{url}', url).replace('{title}', title)
-//                    $('#articles').append(el);
-//                    $('#articles').scrollTop( $('#articles')[0].scrollHeight);
-//                }, 100)
-//            });
-//
-//            function fetch(callback) {
-//                $.ajax('/api/article', {
-//                    success: function (data) {
-//                        articles = articles.concat(data);
-//                        callback();
-//                    }
-//                });
-//            }
-//        });
     </script>
 @endsection

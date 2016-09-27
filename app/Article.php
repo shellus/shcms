@@ -28,14 +28,56 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property boolean $version
  * @method static \Illuminate\Database\Query\Builder|\App\Article whereVersion($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Category[] $categories
  */
 class Article extends Model
 {
     protected $next = null;
     protected $fillable = [
-        'title','body','referrer_title', 'referrer','version','to_local',
+    'title','body', 'user_id','referrer_title', 'referrer','version','to_local',
     ];
 
+    public static function search($s,$c, $perPage = 20){
+
+        $currentPage = \Request::get('page',1);
+
+        $sphinx = new \SphinxClient();
+
+        $sphinx->SetServer ('127.0.0.1', 9312);
+
+        $sphinx->SetArrayResult (true);
+
+        $sphinx->SetLimits($perPage * ($currentPage - 1), $perPage, 100000);
+
+        $sphinx->SetMaxQueryTime(10);
+
+        $index = '*';
+
+        $sphinx->SetFilter('category_id', array($c));
+
+//        $key = mb_convert_encoding($key, 'UTF-8');
+
+        $result = $sphinx->query ($s, $index);
+
+        $total = $result['total'];
+
+        $ids = [];
+
+        foreach ($result['matches'] as $match){
+            $ids[] = $match['id'];
+        }
+
+        $items = Article::whereIn('id', $ids) -> get(['id', 'title']);
+
+        $articles = new \Illuminate\Pagination\LengthAwarePaginator($items, $total, $perPage, $currentPage,
+            [
+                'path' => '/' . \Request::path(),
+                'query' => \Request::all(),
+            ]
+        );
+
+        return $articles;
+    }
     public function categories()
     {
         return $this->belongsToMany('App\Category')->withTimestamps();

@@ -3,12 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\ArticleReadingAnalysis;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
 class ArticleController extends Controller
 {
+
+    public function search(Request $request){
+        $articles = Article::search($request['s'],$request['c']);
+
+        return view('article.index', ['articles' => $articles]);
+
+    }
+
+    public function reading(Request $request){
+        
+        ArticleReadingAnalysis::reading(\Auth::user(), $request['article_id']);
+
+        return $this -> success('统计阅读完成');
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *

@@ -46,6 +46,10 @@
             background-color: #2b2b2b;
             color: #a8b6c5;
         }
+        #articles{
+            line-height: 2em;
+            min-height: 400px;
+        }
     </style>
 
 

@@ -39,15 +39,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $total = Article::count();
-        $count = 10;
-        $ids = [];
-        while ($count --> 1){
-            $ids[] = rand(0, $total);
-        }
-        dump($ids);
-        $articles = Article::where('id', 'in', $ids) -> get();
-        dd($articles);
+        \App\ArticleReadingAnalysis::find(1);
 
 //        $articles = Article::limit(10) -> orderByRaw('RAND()') -> get();
     }

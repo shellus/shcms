@@ -23,6 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $read_count = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> count();
+
+        $read_time = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> sum('reading_at');
+
+        $lest_read_articles = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> limit(20) -> get();
+
+        return view('home', compact(['read_count', 'read_time', 'lest_read_articles']));
     }
 }
