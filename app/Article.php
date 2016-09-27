@@ -37,11 +37,16 @@ class Article extends Model
     'title','body', 'user_id','referrer_title', 'referrer','version','to_local',
     ];
 
-    public static function search($s,$c, $perPage = 20){
+    public static function search($s, $c = [], $perPage = 20){
 
+        if ($c === null){
+            $c = Category::all(['id']) -> mode('id');
+        }
         $currentPage = \Request::get('page',1);
 
         $sphinx = new \SphinxClient();
+
+        $sphinx->setMatchMode(2);
 
         $sphinx->SetServer ('127.0.0.1', 9312);
 
@@ -53,7 +58,7 @@ class Article extends Model
 
         $index = '*';
 
-        $sphinx->SetFilter('category_id', array($c));
+        $sphinx->SetFilter('category_id', $c);
 
 //        $key = mb_convert_encoding($key, 'UTF-8');
 

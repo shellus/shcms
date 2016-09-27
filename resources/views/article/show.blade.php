@@ -87,8 +87,8 @@
                 last_height = document.scrollingElement.scrollTop;
 
 
-                // 20秒看一屏，是正常看的
-                if(sleep < 20){
+                // 5秒看一屏，是正常看的
+                if(sleep < 5){
                     $.ajax('/article/reading', {
                         data:{
                             'article_id': $('meta[name="article-id"]').attr('content'),

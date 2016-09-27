@@ -50,6 +50,12 @@
             line-height: 2em;
             min-height: 400px;
         }
+        .search-box>input{
+            border-radius: 0 !important;
+        }
+        .search-box>.input-group-btn>.btn{
+            border-radius: 0;
+        }
     </style>
 
 
@@ -99,7 +105,11 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    &nbsp;
+                    <li>
+                        <a href="{{ url('/category') }}" >
+                            分类
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -115,6 +125,12 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ url('/home') }}" >
+                                        Home
+                                    </a>
+                                </li>
+
                                 <li>
                                     <a href="{{ url('/logout') }}"
                                         onclick="event.preventDefault();

@@ -8,6 +8,7 @@
         .pagination {
             margin: 10px 0;
         }
+
     </style>
 @endsection
 @section('content')
@@ -18,11 +19,16 @@
                     <div class="panel-heading">无穷无尽，请随心点击</div>
 
                     <div class="panel-body">
-                        <script type="application/html" id="articles-tmpl">
-                            <li>
-                                <a href="{url}">{title}</a>
-                            </li>
-                        </script>
+                        <form method="GET" action="{{ url('/article/search') }}">
+                            <div class="input-group input-group-lg search-box">
+                                {{--<input type="hidden" name="c" value="*">--}}
+                                <input type="text" class="form-control" name="s" value="{{ \Request::get('s') }}" placeholder="大家都在搜 丝袜">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">搜索</button>
+                                  </span>
+                            </div>
+                        </form>
+
                         <ul id="articles" class="list-unstyled">
                             @foreach($articles as $article)
                                 <li>

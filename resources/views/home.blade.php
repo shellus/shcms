@@ -33,6 +33,9 @@
                     </ul>
 
                 </div>
+                <div class="panel-footer">
+                    {!! $lest_read_articles->links() !!}
+                </div>
             </div>
         </div>
     </div>
