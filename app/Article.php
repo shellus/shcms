@@ -64,12 +64,17 @@ class Article extends Model
 
         $result = $sphinx->query ($s, $index);
 
+        if($result === false){
+            throw new \Exception('sphinx error');
+        }
         $total = $result['total'];
 
         $ids = [];
 
-        foreach ($result['matches'] as $match){
-            $ids[] = $match['id'];
+        if(key_exists('matches',$result)){
+            foreach ($result['matches'] as $match){
+                $ids[] = $match['id'];
+            }
         }
 
         $items = Article::whereIn('id', $ids) -> get(['id', 'title']);

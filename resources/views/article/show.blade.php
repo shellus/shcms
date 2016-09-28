@@ -1,15 +1,11 @@
 @extends('layouts.app')
 @section('header')
     <style>
-        #article-body{
-            line-height: 2em;
-        }
-        .panel-body {
-            padding-top: 0;
-        }
         #article-field-set{
             font-style: oblique;
-            padding: 10px;
+            font-size: 0.9em;
+            margin: 18px 18px 18px 0;
+            border-left: 2px solid #1b6d85;
         }
     </style>
     <meta name="article-id" content="{{ $article -> id }}">
@@ -18,29 +14,33 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">{{ $article -> title }}</div>
+                <h2>{{ $article -> title }}</h2>
 
-                    <div class="panel-body">
-                        <div class="row bg-info" id="article-field-set">
-                            <div class="col-xs-3">
-                                <span>分类: </span>
-                                <span>武侠古典</span>
-                            </div>
-                            <div class="col-xs-3">
-                                <span>阅读数量: </span>
-                                <span>103</span>
-                            </div>
-                            <div class="col-xs-3">
-                                <span>长度: </span>
-                                <span>{{ strlen($article -> body) }} 字</span>
-                            </div>
-                        </div>
-
-                        <div id="article-body">
-                            　　{!! $article -> body !!}
-                        </div>
+                <div class="row" id="article-field-set">
+                    <div class="col-xs-3">
+                        <span>分类: </span>
+                        <span>武侠古典</span>
                     </div>
+                    <div class="col-xs-3">
+                        <span>阅读数量: </span>
+                        <span>103</span>
+                    </div>
+                    <div class="col-xs-3">
+                        <span>长度: </span>
+                        <span>{{ strlen($article -> body) }} 字</span>
+                    </div>
+                </div>
+
+                <div class="action-list">
+                    <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
+                </div>
+                <hr>
+
+
+
+                <div id="article-body">
+                    {{--　　--}}
+                    {!! $article -> body !!}
                 </div>
             </div>
         </div>

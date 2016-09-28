@@ -21,6 +21,10 @@
     </script>
 
     <style>
+        body{
+            font-size: 1.6em;
+            line-height: 1.5em;
+        }
         footer {
             color: #777;
             padding: 30px 0;
@@ -62,27 +66,27 @@
     @yield('header')
 </head>
 <body>
-<div class="debug-bar">
-    <div class="container">
-                <div id="collapseOne" class="panel-collapse collapse sql-dumper" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body text-left">
-                        <ul>
-                            @foreach(getQueryLog()['sqls'] as $key => $query)
-                                <li>
-                                    {{ $key }} . <pre class="inline"><code>{{ $query['sql'] }}</code></pre> in {{ $query['time'] }}  ms.
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-                <p>
-                    sql count {{ count(getQueryLog()['sqls']) }} in {{ getQueryLog()['total_time'] }} ms.
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        detail
-                    </a>
-                </p>
-    </div>
-</div>
+{{--<div class="debug-bar">--}}
+    {{--<div class="container">--}}
+                {{--<div id="collapseOne" class="panel-collapse collapse sql-dumper" role="tabpanel" aria-labelledby="headingOne">--}}
+                    {{--<div class="panel-body text-left">--}}
+                        {{--<ul>--}}
+                            {{--@foreach(getQueryLog()['sqls'] as $key => $query)--}}
+                                {{--<li>--}}
+                                    {{--{{ $key }} . <pre class="inline"><code>{{ $query['sql'] }}</code></pre> in {{ $query['time'] }}  ms.--}}
+                                {{--</li>--}}
+                            {{--@endforeach--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<p>--}}
+                    {{--sql count {{ count(getQueryLog()['sqls']) }} in {{ getQueryLog()['total_time'] }} ms.--}}
+                    {{--<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">--}}
+                        {{--detail--}}
+                    {{--</a>--}}
+                {{--</p>--}}
+    {{--</div>--}}
+{{--</div>--}}
 
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">

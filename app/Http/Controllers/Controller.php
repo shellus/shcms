@@ -14,10 +14,16 @@ class Controller extends BaseController
 
     protected function message($is_success, $message)
     {
-        return JsonResponse::create([
-            'status' => $is_success?'success': 'fail',
-            'message' => $message,
-        ],$is_success ? 200 : 500);
+        if (\Request::isJson()){
+            return JsonResponse::create([
+                'status' => $is_success?'success': 'fail',
+                'message' => $message,
+            ],$is_success ? 200 : 500);
+        }else{
+            return view('success', ['message' => $message]);
+
+        }
+
     }
 
     protected function success($m){return $this->message(true, $m);}

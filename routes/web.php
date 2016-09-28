@@ -15,7 +15,6 @@ Route::get('/', 'IndexController@index');
 
 Auth::routes();
 
-
 Route::group([
     'middleware' => 'auth',
 ], function ($router) {

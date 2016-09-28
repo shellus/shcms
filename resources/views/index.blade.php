@@ -4,17 +4,27 @@
         #articles{
             line-height: 2em;
         }
+        body{
+            background-image: url("/images/index.jpg");
+            background-size: cover;
+        }
+        .navbar-default {
+            background-color: rgba(248, 248, 248, 0.6);
+        }
+        .panel {
+            background-color: rgba(255, 255, 255, 0.28);
+        }
     </style>
 @endsection
 @section('content')
     <div class="container">
+
+
         <div class="row">
+
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">无穷无尽，请随心点击</div>
-
+                <div class="panel">
                     <div class="panel-body">
-
                         <form method="GET" action="{{ url('/article/search') }}">
                             <div class="input-group input-group-lg search-box">
                                 {{--<input type="hidden" name="c" value="*">--}}
