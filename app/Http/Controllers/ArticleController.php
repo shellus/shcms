@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\ArticleReadingAnalysis;
+use App\ReadingHistory;
+use App\SearchHistory;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -12,6 +14,13 @@ class ArticleController extends Controller
 {
 
     public function search(Request $request){
+
+        SearchHistory::create([
+            'word' => $request['s'],
+            'page' => $request -> get('page', 1),
+            'user_id' => \Auth::user() -> id,
+        ]);
+
         $articles = Article::search($request['s'],$request['c']);
 
         return view('article.index', ['articles' => $articles]);
@@ -64,8 +73,12 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+        ReadingHistory::create([
+            'article_id' => $id,
+            'user_id' => \Auth::user() -> id,
+        ]);
         return view('article.show',['article' => Article::find($id)]);
     }
 
