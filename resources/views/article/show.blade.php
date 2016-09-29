@@ -64,6 +64,11 @@
 
 @section('footer')
     <script>
+        if(navigator.platform.indexOf('Win32')!=-1){
+
+        }else {
+            return;
+        }
         // 统计阅读时间
         $(function () {
 
