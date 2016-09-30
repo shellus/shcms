@@ -51,7 +51,7 @@ class AirtcleController implements MessageComponentInterface
 
         try
         {
-            $request = \GuzzleHttp\json_decode($msg);
+            $request = \GuzzleHttp\json_decode($msg, true);
         }catch (\Exception $e)
         {
             dump('json pare fial');
