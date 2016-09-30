@@ -17,11 +17,11 @@ class Articles extends Migration
             $table->increments('id');
             $table->string('title');
             $table->longText('body');
-            $table->integer('user_id') -> unsigned() -> default(0);
+            $table->integer('user_id') ->default(0) -> unsigned();
             $table->string('referrer_title');
             $table->string('referrer');
-            $table->tinyInteger('to_local') -> unsigned() -> default(1);
-            $table->tinyInteger('version') -> unsigned() -> default(0);
+            $table->tinyInteger('to_local') ->default(1) -> unsigned();
+            $table->tinyInteger('version') ->default(0) -> unsigned();
             $table->timestamps();
         });
     }

@@ -32,7 +32,14 @@
                 </div>
 
                 <div class="action-list">
+                    <a data-toggle="modal" data-target="#modal" href="{{ url('/favorite/add') }}">收藏</a>
+                    <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-sm"></div>
+                    </div>
+
+                    @if(\Auth::user() -> id = 1)
                     <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
+                    @endif
                 </div>
                 <hr>
 
@@ -52,7 +59,12 @@
 
                     </div>
                     <div class="col-xs-6 text-right">
-                        下一篇：<a href="{{ $article -> next() -> showUrl() }}">{{ $article -> next() -> title }}</a>
+                        下一篇：
+                        @if($article -> next())
+                        <a href="{{ $article -> next() -> showUrl() }}">{{ $article -> next() -> title }}</a>
+                        @else
+                        没有了
+                        @endif
                     </div>
                 </div>
             </div>

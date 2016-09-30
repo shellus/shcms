@@ -27,6 +27,9 @@ Route::group([
     Route::resource('/category', 'CategoryController');
 
     Route::get('/home', 'HomeController@index');
+
+    Route::get('/favorite/add', 'FavoriteController@add');
+    Route::resource('/favorite', 'FavoriteController');
 });
 
 
