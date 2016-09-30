@@ -1,16 +1,22 @@
 <?php
 
 namespace App\Console\Commands;
-use Illuminate\Console\Command;
 
-class Test extends Command
+namespace App\Console\Commands;
+use Ratchet\Http\HttpServer;
+use Ratchet\Server\IoServer;
+use App\WebSocket\AirtcleController;
+use Illuminate\Console\Command;
+use Ratchet\WebSocket\WsServer;
+
+class Ws extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'ws';
 
     /**
      * The console command description.
@@ -36,6 +42,17 @@ class Test extends Command
      */
     public function handle()
     {
+        $server = IoServer::factory(
+            new HttpServer(
+                new WsServer(
+                    new AirtcleController
+                )
+            ),
+            8080
+        );
 
+        $this -> info('ws server start runtime');
+        $server->run();
+        $this -> warn('ws server runtime close');
     }
 }

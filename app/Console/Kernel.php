@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\CrawlArticle::class,
         Commands\CrawlBuildUrls::class,
+        Commands\Ws::class,
         Commands\Test::class,
     ];
 
