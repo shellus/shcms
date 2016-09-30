@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Console\Commands;
-
+use Ratchet\Server\IoServer;
+use App\WebSocket\AirtcleController;
 use App\Article;
 use App\Category;
 use Illuminate\Console\Command;
@@ -39,7 +40,12 @@ class Test extends Command
      */
     public function handle()
     {
-        \App\ArticleReadingAnalysis::find(1);
+        $server = IoServer::factory(
+            new AirtcleController(),
+            8080
+        );
+
+        $server->run();
 
 //        $articles = Article::limit(10) -> orderByRaw('RAND()') -> get();
     }

@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'IndexController@index');
+Route::get('/test', 'TestController@index');
+
 
 Auth::routes();
 

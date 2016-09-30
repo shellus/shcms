@@ -10,7 +10,8 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "guzzlehttp/guzzle": "^6.2",
         "doctrine/dbal": "^2.5",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "cboden/ratchet": "^0.3.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

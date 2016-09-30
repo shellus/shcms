@@ -64,12 +64,16 @@
 
 @section('footer')
     <script>
-        if(navigator.platform.indexOf('Win32')!=-1){
+        var conn = new WebSocket('ws://localhost:8080');
+        conn.onopen = function(e) {
+            console.log("Connection established!");
+        };
 
-        }else {
-            return;
-        }
+        conn.onmessage = function(e) {
+            console.log(e.data);
+        };
         // 统计阅读时间
+        /*
         $(function () {
 
             // 上次滚动条位置
@@ -108,5 +112,7 @@
                 }
             }, 1000)
         });
+        */
+
     </script>
 @endsection
