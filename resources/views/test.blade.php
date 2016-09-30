@@ -18,3 +18,11 @@
     </div>
 </div>
 @endsection
+
+
+@section('footer')
+    <script>
+
+    </script>
+
+    @endsection

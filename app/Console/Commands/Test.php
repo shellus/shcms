@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Console\Commands;
+use Illuminate\Session\DatabaseSessionHandler;
+use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use App\WebSocket\AirtcleController;
-use App\Article;
-use App\Category;
+use Ratchet\Session\SessionProvider;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler;
 use Illuminate\Console\Command;
+use Ratchet\WebSocket\WsServer;
 
 class Test extends Command
 {
@@ -40,13 +43,18 @@ class Test extends Command
      */
     public function handle()
     {
+
+
         $server = IoServer::factory(
-            new AirtcleController(),
+            new HttpServer(
+                new WsServer(
+                    new AirtcleController
+                )
+            ),
             8080
         );
 
         $server->run();
 
-//        $articles = Article::limit(10) -> orderByRaw('RAND()') -> get();
     }
 }

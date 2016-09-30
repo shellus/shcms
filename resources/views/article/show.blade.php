@@ -64,16 +64,16 @@
 
 @section('footer')
     <script>
-        var conn = new WebSocket('ws://localhost:8080');
+        var conn = new WebSocket('ws://sex.endaosi.com:8080');
         conn.onopen = function(e) {
-            console.log("Connection established!");
+            console.log('websocket 连接成功');
         };
 
         conn.onmessage = function(e) {
             console.log(e.data);
         };
         // 统计阅读时间
-        /*
+
         $(function () {
 
             // 上次滚动条位置
@@ -98,21 +98,16 @@
 
                 // 5秒看一屏，是正常看的
                 if(sleep < 5){
-                    $.ajax('/article/reading', {
-                        data:{
-                            'article_id': $('meta[name="article-id"]').attr('content'),
-                        },
-                        success: function (data) {
-                            console.log(data);
-                        }
-                    });
+                    conn.send(JSON.stringify({
+                        'article_id': $('meta[name="article-id"]').attr('content'),
+                    }));
                 }else {
                     // 否则是他没看了，在挂机
                     console.log('挂机，不统计');
                 }
             }, 1000)
         });
-        */
+
 
     </script>
 @endsection

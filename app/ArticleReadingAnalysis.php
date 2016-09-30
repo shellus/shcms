@@ -32,10 +32,10 @@ class ArticleReadingAnalysis extends Model
         return $this->belongsTo('App\Article');
     }
 
-    public static function reading($user, $id)
+    public static function reading($user_id, $id)
     {
         $attr = [
-            'user_id' => $user -> id,
+            'user_id' => $user_id,
             'article_id' => $id,
         ];
 

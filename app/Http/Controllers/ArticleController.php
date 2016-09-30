@@ -27,15 +27,6 @@ class ArticleController extends Controller
 
     }
 
-    public function reading(Request $request){
-
-        ArticleReadingAnalysis::reading(\Auth::user(), $request['article_id']);
-
-        return $this -> success('统计阅读完成');
-    }
-
-
-
     /**
      * Display a listing of the resource.
      *
