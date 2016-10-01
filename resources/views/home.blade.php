@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('header')
+<style>
+    .reading-time{
+        width: 8em;
+        display: inline-block;
+    }
+</style>
+@endsection
+
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -25,9 +35,9 @@
                     <ul id="articles" class="list-unstyled">
                         @foreach($lest_read_articles as $article)
                             <li>
+                                <span class="label label-info reading-time">reading {{ $article -> reading_at }}s</span>
                                 <a href="{{ $article -> article -> showUrl() }}">
                                     {{ $article -> article -> title }}</a>
-                                || 读了 {{ $article -> reading_at }} 秒
                             </li>
                         @endforeach
                     </ul>
