@@ -36,7 +36,14 @@ class Article extends Model
     protected $fillable = [
     'title','body', 'user_id','referrer_title', 'referrer','version','to_local',
     ];
-
+    public function getDisplayTitleAttribute()
+    {
+        $value = $this -> title;
+        if (mb_strlen($value) >15){
+            $value = mb_substr($value,0,15) . '...';
+        }
+        return $value;
+    }
     public static function search($s, $c = [], $perPage = 20){
 
         if ($c === null){

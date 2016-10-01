@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} - 谈天说性吧 - 看小说就到shuoxingba.com</title>
 
     <!-- Styles -->
     <link href="/bootstrap-3.3.0-dist/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -59,6 +59,17 @@
         }
         .search-box>.input-group-btn>.btn{
             border-radius: 0;
+        }
+        body{
+            background-color: #d8e0eb;
+            /*background-image: url("/images/index.jpg");*/
+            /*background-size: cover;*/
+        }
+        .navbar-default {
+            background-color: rgba(248, 248, 248, 0.6);
+        }
+        .panel {
+            background-color: rgba(255, 255, 255, 0.28);
         }
     </style>
 

@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-xs-3">
                         <span>长度: </span>
-                        <span>{{ strlen($article -> body) }} 字</span>
+                        <span>{{ mb_strlen($article -> body) }} 字</span>
                     </div>
                 </div>
 
@@ -76,7 +76,7 @@
 
 @section('footer')
     <script>
-        var conn = new WebSocket('ws://sex.endaosi.com:8080');
+        var conn = new WebSocket('ws://'+document.domain+':8080');
         conn.onopen = function(e) {
             console.log('websocket 连接成功');
         };
@@ -85,6 +85,7 @@
             console.log(e.data);
         };
         // 统计阅读时间
+
 
         $(function () {
 

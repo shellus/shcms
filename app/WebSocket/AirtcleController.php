@@ -44,7 +44,7 @@ class AirtcleController implements MessageComponentInterface
         $user_id = $from->session->get(\Auth::getName());
 
         if (!isset($user_id)) {
-            echo "the user is not logged via an http session";
+            dump("用户未登录");
         } else {
             $user = \App\User::find($user_id);
         }
@@ -57,10 +57,19 @@ class AirtcleController implements MessageComponentInterface
             dump('json pare fial');
         }
 
-        if(!isset($request['article_id'])){
-            $this -> fail('article_id 未设置', $from);
+
+        dump('用户解析成功');
+        dump($user -> name);
+
+        dump('请求：');
+        dump($request);
+
+        try{
+            \App\ArticleReadingAnalysis::reading($user_id, $request['article_id']);
+        }catch (\Exception $e)
+        {
+            dump($e -> getFile(), $e -> getLine(), $e -> getMessage());
         }
-        \App\ArticleReadingAnalysis::reading($user_id, $request['article_id']);
 
         $this -> success('统计阅读完成', $from);
 
@@ -76,7 +85,15 @@ class AirtcleController implements MessageComponentInterface
             'status' => $status,
             'message' => $message,
         ]);
-        $from ->send($s);
+        try{
+            $result = $from ->send($s);
+        }catch (\Exception $e)
+        {
+            dump($e -> getFile(), $e -> getLine(), $e -> getMessage());
+        }
+
+
+
 
     }
     protected function fail($m, ConnectionInterface $from){return $this->message('fail', $m, $from);}

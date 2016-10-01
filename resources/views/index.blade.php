@@ -1,21 +1,4 @@
 @extends('layouts.app')
-@section('header')
-    <style>
-        #articles{
-            line-height: 2em;
-        }
-        body{
-            background-image: url("/images/index.jpg");
-            background-size: cover;
-        }
-        .navbar-default {
-            background-color: rgba(248, 248, 248, 0.6);
-        }
-        .panel {
-            background-color: rgba(255, 255, 255, 0.28);
-        }
-    </style>
-@endsection
 @section('content')
     <div class="container">
 
@@ -43,7 +26,7 @@
                         <ul id="articles" class="list-unstyled">
                             @foreach($articles as $article)
                                 <li>
-                                    <a href="{{ $article -> showUrl() }}">{{ $article['title'] }}</a>
+                                    <a title="{{ $article -> title }}" href="{{ $article -> showUrl() }}">{{ $article -> display_title }}</a>
                                 </li>
                             @endforeach
                         </ul>

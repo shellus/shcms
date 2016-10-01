@@ -19,7 +19,7 @@
                         {{ csrf_field() }}
                         {!! method_field('put') !!}
                         <div class="form-group">
-                            <input id="title" type="text" class="form-control" name="email" value="{{ $article -> title }}">
+                            <input id="title" type="text" class="form-control" name="title" value="{{ $article -> title }}">
                         </div>
                         <div class="form-group">
                             <div class="row">
