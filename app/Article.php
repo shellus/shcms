@@ -96,6 +96,10 @@ class Article extends Model
 
         return $articles;
     }
+    public function votes()
+    {
+        return $this->hasMany('App\ArticleVote');
+    }
     public function categories()
     {
         return $this->belongsToMany('App\Category')->withTimestamps();

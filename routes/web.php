@@ -22,6 +22,9 @@ Route::group([
 ], function ($router) {
     Route::get('/article/search', 'ArticleController@search');
     Route::get('/article/reading', 'ArticleController@reading');
+
+    Route::post('/article/vote', 'ArticleController@vote');
+
     Route::resource('/article', 'ArticleController');
 
     Route::resource('/category', 'CategoryController');

@@ -32,14 +32,40 @@
                 </div>
 
                 <div class="action-list">
-                    <a data-toggle="modal" data-target="#modal" href="{{ url('/favorite/add') }}">收藏</a>
-                    <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                        <div class="modal-dialog modal-sm"></div>
+
+
+
+                    <div class="col-md-6">
+                        <div class="zm-votebar goog-scrollfloater" data-za-module="VoteBar">
+                            <div>
+
+                                <a href="#" onclick="vote_click(event, 1);">
+                                    <i class="glyphicon glyphicon-thumbs-up text-success"></i> 顶 ({{ $article -> votes() -> where('vote', '>', 0) -> sum('vote') }})
+                                </a>
+
+                            </div>
+                            <div>
+
+                                <a href="#" onclick="vote_click(event, 0);">
+                                    <i class="glyphicon glyphicon-thumbs-down text-warning"></i> 踩 ({{ $article -> votes() -> where('vote', '<', 0) -> sum('vote') }})
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <a data-toggle="modal" data-target="#modal" href="{{ url('/favorite/add') }}">收藏</a>
+                        <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                            <div class="modal-dialog modal-sm"></div>
+                        </div>
                     </div>
 
+
                     @if(\Auth::user() -> id = 1)
-                    <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
+                        <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
                     @endif
+
+
+
                 </div>
                 <hr>
 
@@ -76,6 +102,32 @@
 
 @section('footer')
     <script>
+
+        function vote_click(event,is_add) {
+            event.preventDefault();
+            if(is_add){
+                var url = '{{ url('/article/vote') }}';
+                var data = {!! json_encode(['article_id'=>$article -> id, 'action' => 'up', '_token' => csrf_token()]) !!};
+            }else {
+                var url = '{{ url('/article/vote') }}';
+                var data = {!! json_encode(['article_id'=>$article -> id, 'action' => 'down', '_token' => csrf_token()]) !!};
+            }
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: url,
+                data: JSON.stringify(data),
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (err) {
+                }
+            });
+
+        }
+
+
         var conn = new WebSocket('ws://'+document.domain+':8080');
         conn.onopen = function(e) {
             console.log('websocket 连接成功');

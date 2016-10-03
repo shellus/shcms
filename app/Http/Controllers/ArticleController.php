@@ -27,6 +27,24 @@ class ArticleController extends Controller
 
     }
 
+    public function vote(Requests\UserArticleVoteRequest $request)
+    {
+        $data = [
+            'user_id' => $request -> user() -> id,
+
+        ] + $request -> only('article_id');
+
+        if($request['action'] == 'up'){
+            $result = \App\ArticleVote::voteUp($data);
+        }else{
+            $result = \App\ArticleVote::voteDown($data);
+        }
+
+
+        return $this -> message($result,$result?'操作成功':'操作失败');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
