@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\ArticleReadingAnalysis whereReadingAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\ArticleReadingAnalysis whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\ArticleReadingAnalysis whereUpdatedAt($value)
+ * @property-read \App\Article $article
  */
 class ArticleReadingAnalysis extends Model
 {

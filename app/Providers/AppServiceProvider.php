@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_DEBUG')){
             \DB::enableQueryLog();
         }
+
+
+        \Carbon\Carbon::setLocale('zh');
     }
 
     /**

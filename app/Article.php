@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $version
  * @method static \Illuminate\Database\Query\Builder|\App\Article whereVersion($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Category[] $categories
+ * @property-read mixed $display_title
  */
 class Article extends Model
 {

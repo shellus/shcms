@@ -33,11 +33,13 @@
 
                     <h3>最近阅读：</h3>
                     <ul id="articles" class="list-unstyled">
-                        @foreach($lest_read_articles as $article)
+                        @foreach($lest_read_articles as $lest_read_article)
                             <li>
-                                <span class="label label-info reading-time">reading {{ $article -> reading_at }}s</span>
-                                <a href="{{ $article -> article -> showUrl() }}">
-                                    {{ $article -> article -> title }}</a>
+                                <span class="label label-info reading-time">{{ \Carbon\Carbon::parse($lest_read_article -> created_at) -> diffForHumans() }}</span>
+
+                                <span class="label label-info reading-time">阅读 {{ $lest_read_article -> reading_at }} 秒</span>
+                                <a href="{{ $lest_read_article -> article -> showUrl() }}">
+                                    {{ $lest_read_article -> article -> title }}</a>
                             </li>
                         @endforeach
                     </ul>
