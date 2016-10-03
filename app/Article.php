@@ -107,6 +107,10 @@ class Article extends Model
 
     public static function getByRandom($count){
         $total = Article::count();
+
+        if($count > $total){
+            $count = $total;
+        }
         $randoms = [];
         $ids = [];
 
