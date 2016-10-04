@@ -19,7 +19,11 @@
                 <div class="row" id="article-field-set">
                     <div class="col-xs-3">
                         <span>分类: </span>
-                        <span>武侠古典</span>
+                        <span>
+                            <a href="{{ $article -> category() -> showUrl() }}">
+                            {{ $article -> category() -> title }}
+                            </a>
+                        </span>
                     </div>
                     <div class="col-xs-3">
                         <span>阅读数量: </span>

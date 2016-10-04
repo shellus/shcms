@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * App\Articles
@@ -99,6 +100,18 @@ class Article extends Model
     public function votes()
     {
         return $this->hasMany('App\ArticleVote');
+    }
+    public function category(){
+        try{
+            $model = $this -> categories() -> firstOrFail();
+        }catch (ModelNotFoundException $e){
+            $model = $this -> categories() -> whereSlug('default') -> firstOrCreate([
+                'slug' => 'default',
+                'title' => '缺省分类',
+                'description' => '系统自动创建的'
+            ]);
+        }
+        return $model;
     }
     public function categories()
     {
