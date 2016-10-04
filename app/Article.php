@@ -31,6 +31,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  * @method static \Illuminate\Database\Query\Builder|\App\Article whereVersion($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Category[] $categories
  * @property-read mixed $display_title
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ArticleVote[] $votes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ReadingHistory[] $readingHistories
  */
 class Article extends Model
 {
@@ -134,6 +136,7 @@ class Article extends Model
         if($count > $total){
             $count = $total;
         }
+
         $randoms = [];
         $ids = [];
 
@@ -141,8 +144,9 @@ class Article extends Model
 
 
         do{
-            $randoms[] = rand(0, $total);
+            $randoms[] = rand(0, $total-1);
         }while ($count --> 1);
+
 
         $all_ids = \Cache::rememberForever('all_ids', function() {
             return \DB::select('select `id` from `articles`;');
@@ -152,9 +156,11 @@ class Article extends Model
             $ids[] = $all_ids[$random] -> id;
         }
 
+
+
 //        $articles = Article::limit(10) -> orderByRaw('RAND()') -> get();
 
-        $articles = Article::whereIn('id', $randoms) -> get(['id', 'title']);
+        $articles = Article::whereIn('id', $ids) -> get(['id', 'title']);
 
         return $articles;
     }
