@@ -32,7 +32,7 @@ class IndexController extends Controller
 //        {
 //            $articles[] = $analysi -> article;
 //        }
-        $articles = Article::getByRandom(200);
+        $articles = Article::getByRandom(20);
         return view('index', ['articles' => $articles]);
     }
 }

@@ -26,7 +26,14 @@
                         <ul id="articles" class="list-unstyled">
                             @foreach($articles as $article)
                                 <li>
-                                    <a title="{{ $article -> title }}" href="{{ $article -> showUrl() }}">{{ $article -> display_title }}</a>
+                                    <div>
+                                        <h3>{{ $article -> display_title }}</h3>
+                                    </div>
+                                    <div>
+                                        {!! br2nl(mb_substr($article -> body,0,120)) !!}
+                                    </div>
+                                    <a title="{{ $article -> title }}" href="{{ $article -> showUrl() }}">阅读全文</a>
+                                    <hr>
                                 </li>
                             @endforeach
                         </ul>

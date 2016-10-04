@@ -28,7 +28,7 @@ class HomeController extends Controller
 
         $read_time = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> sum('reading_at');
 
-        $lest_read_articles = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> limit(20) -> orderBy('updated_at','desc') -> paginate(20);
+        $lest_read_articles = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> orderBy('updated_at','desc') -> paginate(20);
 
         return view('home', compact(['read_count', 'read_time', 'lest_read_articles']));
     }

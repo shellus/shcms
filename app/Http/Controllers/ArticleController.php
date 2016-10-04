@@ -90,10 +90,8 @@ class ArticleController extends Controller
      */
     public function show($id, Request $request)
     {
-        ReadingHistory::create([
-            'article_id' => $id,
-            'user_id' => \Auth::user() -> id,
-        ]);
+//        ArticleReadingAnalysis::reading(\Auth::user() -> id, $id);
+
         return view('article.show',['article' => Article::find($id)]);
     }
 

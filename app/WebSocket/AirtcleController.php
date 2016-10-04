@@ -34,6 +34,7 @@ class AirtcleController implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $from, $msg) {
 
+        \DB::reconnect();
         dump($msg);
         // start the session when the user send a message
         // (refreshing it to be sure that we have access to the current state of the session)

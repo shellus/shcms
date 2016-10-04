@@ -27,3 +27,7 @@ function getQueryLog(){
     }
     return $returns;
 }
+
+function br2nl($text){
+    return preg_replace('/<br\\s*?\/??>/i','',$text);
+}

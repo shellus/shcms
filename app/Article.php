@@ -165,7 +165,7 @@ class Article extends Model
 
 //        $articles = Article::limit(10) -> orderByRaw('RAND()') -> get();
 
-        $articles = Article::whereIn('id', $ids) -> get(['id', 'title']);
+        $articles = Article::whereIn('id', $ids) -> get(['id', 'title', 'body']);
 
         return $articles;
     }

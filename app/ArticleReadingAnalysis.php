@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 class ArticleReadingAnalysis extends Model
 {
     protected $fillable = [
-        'user_id','article_id',
+        'user_id','article_id','reading_at',
     ];
 
     public function article()
