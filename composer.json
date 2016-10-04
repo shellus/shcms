@@ -11,7 +11,8 @@
         "guzzlehttp/guzzle": "^6.2",
         "doctrine/dbal": "^2.5",
         "predis/predis": "^1.1",
-        "cboden/ratchet": "^0.3.5"
+        "cboden/ratchet": "^0.3.5",
+        "zizaco/entrust": "^1.7"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -8,16 +8,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - 谈天说性吧 - 看小说就到shuoxingba.com</title>
+    <title>{{ config('app.name', 'Laravel') }} - {{ config('app.sub_name') }}</title>
 
     <!-- Styles -->
     <link href="/bootstrap-3.3.0-dist/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
+        window.laravel = {};
+        window.laravel.push('csrf_token', document.getElementsByName('csrf-token')[0].content);
     </script>
 
     <style>

@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <div class="action-list">
+                <div class="row action-list">
 
 
 
@@ -56,19 +56,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <a data-toggle="modal" data-target="#modal" href="{{ url('/favorite/add') }}">收藏</a>
-                        <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                            <div class="modal-dialog modal-sm"></div>
+                    <div class="col-md-6" >
+                        <div>
+                            <a data-toggle="modal" data-target="#modal" href="{{ url('/favorite/add') }}">收藏</a>
+                            <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                                <div class="modal-dialog modal-sm"></div>
+                            </div>
+                        </div>
+                        <div>
+                            @if(\Auth::user()->can('manage_contents'))
+                                <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
+                                <a href="{{ route('article.edit', $article -> id) }}">删除</a>
+                            @endif
                         </div>
                     </div>
-
-
-                    @if(\Auth::user() -> id = 1)
-                        <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
-                    @endif
-
-
 
                 </div>
                 <hr>
