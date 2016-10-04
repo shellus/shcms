@@ -38,6 +38,8 @@ class Article extends Model
     protected $fillable = [
     'title','body', 'user_id','referrer_title', 'referrer','version','to_local',
     ];
+    private $previous;
+
     public function getDisplayTitleAttribute()
     {
         $value = $this -> title;
@@ -101,6 +103,10 @@ class Article extends Model
     {
         return $this->hasMany('App\ArticleVote');
     }
+    public function readingHistories()
+    {
+        return $this->hasMany('App\ReadingHistory');
+    }
     public function category(){
         try{
             $model = $this -> categories() -> firstOrFail();
@@ -151,6 +157,12 @@ class Article extends Model
         $articles = Article::whereIn('id', $randoms) -> get(['id', 'title']);
 
         return $articles;
+    }
+    public function previous(){
+        if ($this -> previous === null){
+            $this -> previous = $this -> where('id', '<', $this -> id) -> first(['id', 'title']);
+        }
+        return $this -> previous;
     }
     public function next(){
 

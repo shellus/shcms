@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-xs-3">
                         <span>阅读数量: </span>
-                        <span>103</span>
+                        <span>{{ $article -> readingHistories() -> count() }}</span>
                     </div>
                     <div class="col-xs-3">
                         <span>长度: </span>
@@ -86,6 +86,13 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="row">
                     <div class="col-xs-6">
+                        上一篇：
+                        @if($article -> previous())
+                            <a href="{{ $article -> previous() -> showUrl() }}">{{ $article -> previous() -> title }}</a>
+                        @else
+                            没有了
+                        @endif
+
 
                     </div>
                     <div class="col-xs-6 text-right">
