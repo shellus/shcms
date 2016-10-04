@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\ArticleReadingAnalysis;
+use App\ArticleVote;
 use App\ReadingHistory;
 use App\SearchHistory;
 use Illuminate\Http\Request;
@@ -30,18 +31,23 @@ class ArticleController extends Controller
     public function vote(Requests\UserArticleVoteRequest $request)
     {
         $data = [
-            'user_id' => $request -> user() -> id,
+                'user_id' => $request -> user() -> id,
 
-        ] + $request -> only('article_id');
+            ] + $request -> only('article_id');
 
         if($request['action'] == 'up'){
-            $result = \App\ArticleVote::voteUp($data);
+            $result = ArticleVote::voteUp($data);
         }else{
-            $result = \App\ArticleVote::voteDown($data);
+            $result = ArticleVote::voteDown($data);
         }
 
+        $article = Article::find($request -> get('article_id'));
+        $result['article_up_vote'] = $article -> votes() -> where('vote', '>', 0) -> sum('vote');
+        $result['article_down_vote'] = $article -> votes() -> where('vote', '<', 0) -> sum('vote');
 
-        return $this -> message($result,$result?'操作成功':'操作失败');
+
+
+        return $this -> message($result,$result?'操作成功':'操作失败', $result);
     }
 
 

@@ -43,16 +43,17 @@
                         <div class="zm-votebar goog-scrollfloater" data-za-module="VoteBar">
                             <div>
 
-                                <a href="#" onclick="vote_click(event, 1);">
-                                    <i class="glyphicon glyphicon-thumbs-up text-success"></i> 顶 ({{ $article -> votes() -> where('vote', '>', 0) -> sum('vote') }})
-                                </a>
+                                <button title="喜欢的文章，就给它11个赞吧~" id="vote-up-btn" href="#" class="btn btn-default" onclick="vote_click(event, this, 1);">
+                                    <i class="glyphicon glyphicon-thumbs-up text-success"></i>
+                                    赞(<span id="vote-up-count">{{ $article -> votes() -> where('vote', '>', 0) -> sum('vote') }}</span>)
+                                </button>
 
                             </div>
                             <div>
-
-                                <a href="#" onclick="vote_click(event, 0);">
-                                    <i class="glyphicon glyphicon-thumbs-down text-warning"></i> 踩 ({{ $article -> votes() -> where('vote', '<', 0) -> sum('vote') }})
-                                </a>
+                                <button id="vote-down-btn" href="#" class="btn btn-default" onclick="vote_click(event, this, 0);">
+                                    <i class="glyphicon glyphicon-thumbs-down text-warning"></i>
+                                    踩(<span id="vote-down-count">{{ $article -> votes() -> where('vote', '<', 0) -> sum('vote') }}</span>)
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -70,7 +71,6 @@
                             @endif
                         </div>
                     </div>
-
                 </div>
                 <hr>
 
@@ -99,9 +99,9 @@
                     <div class="col-xs-6 text-right">
                         下一篇：
                         @if($article -> next())
-                        <a href="{{ $article -> next() -> showUrl() }}">{{ $article -> next() -> title }}</a>
+                            <a href="{{ $article -> next() -> showUrl() }}">{{ $article -> next() -> title }}</a>
                         @else
-                        没有了
+                            没有了
                         @endif
                     </div>
                 </div>
@@ -115,7 +115,26 @@
 @section('footer')
     <script>
 
-        function vote_click(event,is_add) {
+        var currentUserVote = {{ $article -> currentUserVote() }};
+
+        renderVote(currentUserVote);
+
+        function renderVote() {
+
+            if (window.currentUserVote > 0){
+                $('#vote-down-btn').removeClass('active');
+                $('#vote-up-btn').addClass('active');
+            }else if (window.currentUserVote === 0){
+                $('#vote-up-btn').removeClass('active');
+                $('#vote-down-btn').removeClass('active');
+            }else if (window.currentUserVote < 0){
+                $('#vote-down-btn').addClass('active');
+                $('#vote-up-btn').removeClass('active');
+            }
+        }
+
+        function vote_click(event,self,is_add) {
+            $(self).attr("disabled", true);
             event.preventDefault();
             if(is_add){
                 var url = '{{ url('/article/vote') }}';
@@ -131,9 +150,16 @@
                 url: url,
                 data: JSON.stringify(data),
                 success: function (data) {
+                    window.currentUserVote = data.data.vote;
+                    renderVote();
+                    $('#vote-up-count').html(data.data.article_up_vote);
+                    $('#vote-down-count').html(data.data.article_down_vote);
+                    $(self).attr("disabled", false);
                     console.log(data)
                 },
                 error: function (err) {
+                    renderVote(data.data.vote);
+                    $(self).attr("disabled", false);
                 }
             });
 

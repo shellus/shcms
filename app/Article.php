@@ -38,7 +38,7 @@ class Article extends Model
 {
     protected $next = null;
     protected $fillable = [
-    'title','body', 'user_id','referrer_title', 'referrer','version','to_local',
+        'title','body', 'user_id','referrer_title', 'referrer','version','to_local',
     ];
     private $previous;
 
@@ -101,6 +101,11 @@ class Article extends Model
 
         return $articles;
     }
+
+    public function currentUserVote(){
+        return $this -> votes() -> whereUserId(\Auth::user()->id) -> sum('vote');
+    }
+
     public function votes()
     {
         return $this->hasMany('App\ArticleVote');

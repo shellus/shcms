@@ -30,11 +30,11 @@ class ArticleVote extends Model
     //
     public static function voteUp($data){
         $model = self::getOrCreate($data);
-        if ($model -> vote >= 1){
+        if ($model -> vote >= 11){
             return false;
         }else{
             $model -> vote = $model -> vote + 1;
-            return $model -> save();
+            return $model -> save()?$model: false;
         }
     }
 
@@ -45,7 +45,7 @@ class ArticleVote extends Model
             return false;
         }else{
             $model -> vote = $model -> vote - 1;
-            return $model -> save();
+            return $model -> save()?$model: false;
         }
     }
 
