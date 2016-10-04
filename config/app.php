@@ -12,7 +12,11 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => '说性吧',
+    'name' => env('APP_NAME', 'shcms'),
+
+    'sub_name' => env('APP_SUB_NAME', '欢迎你来到shcms'),
+
+    'version' => env('APP_VERSION', 'v3.0.0'),
 
     /*
     |--------------------------------------------------------------------------
