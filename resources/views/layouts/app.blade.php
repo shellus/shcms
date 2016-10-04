@@ -16,7 +16,7 @@
     <!-- Scripts -->
     <script>
         window.laravel = {};
-        window.laravel.push('csrf_token', document.getElementsByName('csrf-token')[0].content);
+        window.laravel.csrf_token = document.getElementsByName('csrf-token')[0].content;
     </script>
 
     <style>
