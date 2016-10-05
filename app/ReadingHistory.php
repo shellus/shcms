@@ -38,4 +38,8 @@ class ReadingHistory extends Model
 
         return $model -> save();
     }
+    public function article()
+    {
+        return $this->belongsTo('App\Article');
+    }
 }
