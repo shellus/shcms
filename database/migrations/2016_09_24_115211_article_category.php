@@ -18,6 +18,13 @@ class ArticleCategory extends Migration
             $table->integer('article_id')->default(0)->unsigned();
             $table->integer('category_id')->default(0)->unsigned();
             $table->timestamps();
+
+            $table->foreign('article_id')->references('id')->on('articles')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->index(['article_id', 'category_id']);
         });
     }
 

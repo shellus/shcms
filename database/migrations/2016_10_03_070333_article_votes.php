@@ -21,6 +21,15 @@ class ArticleVotes extends Migration
             // 正负值
             $table->tinyInteger('vote')->default(0);
             $table->timestamps();
+
+
+            $table->foreign('article_id')->references('id')->on('articles')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->index(['article_id', 'user_id']);
+            $table->index('vote');
         });
     }
 

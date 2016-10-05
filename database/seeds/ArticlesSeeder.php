@@ -15,6 +15,7 @@ class ArticlesSeeder extends Seeder
             [
                 'title' => '欢迎使用shcms, 希望你会喜欢',
                 'body' => "当前版本是:".config('app.version')."，并且不兼容之前的版本，无论是程序架构，还是设计思路，都已经焕然一新，希望你会喜欢shcms的新生。",
+                'user_id' => \App\User::whereEmail('shellus@endaosi.com') -> firstOrFail() -> id,
             ],
         ];
 

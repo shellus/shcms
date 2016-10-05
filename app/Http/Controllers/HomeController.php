@@ -24,11 +24,11 @@ class HomeController extends Controller
     public function index()
     {
 
-        $read_count = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> count();
+        $read_count = \App\ReadingHistory::whereUserId(\Auth::user()->id) -> count();
 
-        $read_time = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> sum('reading_at');
+        $read_time = \App\ReadingHistory::whereUserId(\Auth::user()->id) -> sum('reading_at');
 
-        $lest_read_articles = \App\ArticleReadingAnalysis::whereUserId(\Auth::user()->id) -> orderBy('updated_at','desc') -> paginate(20);
+        $lest_read_articles = \App\ReadingHistory::whereUserId(\Auth::user()->id) -> orderBy('updated_at','desc') -> paginate(20);
 
         return view('home', compact(['read_count', 'read_time', 'lest_read_articles']));
     }

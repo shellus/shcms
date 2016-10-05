@@ -20,6 +20,7 @@ class Categories extends Migration
             $table->string('description');  // 指导资源分类者的标签介绍
             $table->integer('parent_id')->default(0)->unsigned();
             $table->timestamps();
+
         });
     }
 

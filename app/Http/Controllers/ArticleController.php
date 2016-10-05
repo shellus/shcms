@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use App\ArticleReadingAnalysis;
 use App\ArticleVote;
-use App\ReadingHistory;
 use App\SearchHistory;
 use Illuminate\Http\Request;
 
@@ -90,8 +88,6 @@ class ArticleController extends Controller
      */
     public function show($id, Request $request)
     {
-//        ArticleReadingAnalysis::reading(\Auth::user() -> id, $id);
-
         return view('article.show',['article' => Article::find($id)]);
     }
 

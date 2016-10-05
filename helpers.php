@@ -28,6 +28,59 @@ function getQueryLog(){
     return $returns;
 }
 
-function br2nl($text){
-    return preg_replace('/<br\\s*?\/??>/i','',$text);
-}
+function isCrawler() {
+    $agent = strtolower(\Request::header('HTTP_USER_AGENT'));
+    if (!empty($agent)) {
+        $spiderSite= array(
+            "TencentTraveler",
+            "Baiduspider+",
+            "BaiduGame",
+            "Googlebot",
+            "msnbot",
+            "Sosospider+",
+            "Sogou web spider",
+            "ia_archiver",
+            "Yahoo! Slurp",
+            "YoudaoBot",
+            "Yahoo Slurp",
+            "MSNBot",
+            "Java (Often spam bot)",
+            "BaiDuSpider",
+            "Voila",
+            "Yandex bot",
+            "BSpider",
+            "twiceler",
+            "Sogou Spider",
+            "Speedy Spider",
+            "Google AdSense",
+            "Heritrix",
+            "Python-urllib",
+            "Alexa (IA Archiver)",
+            "Ask",
+            "Exabot",
+            "Custo",
+            "OutfoxBot/YodaoBot",
+            "yacy",
+            "SurveyBot",
+            "legs",
+            "lwp-trivial",
+            "Nutch",
+            "StackRambler",
+            "The web archive (IA Archiver)",
+            "Perl tool",
+            "MJ12bot",
+            "Netcraft",
+            "MSIECrawler",
+            "WGet tools",
+            "larbin",
+            "Fish search",
+        );
+        foreach($spiderSite as $val) {
+            $str = strtolower($val);
+            if (strpos($agent, $str) !== false) {
+                return true;
+            }
+        }
+    }
+    return false;
+};

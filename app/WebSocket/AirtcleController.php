@@ -66,7 +66,7 @@ class AirtcleController implements MessageComponentInterface
         dump($request);
 
         try{
-            \App\ArticleReadingAnalysis::reading($user_id, $request['article_id']);
+            \App\ReadingHistory::reading($user_id, $request['article_id']);
         }catch (\Exception $e)
         {
             dump($e -> getFile(), $e -> getLine(), $e -> getMessage());

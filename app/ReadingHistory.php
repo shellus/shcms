@@ -22,7 +22,20 @@ use Illuminate\Database\Eloquent\Model;
 class ReadingHistory extends Model
 {
     protected $fillable = [
-        'article_id','user_id'
+        'user_id','article_id','reading_at',
     ];
+    public static function reading($user_id, $id)
+    {
+        $attr = [
+            'user_id' => $user_id,
+            'article_id' => $id,
+        ];
 
+        $model = static::firstOrCreate($attr,$attr);
+
+        $model -> reading_at += 1;
+
+
+        return $model -> save();
+    }
 }
