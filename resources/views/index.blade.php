@@ -30,13 +30,16 @@
                                         <h3>{{ $article -> display_title }}</h3>
                                     </div>
                                     <div>
-                                        {!! br2nl(mb_substr($article -> body,0,120)) !!}
+                                        {!! trim(strip_tags(mb_substr($article -> body,0,120))) !!}
                                     </div>
                                     <a title="{{ $article -> title }}" href="{{ $article -> showUrl() }}">阅读全文</a>
                                     <hr>
                                 </li>
                             @endforeach
                         </ul>
+                    </div>
+                    <div>
+                        <a style="width: 100%; padding: 20px 10px" class="btn btn-primary btn-lg" href="{{ url('/') }}">再来一波</a>
                     </div>
                 </div>
             </div>
