@@ -171,6 +171,7 @@ return [
          * Package Service Providers...
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
         //
 
         /*
@@ -197,6 +198,9 @@ return [
 
     'aliases' => [
 
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+
+        
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,

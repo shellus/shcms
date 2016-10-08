@@ -10,6 +10,8 @@ class TestController extends Controller
 {
     public function index()
     {
+        dump(\Request::server());
+        dd(\Request::ips());
         return view('test');
     }
 }
