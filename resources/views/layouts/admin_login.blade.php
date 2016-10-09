@@ -11,7 +11,7 @@
     <title>@yield('page_title') - {{ config('app.name', 'Laravel') }} - {{ config('app.sub_name') }}</title>
 
     <!-- Styles -->
-    <link href="/bootstrap-3.3.0-dist/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -25,9 +25,9 @@
 
     @yield('content')
     <!-- Scripts -->
-    <script src="/jquery-2.2.4/dist/jquery.min.js"></script>
-    <script src="/bootstrap-3.3.0-dist/dist/js/bootstrap.min.js"></script>
-    <script src="/jquery-validation-1.15.0/dist/jquery.validate.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
 
 @yield('footer')
 </body>
