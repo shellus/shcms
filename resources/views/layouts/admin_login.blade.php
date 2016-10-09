@@ -27,6 +27,7 @@
     <!-- Scripts -->
     <script src="/jquery-2.2.4/dist/jquery.min.js"></script>
     <script src="/bootstrap-3.3.0-dist/dist/js/bootstrap.min.js"></script>
+    <script src="/jquery-validation-1.15.0/dist/jquery.validate.min.js"></script>
 
 @yield('footer')
 </body>

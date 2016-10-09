@@ -16,7 +16,7 @@
         padding: 4rem 4rem 2rem;
         overflow: hidden;
         background: rgba(0,0,0,.2);
-        border-radius: 0.4em;
+        /*border-radius: 0.4em;*/
         border: 1px solid #191919;
         box-shadow: inset 0 0 2px 1px rgba(255,255,255,0.08), 0 16px 10px -8px rgba(0, 0, 0, 0.6);
         max-width: 480px;
@@ -31,13 +31,14 @@
     .login-form::before {
         border-style: none;
         content: "";
-        width: 8px;
-        height: 5px;
+        width: 41px;
+        height: 35px;
         position: absolute;
-        left: 34%;
-        top: -7px;
+        left: 37%;
+        top: -88px;
+        background-color: red;
         border-radius: 50%;
-        box-shadow: 0 0 6px 4px #fff;
+        box-shadow: 0 0 124px 179px #d8d8d8;
     }
     .login-form::after {
         content: "";
@@ -131,9 +132,11 @@
             padding: 3rem;
         }
     }
-    /*ace hack*/
-    .main-container.container:before {
-        box-shadow: none;
+    .form-control{
+        border-radius: inherit;
+    }
+    .btn{
+        border-radius: inherit;
     }
 </style>
 @endsection
@@ -141,7 +144,7 @@
     <div class="container">
 
         <div class="page-header">
-            <h1 title="这玩意持续占50%CPU，好玩吧？">{{ config('app.name') }} <small class="hidden-xs">管理后台权限检查</small></h1>
+            <h1 class="text-animate" title="这玩意持续占50%CPU，好玩吧？"><b>{{ config('app.name') }}</b> <small class="hidden-xs">管理后台权限检查</small></h1>
             您在此页面的操作将会被记录并可能触发警报，请谨慎！
         </div>
         <div class="row">
@@ -151,34 +154,37 @@
                         <div id='loadingbar' class="waiting"><dt/><dd/></div>
                         <form class="form-horizontal" role="form" action="" method="post" id="login-form">
                             <input name="login_type" value="email" type="hidden">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">邮箱</label>
+
+                            <div class="form-group has-feedback">
+                                <div class="col-sm-3">
+                                    <label for="email-input" class="control-label">邮箱</label>
+                                </div>
                                 <div class="col-sm-9">
-                                <span class="block input-icon input-icon-right">
-                                    <input name="email" type="email" class="form-control" placeholder="Email" autofocus>
-                                    <i class="ace-icon fa fa-envelope green"></i>
-                                </span>
+                                    <input id="email-input" name="email" type="email" class="form-control" placeholder="Email" autofocus>
+                                    <i class="glyphicon glyphicon-envelope form-control-feedback"></i>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">密码</label>
+                            <div class="form-group has-feedback">
+                                <div class="col-sm-3">
+                                    <label for="password-input" class="control-label">密码</label>
+                                </div>
                                 <div class="col-sm-9">
-                                <span class="block input-icon input-icon-right">
-                                    <input name="password" type="password" class="form-control" placeholder="Password">
-                                    <i class="ace-icon fa fa-lock blue"></i>
-                                </span>
+                                    <input id="password-input" name="password" type="password" class="form-control" placeholder="Password">
+                                    <i class="glyphicon glyphicon-eye-open form-control-feedback"></i>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right">验证码</label>
+                            <div class="form-group has-feedback">
+                                <div class="col-sm-3">
+                                    <label for="verify_code-input" class="control-label">验证码</label>
+                                </div>
                                 <div class="col-sm-5">
                                 <span class="block input-icon input-icon-right">
-                                    <input name="verify_code" type="text" class="form-control" placeholder="verify code">
-                                    <i class="ace-icon glyphicon glyphicon-font warning"></i>
+                                    <input id="verify_code-input" name="verify_code" type="text" class="form-control" placeholder="verify code">
+                                    <i class="glyphicon glyphicon-font warning form-control-feedback"></i>
                                 </span>
                                 </div>
                                 <div class="col-sm-4">
-                                    <img style="cursor: pointer;" src="/aaaa" onclick="this.src=this.src" width="100%" height="34" />
+                                    <img style="cursor: pointer;" src="{{captcha_src()}}" onclick="this.src=this.src" width="100%" height="34" />
                                 </div>
                             </div>
                             <div class="space"></div>
@@ -188,9 +194,9 @@
                                     <span class="lbl">  记住我</span>
                                 </label>
                                 <div class="col-sm-8 text-right">
-                                    <button type="submit" class="width-45 pull-right btn btn-primary">
-                                        <i class="ace-icon fa fa-key"></i>
-                                        <span class="bigger-110">登入</span>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="glyphicon glyphicon-off"></i>
+                                        <b>登入</b>
                                     </button>
                                 </div>
                             </div>
@@ -203,4 +209,66 @@
 
     </div>
 
+@endsection
+
+@section('footer')
+    <script>
+        $('#login-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 4,
+                    email:true
+                },
+                password: {
+                    required: true,
+                    minlength: 4
+                },
+                verify_code: {
+                    required: true,
+                    rangelength: [4, 4]
+                },
+            },
+            messages: {
+                email: {
+                    required: '请输入账号',
+                    email:'账号需要是email格式',
+                },
+                password: {
+                    required: '请输入密码',
+                    minlength: '密码最少4位长度',
+                },
+                verify_code: {
+                    required: '请输入验证码',
+                    rangelength: '验证码长度为4',
+                },
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                $(e).remove();
+            },
+            errorPlacement: function (error, element) {
+                if(element.is(':checkbox') || element.is(':radio')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if(element.is('.select2')) {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+                else if(element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                }
+                else {
+                    error.insertAfter(element);
+                }
+            },
+        });
+    </script>
 @endsection

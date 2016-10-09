@@ -170,8 +170,15 @@ return [
         /*
          * Package Service Providers...
          */
+
+        // 代码提示
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+        // 权限认证
         Zizaco\Entrust\EntrustServiceProvider::class,
+
+        // 验证码
+        Mews\Captcha\CaptchaServiceProvider::class,
         //
 
         /*
@@ -200,6 +207,9 @@ return [
 
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
+
+        
         
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
