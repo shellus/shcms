@@ -179,6 +179,9 @@ return [
 
         // 验证码
         Mews\Captcha\CaptchaServiceProvider::class,
+
+        // debugBar
+        Barryvdh\Debugbar\ServiceProvider::class,
         //
 
         /*
@@ -209,7 +212,7 @@ return [
 
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
-        
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

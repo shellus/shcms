@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'IndexController@index');
+Route::get('/', ['uses' => 'IndexController@index', 'as' => 'index']);
 Route::get('/test', 'TestController@index');
 
 
