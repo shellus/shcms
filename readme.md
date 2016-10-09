@@ -13,39 +13,37 @@ http://shcms.endaosi.com/
 - 权限管理
 - 云平台友好
   
-  
+## 运行环境
+
+- PHP5.5以上，推荐使用PHP7
+- nginx或其他Web Server，root目录绑定到public文件夹并设置伪静态到index.php
+- MySQL或兼容MySQL的其他数据库，推荐MySQL5.6
+- redis 缓存服务器
+- spinx 搜索引擎
+
 ## 使用方法
 
-```bash
+`git clone git@github.com:shellus/shcms.git`
 
-git clone git@github.com:shellus/shcms.git
+`cd shcms`
 
-cd shcms
+编辑`.env`文件，修改数据库连接信息
+edit `.env` file, change database connect info
 
-composer install
+`chmod -R 777 storage public/uploads`
 
-cp .env.example .env
+`composer install`
 
-php artisan key:generate
+`cp .env.example .env`
 
-#edit .env change database connect info
+`php artisan key:generate`
 
-php artisan migrate
+`php artisan migrate`
 
-php artisan db:seed
+`php artisan db:seed`
 
-bower install
+`bower install`
 
-```
-
-一些依赖
-
-> 要使用redis，执行 `composer require predis/predis` 
-> 并修改 `.env` 文件中的`CACHE_DRIVER` `SESSION_DRIVER` `QUEUE_DRIVER` 值为`redis`
-
-> 如果看到权限不足（permission denied）的提示，请执行 `chmod -R 777 storage/`
-
-> 如果你使用本地文件系统储存上传文件，请执行 `chmod -R 777 public/uploads`
 
 ## 问题
 
