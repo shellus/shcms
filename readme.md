@@ -10,6 +10,7 @@ http://shcms.endaosi.com/
 
 ## 特色
 
+- 全文搜索
 - 权限管理
 - 云平台友好
   
