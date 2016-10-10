@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-xs-3">
                             <span>阅读时长: </span>
-                            <span>{{ $read_time }} 秒</span>
+                            <span>{{ \Carbon\Carbon::createFromTimestamp(0) -> diffForHumans(\Carbon\Carbon::createFromTimestamp($read_time), true) }}</span>
                         </div>
                     </div>
 
@@ -37,7 +37,7 @@
                             <li>
                                 <span class="label label-info reading-time">{{ \Carbon\Carbon::parse($lest_read_article -> created_at) -> diffForHumans() }}</span>
 
-                                <span class="label label-info reading-time">阅读 {{ $lest_read_article -> reading_at }} 秒</span>
+                                <span class="label label-info reading-time">阅读 {{ \Carbon\Carbon::createFromTimestamp(0) -> diffForHumans(\Carbon\Carbon::createFromTimestamp($lest_read_article -> reading_at), true) }}</span>
                                 <a href="{{ $lest_read_article -> article -> showUrl() }}">
                                     {{ $lest_read_article -> article -> title }}</a>
                             </li>
