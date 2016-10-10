@@ -52,7 +52,7 @@ class AirtcleController implements MessageComponentInterface
 
         try
         {
-            $request = \GuzzleHttp\json_decode($msg, true);
+            $request = json_decode($msg, true);
         }catch (\Exception $e)
         {
             dump('json pare fial');
@@ -82,7 +82,7 @@ class AirtcleController implements MessageComponentInterface
     }
     protected function message($status, $message, ConnectionInterface $from)
     {
-        $s = \GuzzleHttp\json_encode([
+        $s = json_encode([
             'status' => $status,
             'message' => $message,
         ]);
