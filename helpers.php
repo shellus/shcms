@@ -5,27 +5,44 @@
  * Date: 2016-09-25
  * Time: 4:20
  */
-function getQueryLog(){
-    static $querys;
-    if (!$querys){
-        $querys = \DB::getQueryLog();
-    }
-    $returns = [
-        'total_time' => 0,
-        'sqls' => [],
-    ];
-    /** @var \Illuminate\Database\Events\QueryExecuted $query */
-    foreach ($querys as $query){
-        $return['sql'] = $query['query'];
-        foreach ($query['bindings'] as $binding){
-            $return['sql'] = preg_replace ('/\?/i', '\'' . $binding . '\'', $return['sql'], 1);
+function rc4($key, $data)
+{
+    // Store the vectors "S" has calculated
+    static $SC;
+    // Function to swaps values of the vector "S"
+    $swap = create_function('&$v1, &$v2', '
+        $v1 = $v1 ^ $v2;
+        $v2 = $v1 ^ $v2;
+        $v1 = $v1 ^ $v2;
+    ');
+    $ikey = crc32($key);
+    if (!isset($SC[$ikey])) {
+        // Make the vector "S", basead in the key
+        $S    = range(0, 255);
+        $j    = 0;
+        $n    = strlen($key);
+        for ($i = 0; $i < 255; $i++) {
+            $char  = ord($key{$i % $n});
+            $j     = ($j + $S[$i] + $char) % 256;
+            $swap($S[$i], $S[$j]);
         }
-        $return['bindings'] = $query['bindings'];
-        $return['time'] = $query['time'];
-        $returns['sqls'][] = $return;
-        $returns['total_time'] += $query['time'];
+        $SC[$ikey] = $S;
+    } else {
+        $S = $SC[$ikey];
     }
-    return $returns;
+    // Crypt/decrypt the data
+    $n    = strlen($data);
+    $data = str_split($data, 1);
+    $i    = $j = 0;
+    for ($m = 0; $m < $n; $m++) {
+        $i        = ($i + 1) % 256;
+        $j        = ($j + $S[$i]) % 256;
+        $swap($S[$i], $S[$j]);
+        $char     = ord($data[$m]);
+        $char     = $S[($S[$i] + $S[$j]) % 256] ^ $char;
+        $data[$m] = chr($char);
+    }
+    return implode('', $data);
 }
 
 function isCrawler() {
