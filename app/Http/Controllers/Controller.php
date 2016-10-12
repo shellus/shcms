@@ -12,20 +12,24 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function message($is_success, $message, $data = null)
+    protected function message($status, $message, $data = null)
     {
+        $statusCodes = [
+            'fail' => 500,
+            'success' => 200,
+
+        ];
         if (\Request::isJson()){
             return JsonResponse::create([
-                'status' => $is_success?'success': 'fail',
+                'status' => $status,
                 'message' => $message,
                 'data' => $data,
-            ],$is_success ? 200 : 500);
+            ],$statusCodes[$status]);
         }else{
-            return view('success', ['message' => $message]);
-
+            return view($status, ['message' => $message]);
         }
 
     }
-
-    protected function success($m, $data = null){return $this->message(true, $m, $data);}
+    protected function fail($m, $data = null){return $this->message('fail', $m, $data);}
+    protected function success($m, $data = null){return $this->message('success', $m, $data);}
 }
