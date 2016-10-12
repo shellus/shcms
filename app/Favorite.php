@@ -23,5 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Favorite extends Model
 {
-    //
+    protected $fillable = [
+        'user_id', 'article_id', 'favorite_directory_id',
+    ];
 }

@@ -21,5 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FavoriteDirectoryStar extends Model
 {
-    //
+    protected $fillable = [
+        'user_id', 'favorite_id',
+    ];
 }

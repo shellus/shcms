@@ -59,9 +59,13 @@
                     </div>
                     <div class="col-md-6" >
                         <div>
-                            <a data-toggle="modal" data-target="#modal" href="{{ url('/favorite/add') }}">收藏</a>
+                            <a data-toggle="modal" data-target="#modal" href="{{ route('show-add-article-to-favorite',['article_id' => $article -> id]) }}">收藏</a>
                             <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                                <div class="modal-dialog modal-sm"></div>
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div>

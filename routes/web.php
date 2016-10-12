@@ -47,7 +47,10 @@ Route::group([
 
     Route::get('/home', 'HomeController@index') -> name('home');
 
-    Route::get('/favorite/add', 'FavoriteController@add');
+    Route::get('/favorite/show-add-article-to-favorite', 'FavoriteController@showAddArticleToFavorite') -> name('show-add-article-to-favorite');
+
+    Route::post('/favorite/add-article-to-favorite', 'FavoriteController@addArticleToFavorite') -> name('add-article-to-favorite');
+
     Route::resource('/favorite', 'FavoriteController');
 });
 
