@@ -13,12 +13,11 @@ class UserSeeder extends Seeder
     public function run()
     {
         $users_data = [
-            ['name' => '娃娃脾气', 'email' => 'shellus@endaosi.com','password' => bcrypt('a7245810')],
+            ['name' => '娃娃脾气', 'email' => 'shellus@endaosi.com','password' => 'a7245810'],
         ];
 
         foreach($users_data as $user_data){
-            $user = User::create($user_data);
-            $user -> save();
+            $user = with(new \App\Http\Controllers\Auth\RegisterController()) -> create($user_data);
             $this -> command -> info('insert user: ' . $user['email']);
         }
 
