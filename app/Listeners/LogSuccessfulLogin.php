@@ -30,9 +30,9 @@ class LogSuccessfulLogin
         LoginHistory::create([
             'user_id' => $event -> user -> getAuthIdentifier(),
             'remember' => $event -> remember?1:0,
-            'user_agent' => \Request::header('User-Agent'),
-            'referer' => \Request::header('Referer'),
-            'connection' => \Request::header('Connection'),
+            'user_agent' => \Request::header('User-Agent', ''),
+            'referer' => \Request::header('Referer', ''),
+            'connection' => \Request::header('Connection', ''),
             'login_ip' => \Request::ip(),
         ]);
     }
