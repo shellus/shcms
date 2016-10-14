@@ -11,11 +11,18 @@
                         <form method="GET" action="{{ url('/article/search') }}">
                             <div class="input-group input-group-lg search-box">
                                 {{--<input type="hidden" name="c" value="*">--}}
-                                <input type="text" class="form-control" name="s" value="{{ \Request::get('s') }}" placeholder="大家都在搜 丝袜">
+                                <input autocomplete="off" list="word_list" type="search" class="form-control" name="s" value="{{ \Request::get('s') }}" placeholder="双击查看热搜词哦">
                                   <span class="input-group-btn">
                                     <button class="btn btn-default" type="submit">搜索</button>
                                   </span>
                             </div>
+
+                            <datalist id="word_list">
+                                @foreach($search_histories as $search_history)
+                                <option label="{{ $search_history -> word }} 热搜 {{ $search_history -> rows }} 次" value="{{ $search_history -> word }}" />
+                                @endforeach
+                            </datalist>
+
                         </form>
 
                         <script type="application/html" id="articles-tmpl">
