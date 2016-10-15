@@ -28,13 +28,13 @@ http://shcms.endaosi.com/
 
 `cd shcms`
 
-编辑`.env`文件，修改数据库连接信息
-
 `chmod -R 777 storage public/uploads`
 
 `composer install`
 
 `cp .env.example .env`
+
+编辑`.env`文件，修改数据库连接信息
 
 `php artisan key:generate`
 
