@@ -22,4 +22,11 @@ Route::get('/api/user', function (Request $request) {
 
 Route::resource('/article','Api\ArticleController');
 
+
 Route::get('/system-info','Api\IndexController@systemInfo');
+
+Route::group([
+    'prefix' => 'auth',
+], function ($router) {
+    Route::post('/login','Api\AuthController@postLogin');
+});
