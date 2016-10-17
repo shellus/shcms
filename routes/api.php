@@ -21,3 +21,5 @@ Route::get('/api/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::resource('/article','Api\ArticleController');
+
+Route::get('/system-info','Api\IndexController@systemInfo');
