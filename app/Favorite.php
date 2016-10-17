@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Favorite whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Favorite whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $user_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Favorite whereUserId($value)
  */
 class Favorite extends Model
 {

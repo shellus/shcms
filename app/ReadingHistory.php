@@ -18,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\ReadingHistory whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\ReadingHistory whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $reading_at
+ * @property-read \App\Article $article
+ * @method static \Illuminate\Database\Query\Builder|\App\ReadingHistory whereReadingAt($value)
  */
 class ReadingHistory extends Model
 {

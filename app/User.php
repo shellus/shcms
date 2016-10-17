@@ -26,6 +26,11 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $api_token
+ * @property string $register_ip
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Role[] $roles
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereApiToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRegisterIp($value)
  */
 class User extends Authenticatable
 {
