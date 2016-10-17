@@ -32,6 +32,6 @@ class AuthController extends Controller
      */
     protected function getCredentials(Request $request)
     {
-        return $request->only('email', 'password');
+        return $request->only('name', 'password');
     }
 }
