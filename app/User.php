@@ -45,14 +45,18 @@ class User extends Authenticatable
         'name', 'email', 'password', 'register_ip',
     ];
 
+    protected $visible = [
+        'id', 'name', 'email','api_token',
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+//    protected $hidden = [
+//        'password', 'remember_token',
+//    ];
 
     public function roles()
     {
