@@ -13,5 +13,5 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('/test', 'TestController@index');
-Route::get('/login', 'AuthController@getLogin');
-//Route::post('/login', 'AuthController@postLogin');
+Route::get('/login', 'AuthController@showLoginForm');
+Route::post('/login', 'AuthController@login');
