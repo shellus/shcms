@@ -14,7 +14,7 @@ class AlterUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table -> string('api_token') -> after('password') ->nullable();
+            $table -> string('api_token') -> after('password');
             $table->unique('api_token');
         });
     }
@@ -27,8 +27,8 @@ class AlterUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('api_token');
             $table->dropUnique('users_api_token_unique');
+            $table->dropColumn('api_token');
         });
     }
 }
