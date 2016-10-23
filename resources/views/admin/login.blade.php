@@ -144,7 +144,7 @@
     <div class="container">
 
         <div class="page-header">
-            <h1 class="text-animate" title="这玩意持续占50%CPU，好玩吧？"><b>{{ config('app.name') }}</b> <small class="hidden-xs">管理后台权限检查</small></h1>
+            <h1 class="" title="这玩意持续占50%CPU，好玩吧？"><b>{{ config('app.name') }}</b> <small class="hidden-xs">管理后台权限检查</small></h1>
             您在此页面的操作将会被记录并可能触发警报，请谨慎！
         </div>
         <div class="row">
@@ -153,6 +153,7 @@
                     <div class="login-form">
                         <div id='loadingbar' class="waiting"><dt/><dd/></div>
                         <form class="form-horizontal" role="form" action="" method="post" id="login-form">
+                            {{ csrf_field() }}
                             <input name="login_type" value="email" type="hidden">
 
                             <div class="form-group has-feedback">
@@ -184,7 +185,7 @@
                                 </span>
                                 </div>
                                 <div class="col-sm-4">
-                                    <img style="cursor: pointer;" src="{{captcha_src()}}" onclick="this.src=this.src" width="100%" height="34" />
+                                    <img style="cursor: pointer;" src="{{captcha_src()}}" onclick="this.src='{{ url('captcha/default?') }}' + Math.floor(Math.random()*(100000000-10000000+1)+10000000);" width="100%" height="34" />
                                 </div>
                             </div>
                             <div class="space"></div>
@@ -213,6 +214,9 @@
 
 @section('footer')
     <script>
+        if ((/webkit/.test(navigator.userAgent.toLowerCase()))) {
+            $("h1").addClass("text-animate")
+        }
         $('#login-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',
