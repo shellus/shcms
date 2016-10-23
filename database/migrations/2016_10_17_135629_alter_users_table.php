@@ -16,9 +16,12 @@ class AlterUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table -> string('api_token') -> after('password');
 
-            \App\User::chunk(100,function(\App\User $user){
-                $user -> api_token = \Illuminate\Support\Str::random(60);
-                $user -> save();
+            \App\User::chunk(100, function($users){
+                /** @var \App\User $user */
+                foreach ($users as $user){
+                    $user -> api_token = \Illuminate\Support\Str::random(60);
+                    $user -> save();
+                }
             });
             $table->unique('api_token');
         });
