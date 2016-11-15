@@ -19,8 +19,9 @@ class AppServiceProvider extends ServiceProvider
         $log_file = storage_path('logs'.DIRECTORY_SEPARATOR.'sql.log');
         $sqlLogger = new Logger('sql', [new StreamHandler($log_file)]);
 
+        $user = \Auth::user();
         if (env('APP_DEBUG')){
-            \DB::listen(function(QueryExecuted $event)use($sqlLogger) {
+            \DB::listen(function(QueryExecuted $event)use($sqlLogger, $user) {
                 $sql = $event -> sql;
                 $bindings = $event -> bindings;
                 $time = $event -> time;
@@ -31,9 +32,9 @@ class AppServiceProvider extends ServiceProvider
                 $context = [
                     'time' => $time,
                 ];
-                if(\Auth::check()){
-                    $context['user_id'] = \Auth::user() -> id;
-                    $context['user_name'] = \Auth::user() -> name;
+                if($user){
+                    $context['user_id'] = $user -> id;
+                    $context['user_name'] = $user -> name;
                 }
                 $sqlLogger -> info($sql, $context);
             });
