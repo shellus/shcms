@@ -23,7 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $read_count = \App\ReadingHistory::whereUserId(\Auth::user()->id) -> count();
 
         $read_time = \App\ReadingHistory::whereUserId(\Auth::user()->id) -> sum('reading_at');

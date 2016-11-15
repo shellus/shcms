@@ -22,6 +22,24 @@
                     <h3>我的数据：</h3>
                     <div class="row">
                         <div class="col-xs-3">
+                            <span>用户名: </span>
+                            <span>{{ \Auth::user() -> name }}</span>
+                        </div>
+                        <div class="col-xs-3">
+
+                            <form action="/user/update-avatar" method="POST" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <span>头像: </span>
+                                <span><img src="{{ \Auth::user() -> avatarUrl }}"></span>
+                                <input name="avatar" type="file" value="选择文件">
+                                <input type="submit" value="上传">
+                            </form>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">
                             <span>阅读量: </span>
                             <span>{{ $read_count }}</span>
                         </div>

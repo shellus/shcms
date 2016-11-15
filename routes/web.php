@@ -45,6 +45,8 @@ Route::group([
 
     Route::resource('/category', 'CategoryController');
 
+
+    Route::post('/user/update-avatar', 'UserController@updateAvatar');
     Route::get('/home', 'HomeController@index') -> name('home');
 
     Route::get('/favorite/show-add-article-to-favorite', 'FavoriteController@showAddArticleToFavorite') -> name('show-add-article-to-favorite');

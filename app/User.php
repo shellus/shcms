@@ -58,6 +58,18 @@ class User extends Authenticatable
 //        'password', 'remember_token',
 //    ];
 
+
+    public function avatar(){
+        return $this->belongsTo('App\File');
+    }
+
+    public function getAvatarUrlAttribute(){
+        if(!$this->avatar){
+            return asset('images/no_avatars/1.png');
+        }
+        return $this -> avatar -> url;
+    }
+
     public function roles()
     {
         return $this->belongsToMany('App\Role');
