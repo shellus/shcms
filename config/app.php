@@ -187,6 +187,7 @@ return [
         /*
          * Application Service Providers...
          */
+        App\Providers\LogicLogProvider::class, // 业务逻辑日志
         App\Providers\AppServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
