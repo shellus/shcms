@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('avatar_id') -> nullable() -> unsigned();
             $table->string('register_ip');
-            $table -> string('api_token')->unique();
+            $table -> string('api_token')->default('');
             $table->rememberToken();
             $table->timestamps();
         });
