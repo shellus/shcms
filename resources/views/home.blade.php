@@ -30,7 +30,7 @@
                             <form action="/user/update-avatar" method="POST" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <span>头像: </span>
-                                <span><img src="{{ \Auth::user() -> avatarUrl }}"></span>
+                                <span><img width="100" height="100" src="{{ \Auth::user() -> avatarUrl }}"></span>
                                 <input name="avatar" type="file" value="选择文件">
                                 <input type="submit" value="上传">
                             </form>
