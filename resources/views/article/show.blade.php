@@ -81,9 +81,9 @@
 
 
                 <div id="article-body">
-                    {{--　　--}}
                     {!! $article -> body !!}
                 </div>
+                <hr>
             </div>
         </div>
 
