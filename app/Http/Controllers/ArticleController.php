@@ -46,7 +46,7 @@ class ArticleController extends Controller
 
 
 
-        return $this -> message($result,$result?'操作成功':'操作失败', $result);
+        return $this -> message($result?'success':'fail',$result?'操作成功':'操作失败', $result);
     }
 
 
