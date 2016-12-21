@@ -17,6 +17,8 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3",
-    "jquery-validation": "^1.15.1"
+    "jquery-validation": "^1.15.1",
+    "AdminLTE": "admin-lte#^2.3.8",
+    "Ionicons": "ionicons#^2.0.1"
   }
 }
