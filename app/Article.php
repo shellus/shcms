@@ -52,6 +52,10 @@ class Article extends Model
     }
     public static function search($s, $c = [], $perPage = 20){
 
+        if(!class_exists('\SphinxClient')){
+            return Article::whereRaw("`title` LIKE ?", ["%" . $s . "%"]) -> paginate();
+        }
+
         if ($c === null){
             $c = Category::all(['id']) -> mode('id');
         }
