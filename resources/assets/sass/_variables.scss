@@ -1,9 +1,10 @@
 
-// Color
+// Body
 $body-bg: #FFFFCC;
 $text-color: #339966;
 $navbar-default-bg: #339933;
 $panel-default-heading-bg: #99CC00;
+$panel-bg: rgb(255, 255, 255) !default;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -19,11 +20,9 @@ $brand-success: #2ab27b;
 $brand-warning: #cbb956;
 $brand-danger: #bf5329;
 
-// Font
+// Typography
 $font-family-sans-serif: Helvetica Neue,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
-$font-size-base: 12px;
-$font-size-large:         ceil(($font-size-base * 1.65)) !default; // ~18px
-$font-size-small:         ceil(($font-size-base * 0.85)) !default; // ~12px
+$font-size-base: 14px;
 $line-height-base: 1.6;
 
 // Buttons
@@ -33,6 +32,7 @@ $btn-default-color: $text-color;
 $input-border: lighten($text-color, 40%);
 $input-border-focus: lighten($brand-primary, 25%);
 $input-color-placeholder: lighten($text-color, 30%);
+
 
 // Radius
 $border-radius-base:        0px !default;
