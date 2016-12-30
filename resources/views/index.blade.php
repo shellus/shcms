@@ -45,8 +45,8 @@
                             @endforeach
                         </ul>
                     </div>
-                    <div>
-                        <a style="width: 100%; padding: 20px 10px" class="btn btn-primary btn-lg" href="{{ url('/') }}">再来一波</a>
+                    <div class="text-center">
+                        <a style="" class="btn btn-primary btn-lg" href="{{ url('/') }}">再来一波</a>
                     </div>
                 </div>
             </div>
