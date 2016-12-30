@@ -1,10 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-
-
         <div class="row">
-
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel">
                     <div class="panel-body">
@@ -48,6 +45,7 @@
                     <div class="text-center">
                         <a style="" class="btn btn-primary btn-lg" href="{{ url('/') }}">再来一波</a>
                     </div>
+                    {{--<searchbox>123</searchbox> TODO 写Vue的搜索下拉框 --}}
                     <br>
                 </div>
             </div>
