@@ -20,6 +20,7 @@
     "jquery-validation": "^1.15.1",
     "AdminLTE": "admin-lte#^2.3.8",
     "Ionicons": "ionicons#^2.0.1",
-    "jquery-editable-select": "^2.2.4"
+    "jquery-editable-select": "^2.2.4",
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.7"
   }
 }

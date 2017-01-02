@@ -24,35 +24,6 @@
                                 @endforeach
                             </ul>
 
-
-                            <div class="col-md-7" id="fade-place" data-effects="fade">
-                                <input type="text"
-                                       autocomplete="off"
-                                       class="form-control es-input">
-                                <ul class="es-list" style="top: 33px; left: 15px; width: 273px; display: none;">
-                                    <li class="" style="display: none;">Alfa Romeo</li>
-                                    <li class="" style="display: none;">Audi</li>
-                                    <li class="" style="display: none;">BMW</li>
-                                    <li class="" style="display: none;">Citroen</li>
-                                    <li class="" style="display: none;">Fiat</li>
-                                    <li class="" style="display: none;">Ford</li>
-                                    <li class="" style="display: none;">Jaguar</li>
-                                    <li class="es-visible selected">Jeep</li>
-                                    <li class="" style="display: none;">Lancia</li>
-                                    <li class="" style="display: none;">Land Rover</li>
-                                    <li class="" style="display: none;">Mercedes</li>
-                                    <li class="" style="display: none;">Mini</li>
-                                    <li class="" style="display: none;">Nissan</li>
-                                    <li class="" style="display: none;">Opel</li>
-                                    <li class="" style="display: none;">Peugeot</li>
-                                    <li class="" style="display: none;">Porsche</li>
-                                    <li class="" style="display: none;">Renault</li>
-                                    <li class="" style="display: none;">Smart</li>
-                                    <li class="" style="display: none;">Volkswagen</li>
-                                    <li class="" style="display: none;">Volvo</li>
-                                </ul>
-                            </div>
-
                         </form>
 
                         <script type="application/html" id="articles-tmpl">

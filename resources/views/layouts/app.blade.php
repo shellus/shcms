@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }} - {{ config('app.sub_name') }}</title>
 
     <!-- Styles -->
-    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 
     <!-- Scripts -->
