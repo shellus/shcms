@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }} - {{ config('app.sub_name') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -106,8 +107,10 @@
 
     </footer>
 </div>
-    <!-- Scripts -->
-    <script src="{{ asset('/js/app.js') }}"></script>
+<!-- Scripts -->
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/js/app.js"></script>
 
 @yield('footer')
 </body>

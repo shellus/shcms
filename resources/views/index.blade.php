@@ -8,17 +8,50 @@
                         <form method="GET" action="{{ url('/article/search') }}">
                             <div class="input-group input-group-lg search-box">
                                 {{--<input type="hidden" name="c" value="*">--}}
-                                <input autocomplete="off" list="word_list" type="search" class="form-control" name="s" value="{{ \Request::get('s') }}" placeholder="双击查看热搜词哦">
-                                  <span class="input-group-btn">
+                                <input id="search-input" autocomplete="off" type="search" class="form-control es-input" name="s"
+                                       value="{{ \Request::get('s') }}" placeholder="双击查看热搜词哦">
+                                <span class="input-group-btn">
                                     <button class="btn btn-default" type="submit">搜索</button>
                                   </span>
                             </div>
 
-                            <datalist id="word_list">
+                            <ul style="background-color: #1f648b;" class="input-datalist list-unstyled" id="word-list"
+                                hidden>
                                 @foreach($search_histories as $search_history)
-                                <option label="{{ $search_history -> word }} 热搜 {{ $search_history -> rows }} 次" value="{{ $search_history -> word }}" />
+                                    <li value="{{ $search_history -> word }}">
+                                        {{ $search_history -> word }} 热搜 {{ $search_history -> rows }} 次
+                                    </li>
                                 @endforeach
-                            </datalist>
+                            </ul>
+
+
+                            <div class="col-md-7" id="fade-place" data-effects="fade">
+                                <input type="text"
+                                       autocomplete="off"
+                                       class="form-control es-input">
+                                <ul class="es-list" style="top: 33px; left: 15px; width: 273px; display: none;">
+                                    <li class="" style="display: none;">Alfa Romeo</li>
+                                    <li class="" style="display: none;">Audi</li>
+                                    <li class="" style="display: none;">BMW</li>
+                                    <li class="" style="display: none;">Citroen</li>
+                                    <li class="" style="display: none;">Fiat</li>
+                                    <li class="" style="display: none;">Ford</li>
+                                    <li class="" style="display: none;">Jaguar</li>
+                                    <li class="es-visible selected">Jeep</li>
+                                    <li class="" style="display: none;">Lancia</li>
+                                    <li class="" style="display: none;">Land Rover</li>
+                                    <li class="" style="display: none;">Mercedes</li>
+                                    <li class="" style="display: none;">Mini</li>
+                                    <li class="" style="display: none;">Nissan</li>
+                                    <li class="" style="display: none;">Opel</li>
+                                    <li class="" style="display: none;">Peugeot</li>
+                                    <li class="" style="display: none;">Porsche</li>
+                                    <li class="" style="display: none;">Renault</li>
+                                    <li class="" style="display: none;">Smart</li>
+                                    <li class="" style="display: none;">Volkswagen</li>
+                                    <li class="" style="display: none;">Volvo</li>
+                                </ul>
+                            </div>
 
                         </form>
 
@@ -26,6 +59,7 @@
                             <li>
                                 <a href="{url}">{title}</a>
                             </li>
+
                         </script>
                         <ul id="articles" class="list-unstyled">
                             @foreach($articles as $article)
@@ -54,32 +88,32 @@
 @endsection
 @section('footer')
     <script>
-//        $(function () {
-//            var articles = [];
-//            fetch(function () {
-//                setInterval(function () {
-//                    var article = articles.shift();
-//
-//                    if(articles.length < 5){
-//                        fetch(function(){console.log('又拉来一批')});
-//                    }
-//                    var url = 'http://shcms-v3.localhost/article/' + article.id;
-//                    var title = article.title;
-//                    var html = $("#articles-tmpl").html();
-//                    var el = html.replace('{url}', url).replace('{title}', title)
-//                    $('#articles').append(el);
-//                    $('#articles').scrollTop( $('#articles')[0].scrollHeight);
-//                }, 100)
-//            });
-//
-//            function fetch(callback) {
-//                $.ajax('/api/article', {
-//                    success: function (data) {
-//                        articles = articles.concat(data);
-//                        callback();
-//                    }
-//                });
-//            }
-//        });
+        //        $(function () {
+        //            var articles = [];
+        //            fetch(function () {
+        //                setInterval(function () {
+        //                    var article = articles.shift();
+        //
+        //                    if(articles.length < 5){
+        //                        fetch(function(){console.log('又拉来一批')});
+        //                    }
+        //                    var url = 'http://shcms-v3.localhost/article/' + article.id;
+        //                    var title = article.title;
+        //                    var html = $("#articles-tmpl").html();
+        //                    var el = html.replace('{url}', url).replace('{title}', title)
+        //                    $('#articles').append(el);
+        //                    $('#articles').scrollTop( $('#articles')[0].scrollHeight);
+        //                }, 100)
+        //            });
+        //
+        //            function fetch(callback) {
+        //                $.ajax('/api/article', {
+        //                    success: function (data) {
+        //                        articles = articles.concat(data);
+        //                        callback();
+        //                    }
+        //                });
+        //            }
+        //        });
     </script>
 @endsection
