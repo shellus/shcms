@@ -15,7 +15,7 @@ var bootstrapSass = {
 // css source file: .scss files
 var css = {
     in: source + 'sass/bootstrap.scss',
-    out: dest + 'css/',
+    out: dest + 'bootstrap/css/',
     watch: source + 'sass/**/*',
     sassOpts: {
         outputStyle: 'compressed',

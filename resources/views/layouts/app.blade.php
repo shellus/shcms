@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }} - {{ config('app.sub_name') }}</title>
 
     <!-- Styles -->
-    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/bower_components/jquery-editable-select/dist/jquery-editable-select.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 
