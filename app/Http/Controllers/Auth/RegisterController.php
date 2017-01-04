@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -39,7 +41,25 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        if(!config('allow_register')){
+            abort(403);
+        }
+        $this->validator($request->all())->validate();
 
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return redirect($this->redirectPath());
+    }
     /**
      * Get a validator for an incoming registration request.
      *

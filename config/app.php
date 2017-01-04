@@ -18,6 +18,8 @@ return [
 
     'version' => env('APP_VERSION', 'v3.0.0'),
 
+    'allow_register' => env('ALLOW_REGISTER', true),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

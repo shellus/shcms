@@ -7,6 +7,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">注册</div>
                 <div class="panel-body">
+
+                    @if(config('allow_register'))
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
@@ -74,6 +76,15 @@
                             </div>
                         </div>
                     </form>
+                    @else
+
+                    <div class="text-center">
+                        <div class="alert alert-warning" role="alert">抱歉，网站现在不允许自助注册用户！</div>
+                        <a class="btn btn-primary" href="javascript:history.go(-1);">
+                            返回上一页
+                        </a>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
