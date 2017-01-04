@@ -25,6 +25,7 @@
     <script>
         window.laravel = {};
         window.laravel.csrf_token = document.getElementsByName('csrf-token')[0].content;
+        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : window.laravel.csrf_token } });
     </script>
 
     @yield('header')

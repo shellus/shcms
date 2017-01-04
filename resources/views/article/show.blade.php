@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('header')
     <style>
-        #article-field-set{
+        #article-field-set {
             font-style: oblique;
             font-size: 0.9em;
             margin: 18px 18px 18px 0;
             border-left: 2px solid #1b6d85;
         }
-        .btn-vote{
+
+        .btn-vote {
             padding: 0;
         }
     </style>
@@ -41,29 +42,33 @@
                 <div class="row action-list">
 
 
-
                     <div class="col-md-6">
-                        <div class="zm-votebar goog-scrollfloater" data-za-module="VoteBar">
+                        <div style="position: absolute; left: -35px; top: 65px;" class="zm-votebar goog-scrollfloater"
+                             data-za-module="VoteBar">
                             <div>
 
-                                <button title="喜欢的文章，就给它11个赞吧~" id="vote-up-btn" href="#" class="btn btn-link btn-vote" onclick="vote_click(event, this, 1);">
+                                <button title="喜欢的文章，就给它11个赞吧~" id="vote-up-btn" href="#" class="btn btn-link btn-vote"
+                                        onclick="vote_click(event, this, 1);">
                                     <i class="glyphicon glyphicon-thumbs-up text-success"></i><br>
                                     赞(<span id="vote-up-count">{{ $article -> votes() -> where('vote', '>', 0) -> sum('vote') }}</span>)
                                 </button>
 
                             </div>
                             <div>
-                                <button id="vote-down-btn" href="#" class="btn btn-link btn-vote" onclick="vote_click(event, this, 0);">
+                                <button id="vote-down-btn" href="#" class="btn btn-link btn-vote"
+                                        onclick="vote_click(event, this, 0);">
                                     <i class="glyphicon glyphicon-thumbs-down text-warning"></i><br>
                                     踩(<span id="vote-down-count">{{ $article -> votes() -> where('vote', '<', 0) -> sum('vote') }}</span>)
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6" >
+                    <div class="col-md-6">
                         <div>
-                            <a data-toggle="modal" data-target="#modal" href="{{ route('show-add-article-to-favorite',['article_id' => $article -> id]) }}">收藏</a>
-                            <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                            <a data-toggle="modal" data-target="#modal"
+                               href="{{ route('show-add-article-to-favorite',['article_id' => $article -> id]) }}">收藏</a>
+                            <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+                                 aria-labelledby="mySmallModalLabel">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
 
@@ -71,16 +76,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            @if(\Auth::user()->can('manage_contents'))
+
+                        @if(\Auth::user()->can('manage_contents'))
+                            <div>
                                 <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
                                 <a href="{{ route('article.edit', $article -> id) }}">删除</a>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
                 <hr>
-
 
 
                 <div id="article-body">
@@ -128,25 +134,25 @@
 
         function renderVote() {
 
-            if (window.currentUserVote > 0){
+            if (window.currentUserVote > 0) {
                 $('#vote-down-btn').removeClass('active');
                 $('#vote-up-btn').addClass('active');
-            }else if (window.currentUserVote === 0){
+            } else if (window.currentUserVote === 0) {
                 $('#vote-up-btn').removeClass('active');
                 $('#vote-down-btn').removeClass('active');
-            }else if (window.currentUserVote < 0){
+            } else if (window.currentUserVote < 0) {
                 $('#vote-down-btn').addClass('active');
                 $('#vote-up-btn').removeClass('active');
             }
         }
 
-        function vote_click(event,self,is_add) {
+        function vote_click(event, self, is_add) {
             $(self).attr("disabled", true);
             event.preventDefault();
-            if(is_add){
+            if (is_add) {
                 var url = '{{ url('/article/vote') }}';
                 var data = {!! json_encode(['article_id'=>$article -> id, 'action' => 'up', '_token' => csrf_token()]) !!};
-            }else {
+            } else {
                 var url = '{{ url('/article/vote') }}';
                 var data = {!! json_encode(['article_id'=>$article -> id, 'action' => 'down', '_token' => csrf_token()]) !!};
             }
@@ -173,12 +179,12 @@
         }
 
 
-        var conn = new WebSocket('ws://'+document.domain+':8080');
-        conn.onopen = function(e) {
+        var conn = new WebSocket('ws://' + document.domain + ':8080');
+        conn.onopen = function (e) {
             console.log('websocket 连接成功');
         };
 
-        conn.onmessage = function(e) {
+        conn.onmessage = function (e) {
             console.log(e.data);
         };
         // 统计阅读时间
@@ -192,11 +198,11 @@
             setInterval(function () {
 
                 // 如果滚动条没变
-                if(document.scrollingElement.scrollTop === last_height){
+                if (document.scrollingElement.scrollTop === last_height) {
 
                     // 说明他还在看
                     sleep++;
-                }else {
+                } else {
 
                     // 否则他已经往下看了
                     sleep = 0;
@@ -207,11 +213,11 @@
 
 
                 // 5秒看一屏，是正常看的
-                if(sleep < 5){
+                if (sleep < 5) {
                     conn.send(JSON.stringify({
                         'article_id': $('meta[name="article-id"]').attr('content'),
                     }));
-                }else {
+                } else {
                     // 否则是他没看了，在挂机
                     console.log('挂机，不统计');
                 }

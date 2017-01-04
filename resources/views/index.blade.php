@@ -16,7 +16,7 @@
                             @foreach($articles as $article)
                                 <li>
                                     <div>
-                                        <h3>{{ $article -> display_title }}</h3>
+                                        <a title="{{ $article -> title }}" href="{{ $article -> showUrl() }}"><h3>{{ $article -> display_title }}</h3></a>
                                     </div>
                                     <div>
                                         {!! trim(strip_tags(mb_substr($article -> body,0,120))) !!}
