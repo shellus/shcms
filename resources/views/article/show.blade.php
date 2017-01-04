@@ -7,6 +7,9 @@
             margin: 18px 18px 18px 0;
             border-left: 2px solid #1b6d85;
         }
+        .btn-vote{
+            padding: 0;
+        }
     </style>
     <meta name="article-id" content="{{ $article -> id }}">
 @endsection
@@ -43,15 +46,15 @@
                         <div class="zm-votebar goog-scrollfloater" data-za-module="VoteBar">
                             <div>
 
-                                <button title="喜欢的文章，就给它11个赞吧~" id="vote-up-btn" href="#" class="btn btn-default" onclick="vote_click(event, this, 1);">
-                                    <i class="glyphicon glyphicon-thumbs-up text-success"></i>
+                                <button title="喜欢的文章，就给它11个赞吧~" id="vote-up-btn" href="#" class="btn btn-link btn-vote" onclick="vote_click(event, this, 1);">
+                                    <i class="glyphicon glyphicon-thumbs-up text-success"></i><br>
                                     赞(<span id="vote-up-count">{{ $article -> votes() -> where('vote', '>', 0) -> sum('vote') }}</span>)
                                 </button>
 
                             </div>
                             <div>
-                                <button id="vote-down-btn" href="#" class="btn btn-default" onclick="vote_click(event, this, 0);">
-                                    <i class="glyphicon glyphicon-thumbs-down text-warning"></i>
+                                <button id="vote-down-btn" href="#" class="btn btn-link btn-vote" onclick="vote_click(event, this, 0);">
+                                    <i class="glyphicon glyphicon-thumbs-down text-warning"></i><br>
                                     踩(<span id="vote-down-count">{{ $article -> votes() -> where('vote', '<', 0) -> sum('vote') }}</span>)
                                 </button>
                             </div>
