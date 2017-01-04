@@ -5,27 +5,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel">
                     <div class="panel-body">
-                        <form method="GET" action="{{ url('/article/search') }}">
-                            <div class="input-group input-group-lg search-box">
-                                {{--<input type="hidden" name="c" value="*">--}}
-                                <input id="search-input" autocomplete="off" type="search" class="form-control es-input" name="s"
-                                       value="{{ \Request::get('s') }}" placeholder="双击查看热搜词哦">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">搜索</button>
-                                  </span>
-                            </div>
-
-                            <ul style="background-color: #1f648b;" class="input-datalist list-unstyled" id="word-list"
-                                hidden>
-                                @foreach($search_histories as $search_history)
-                                    <li value="{{ $search_history -> word }}">
-                                        {{ $search_history -> word }} 热搜 {{ $search_history -> rows }} 次
-                                    </li>
-                                @endforeach
-                            </ul>
-
-                        </form>
-
+                        @include('components.search-form')
                         <script type="application/html" id="articles-tmpl">
                             <li>
                                 <a href="{url}">{title}</a>
@@ -86,5 +66,7 @@
         //                });
         //            }
         //        });
+
     </script>
+
 @endsection

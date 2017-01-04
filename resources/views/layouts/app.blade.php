@@ -12,7 +12,13 @@
 
     <!-- Styles -->
     <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/bower_components/jquery-editable-select/dist/jquery-editable-select.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/jquery-editable-select/dist/jquery-editable-select.min.js"></script>
 
     <!-- Scripts -->
     <script>
@@ -107,9 +113,6 @@
 
     </footer>
 </div>
-<!-- Scripts -->
-<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/js/app.js"></script>
 
 @yield('footer')
