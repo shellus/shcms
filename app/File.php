@@ -55,6 +55,6 @@ class File extends Model
     }
 
     public function getUrlAttribute(){
-        return 'uploads'.'/'.$this -> save_path .'/'. $this -> filename;
+        return '/uploads'.'/'.$this -> save_path .'/'. $this -> filename;
     }
 }
