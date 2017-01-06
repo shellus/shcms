@@ -43,6 +43,7 @@ Route::group([
 
     Route::resource('/article', 'ArticleController');
 
+    Route::post('/category/update-logo', 'CategoryController@updateLogo');
     Route::resource('/category', 'CategoryController');
 
 

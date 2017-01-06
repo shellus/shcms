@@ -8,7 +8,7 @@
                 <div class="panel-heading">注册</div>
                 <div class="panel-body">
 
-                    @if(config('allow_register'))
+                    @if(config('app.allow_register'))
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
@@ -70,7 +70,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" name="register">
                                     注册
                                 </button>
                             </div>

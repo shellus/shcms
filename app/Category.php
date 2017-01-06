@@ -38,4 +38,13 @@ class Category extends Model
     public function showUrl(){
         return route('category.show', [$this -> id]);
     }
+    public function logo(){
+        return $this->belongsTo('App\File');
+    }
+    public function getLogoUrlAttribute(){
+        if(!$this->logo){
+            return asset('images/no_category/1.png');
+        }
+        return $this -> logo -> url;
+    }
 }

@@ -49,7 +49,7 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        if(!config('allow_register')){
+        if(!config('app.allow_register')){
             abort(403);
         }
         $this->validator($request->all())->validate();

@@ -24,7 +24,12 @@
                         <ul id="articles" class="list-inline">
                             @foreach($categories as $category)
                                 <li>
-                                    <a href="{{ $category -> showUrl() }}">{{ $category['title'] }}</a>
+                                    <a href="{{ $category -> showUrl() }}">
+                                    <img width="64" height="64" src="{{ $category->logoUrl }}" class="img-circle">
+                                        <div class="text-center">
+                                            {{ $category['title'] }}
+                                        </div>
+                                    </a>
                                 </li>
                             @endforeach
                         </ul>

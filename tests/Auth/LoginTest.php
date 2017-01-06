@@ -27,7 +27,7 @@ class LoginTest extends TestCase
             ->type($testUser['email'], 'email')
             ->type($testUser['password'], 'password')
             ->type($testUser['password'], 'password_confirmation')
-            ->press('Register')
+            ->press('register')
             ->seePageIs(route('home'));
 
         $this ->visit(route('home'))->press('')->seePageIs(route('index'));
@@ -41,7 +41,7 @@ class LoginTest extends TestCase
             ->type($testUser['email'], 'email')
             ->type($testUser['password'], 'password')
             ->check('remember')
-            ->press('Login')
+            ->press('login')
             ->seePageIs(route('home'));
 
         $this ->visit(route('home'))->press('')->seePageIs(route('index'));
