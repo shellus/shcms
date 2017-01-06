@@ -53,7 +53,7 @@
 
                             @forelse($lest_read_articles as $lest_read_article)
                                 <li>
-                                    <span class="label label-info reading-time">{{ \Carbon\Carbon::parse($lest_read_article -> created_at) -> diffForHumans() }}</span>
+                                    <span class="label label-info reading-time">{{ \Carbon\Carbon::parse($lest_read_article -> updated_at) -> diffForHumans() }}</span>
 
                                     <span class="label label-info reading-time">阅读 {{ \Carbon\Carbon::createFromTimestamp(0) -> diffForHumans(\Carbon\Carbon::createFromTimestamp($lest_read_article -> reading_at), true) }}</span>
                                     <a href="{{ $lest_read_article -> article -> showUrl() }}">
