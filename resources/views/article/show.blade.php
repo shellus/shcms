@@ -178,8 +178,14 @@
 
         }
 
+        var ishttps = 'https:' == document.location.protocol ? true: false;
 
-        var conn = new WebSocket('ws://' + document.domain + ':8080');
+        if(ishttps){
+            var conn = new WebSocket('wss://' + document.domain + '/websocket');
+        }else {
+            var conn = new WebSocket('ws://' + document.domain + ':8080');
+        }
+
         conn.onopen = function (e) {
             console.log('websocket 连接成功');
         };
