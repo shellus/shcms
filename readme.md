@@ -42,10 +42,15 @@ bower install
 cp .env.example .env
 ```
 编辑`.env`文件：
+
 1. 修改数据库连接信息 `DB_*`
+
 2. 设置网站名称和副标题 `APP_NAME, APP_SUB_NAME`
+
 3. 声明是否已经开启SSL `ENABLE_SSL`（这将在非HTTPS访问时警告用户使用HTTPS安全浏览）
+
 4. 修改 `APP_ENV` 为你的运行环境代号
+
 
 ```bash
 php artisan key:generate
@@ -64,7 +69,8 @@ php artisan optimize
 
 ```
 
-如果你需要支持文章阅读时长统计，那么你需要运行`php artisan ws`, 我建议你使用supervisor来运行它
+如果你需要支持文章阅读时长统计，那么你需要运行 `php artisan ws` 这将使用8080端口, 你可以使用 `supervisor` 来运行它
+
 ```bash
 sudo apt install -y supervisor
 
@@ -72,6 +78,7 @@ sudo vim /etc/supervisor/conf.d/ws.conf
 ```
 
 ws.conf 推荐配置
+
 ```bash
 [program:ws]
 command=php artisan ws
@@ -80,6 +87,7 @@ directory=path/to/shcms/
 ```
 
 然后使新的配置生效
+
 ```bash
 sudo service supervisor restart
 ```
