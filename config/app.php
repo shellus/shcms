@@ -12,11 +12,11 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'shcms'),
+    'name' => env('APP_NAME', ''),
 
-    'sub_name' => env('APP_SUB_NAME', '欢迎你来到shcms'),
+    'sub_name' => env('APP_SUB_NAME', ''),
 
-    'version' => env('APP_VERSION', 'v3.0.0'),
+    'version' => 'v3.0.0',
 
     'allow_register' => env('ALLOW_REGISTER', true),
 
