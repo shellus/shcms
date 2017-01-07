@@ -9,7 +9,7 @@
     </div>
     <label for="search-list"></label>
     <select id="search-list" class="form-control hidden">
-        @foreach($search_histories as $search_history)
+        @foreach(\App\Article::searchHistoryTopList() as $search_history)
             <option data-val="{{ $search_history -> word }}">
                 {{ $search_history -> word }} 热搜 {{ $search_history -> rows }} 次
             </option>

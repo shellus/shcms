@@ -21,9 +21,6 @@
                             @endforeach
                         </ul>
                     </div>
-                    <div class="text-center">
-                        <a style="" class="btn btn-primary btn-lg" href="{{ url('/') }}">再来一波</a>
-                    </div>
                     <br>
                 </div>
             </div>

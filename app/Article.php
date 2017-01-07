@@ -50,6 +50,9 @@ class Article extends Model
         }
         return $value;
     }
+    public static function searchHistoryTopList(){
+        return \App\SearchHistory::selectRaw('count(*) as rows ,word') -> where('page', '=', 1) -> orderByRaw('rows desc') -> groupBy('word') -> limit(30) -> get();
+    }
     public static function search($s, $c = [], $perPage = 20){
 
         if(!class_exists('\SphinxClient')){
