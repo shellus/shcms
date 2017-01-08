@@ -23,6 +23,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Category whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\File $logo
+ * @property-read mixed $logo_url
+ * @property integer $logo_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Category whereLogoId($value)
  */
 class Category extends Model
 {

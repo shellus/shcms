@@ -5,6 +5,28 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * App\File
+ *
+ * @property integer $id
+ * @property string $mime_type
+ * @property string $size
+ * @property string $display_filename
+ * @property string $save_path
+ * @property string $filename
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read mixed $url
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereMimeType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereDisplayFilename($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereSavePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereFilename($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\File whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class File extends Model
 {
     protected $fillable = [

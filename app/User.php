@@ -31,6 +31,10 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Role[] $roles
  * @method static \Illuminate\Database\Query\Builder|\App\User whereApiToken($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereRegisterIp($value)
+ * @property integer $avatar_id
+ * @property-read \App\File $avatar
+ * @property-read mixed $avatar_url
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAvatarId($value)
  */
 class User extends Authenticatable
 {
