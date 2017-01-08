@@ -65,7 +65,6 @@ class ArticleLexicalAnalysis extends Command
                 }catch (\Throwable $t){
                     dd('unlock fail？？？');
                 }
-                var_dump($e);
                 $this -> error('Error: ' . $e->getMessage());
                 $this -> error('File: ' . $e->getFile());
                 $this -> error('Line: ' . $e->getLine());
