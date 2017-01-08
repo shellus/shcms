@@ -137,6 +137,15 @@ class Article extends Model
     {
         return $this->belongsToMany('App\Category')->withTimestamps();
     }
+
+    /**
+     * 关键词关联，通过中间表
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function keyWords()
+    {
+        return $this->belongsToMany('App\KeyWords')->withTimestamps();
+    }
     public function showUrl(){
         return route('article.show', [$this -> id]);
     }

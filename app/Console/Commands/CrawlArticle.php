@@ -3,12 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Article;
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlArticle extends Command
 {
+    use CommandHelper;
     /**
      * The name and signature of the console command.
      *
@@ -107,35 +107,5 @@ class CrawlArticle extends Command
         ]);
         return $bool;
     }
-    private function request($url){
-        $client = new Client();
-        $res = $client->request('GET', $url, ['connect_timeout' => 10]);
-        return $res->getBody() -> getContents();
-    }
-    // 乐观锁实现
-    protected function getLockArticle(){
 
-        $try = 0;
-
-        do{
-            $article = Article::where('version', '=', 0) -> where('to_local', '=', 0) -> first();
-
-            if ($article !== null){
-                $this -> info('fetch article lock is ' . $article -> id);
-                $bool = Article::where('version', '=', 0) -> where('id', '=', $article -> id) -> update(['version' => 1]);
-
-                if($bool){
-                    // hack
-                    return Article::find($article->id);
-                }
-            }
-            $this -> warn('article lock fail, 10ms after retry');
-            // 等待10毫秒后再试试
-            usleep(1000 * 10);
-
-            // 尝试3次还不行就返回false了。
-        }while (++$try < 3);
-
-        return false;
-    }
 }
