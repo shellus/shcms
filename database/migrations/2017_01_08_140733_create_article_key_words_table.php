@@ -17,7 +17,6 @@ class CreateArticleKeyWordsTable extends Migration
             $table->increments('id');
             $table->integer('key_words_id')->default(0)->unsigned();
             $table->integer('article_id')->default(0)->unsigned();
-            $table->integer('pos');
             $table->timestamps();
 
             $table->foreign('article_id')->references('id')->on('articles')

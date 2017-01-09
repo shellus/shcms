@@ -22,6 +22,6 @@ use Illuminate\Database\Eloquent\Model;
 class KeyWords extends Model
 {
     protected $fillable = [
-        'word','weights',
+        'word','weight',
     ];
 }

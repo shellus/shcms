@@ -16,7 +16,7 @@ class CreateKeyWordsTable extends Migration
         Schema::create('key_words', function (Blueprint $table) {
             $table->increments('id');
             $table->string('word', 10)->unique();
-            $table->integer('weights')->default(0)->unsigned();
+            $table->float('weight')->default(0)->unsigned();
             $table->timestamps();
         });
     }
