@@ -86,14 +86,15 @@ class ArticleLexicalAnalysis extends Command
         foreach ($dicts as $dict){
             $data = [
                 'word' => $dict['word'],
-                'weight' => $dict['weight']
             ];
-            $this -> info('key words: (' . mb_convert_encoding($dict['word'],'GBK') . ')');
-            /** @var KeyWords $keyWord */
-            $keyWord = KeyWords::firstOrCreate(['word' => $dict['word']],$data);
-            $article->keyWords()->attach($keyWord);
+            $append = ['weight' => $dict['weight'] * 100000000000000];
 
-            $article -> version += 1;
+            $this -> info('key words: (' . $dict['word'] . ')');
+            /** @var KeyWords $keyWord */
+            $keyWord = KeyWords::firstOrCreate($data);
+            $article->keyWords()->attach($keyWord, $append);
+
+            $article -> version = 1 + intval($article -> version);
             $article -> save();
         }
         return true;
