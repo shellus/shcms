@@ -13,7 +13,8 @@
         "cboden/ratchet": "^0.3.5",
         "zizaco/entrust": "^1.7",
         "mews/captcha": "^2.1",
-        "barryvdh/laravel-debugbar": "^2.3"
+        "barryvdh/laravel-debugbar": "^2.3",
+        "guzzlehttp/guzzle": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
