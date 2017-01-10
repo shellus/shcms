@@ -87,7 +87,7 @@ class ArticleLexicalAnalysis extends Command
             $data = [
                 'word' => $dict['word'],
             ];
-            $append = ['weight' => $dict['weight'] * 100000000000000];
+            $append = ['weight' => $dict['weight']];
 
             $this -> info('key words: (' . $dict['word'] . ')');
             /** @var KeyWords $keyWord */
