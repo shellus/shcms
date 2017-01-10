@@ -82,7 +82,17 @@ class ArticleLexicalAnalysis extends Command
      * @return bool
      */
     protected function analysis(Article $article){
-        $dicts = \App\Wenzi\ArticleLexicalAnalysis::LexicalAnalysis($article -> body);
+
+        // 分段处理超长文章
+        if(mb_strlen($article -> body) > 5000){
+            $dicts = [];
+            for ($i = 0; $i < mb_strlen($article -> body); $i += 5000){
+                $dicts = $dicts + \App\Wenzi\ArticleLexicalAnalysis::LexicalAnalysis(mb_substr($article -> body, $i, 5000));
+            }
+        }else{
+            $dicts = \App\Wenzi\ArticleLexicalAnalysis::LexicalAnalysis($article -> body);
+        }
+
         foreach ($dicts as $dict){
             if (mb_strlen($dict['word']) > 10){
                 // 大于十个字符就不要了。没这么长的关键词
