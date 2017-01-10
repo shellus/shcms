@@ -86,6 +86,6 @@ return [
     |
     */
 
-    'prefix' => 'laravel',
+    'prefix' => env('APP_PREFIX', 'shcms' . crc32(env('APP_KEY'))),
 
 ];
