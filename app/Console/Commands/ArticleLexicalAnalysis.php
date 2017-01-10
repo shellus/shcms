@@ -84,6 +84,10 @@ class ArticleLexicalAnalysis extends Command
     protected function analysis(Article $article){
         $dicts = \App\Wenzi\ArticleLexicalAnalysis::LexicalAnalysis($article -> body);
         foreach ($dicts as $dict){
+            if (mb_strlen($dict['word']) > 10){
+                // 大于十个字符就不要了。没这么长的关键词
+                continue;
+            }
             $data = [
                 'word' => $dict['word'],
             ];
