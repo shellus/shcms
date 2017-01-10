@@ -93,10 +93,9 @@ class ArticleLexicalAnalysis extends Command
             /** @var KeyWords $keyWord */
             $keyWord = KeyWords::firstOrCreate($data);
             $article->keyWords()->attach($keyWord, $append);
-
-            $article -> version = 1 + intval($article -> version);
-            $article -> save();
         }
+        $article -> version = 1 + intval($article -> version);
+        $article -> save();
         return true;
     }
 }
