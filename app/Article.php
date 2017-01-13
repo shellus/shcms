@@ -154,7 +154,7 @@ class Article extends Model
     public static function getByRandom($count){
         $ids = Article::orderBy(\DB::raw('RAND()'))->limit($count)->get(['id']);
 
-        return Article::whereIn('id', $ids)->get(['id', 'title', 'body']);
+        return Article::whereIn('id', $ids)->get(['id', 'title', \DB::raw('substr(`body`,1,100) as body')]);
     }
     public function previous(){
         if ($this -> previous === null){
