@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
         $sqlLogger = new Logger('sql', [new StreamHandler($log_file)]);
 
         $user = \Auth::user();
-        if (env('APP_DEBUG')){
+        if (config('app.log_level') == 'debug'){
             \DB::listen(function(QueryExecuted $event)use($sqlLogger, $user) {
                 $sql = $event -> sql;
                 $bindings = $event -> bindings;
