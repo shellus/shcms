@@ -33,6 +33,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <!-- jQuery 2.2.3 -->
+  <script src="{{ asset('/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+
   <!-- Scripts -->
   <script>
       window.laravel = {};
@@ -221,7 +224,7 @@ desired effect
                   <a href="{{ url('/logout') }}"
                      onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                      class="btn btn-default btn-flat">退出</a>
-                  <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                  <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                   </form>
                 </div>
@@ -244,7 +247,7 @@ desired effect
   <!-- Content Wrapper. Contains page content -->
   @yield('content')
     <!-- /.content -->
-  </div>
+
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
@@ -271,7 +274,7 @@ desired effect
         <h3 class="control-sidebar-heading">Recent Activity</h3>
         <ul class="control-sidebar-menu">
           <li>
-            <a href="javascript::;">
+            <a href="javascript:alert('123');">
               <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
               <div class="menu-info">
@@ -338,8 +341,7 @@ desired effect
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.3 -->
-<script src="{{ asset('/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset('/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->

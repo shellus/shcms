@@ -42,4 +42,15 @@ class AuthController extends Controller
     public function showLoginForm(){
         return view('admin::login');
     }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        return redirect(route('admin'));
+    }
 }

@@ -16,7 +16,6 @@
         <section class="content">
 
 
-
             <div class="box">
                 <div class="box-header with-border text-right">
                     {{--<h3 class="box-title">用户列表</h3>--}}
@@ -32,7 +31,7 @@
                             <th>注册时间</th>
                             <th style="width: 40px">Actions</th>
                         </tr>
-                        <?php $users=\App\User::paginate();?>
+                        <?php $users = \App\User::paginate();?>
                         @forelse($users as $user)
                             <tr>
                                 <td>{{ $user->id }}.</td>
@@ -55,7 +54,7 @@
             </div>
 
         </section>
-
+    </div>
 @endsection
 @section('footer')
 @endsection
