@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
@@ -40,6 +40,6 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
     public function showLoginForm(){
-        return view('admin.login');
+        return view('admin::login');
     }
 }

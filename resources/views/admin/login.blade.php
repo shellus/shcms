@@ -1,4 +1,4 @@
-@extends('layouts.admin.login')
+@extends('admin::layouts.login')
 @section('page_title')后台登录@endsection
 @section('header')
 <style>
