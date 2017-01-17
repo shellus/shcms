@@ -33,14 +33,14 @@
         <!-- Optionally, you can add icons to the links -->
         <li><a href="{{ route('admin') }}"><i class="fa fa-calculator"></i> <span>主页</span></a></li>
         <li class="treeview">
-            <a href="#"><i class="fa fa-users text-blue"></i> <span>用户</span>
+            <a href="#"><i class="fa fa-users"></i> <span>用户</span>
                 <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
             </a>
             <ul class="treeview-menu">
-                <li class="active"><a href="{{ route('admin.user.index') }}"><i class="fa fa-list-ul text-blue"></i> <span>查看</span></a></li>
-                <li><a href="{{ route('admin.user.index') }}"><i class="fa fa-plus text-blue"></i> <span>创建</span></a></li>
+                <li><a href="{{ route('admin.user.index') }}"><i class="fa fa-list-ul"></i> <span>查看</span></a></li>
+                <li><a href="{{ route('admin.user.index') }}"><i class="fa fa-plus"></i> <span>创建</span></a></li>
             </ul>
         </li>
 
@@ -58,6 +58,25 @@
             </ul>
         </li>
     </ul>
+    <script type="text/javascript">
+        /* 导航加上活动类 */
+        (function(){
+            // 闭包，立即执行，给侧边导航栏添加active状态
+            var $this = $('.sidebar-menu a[href="' + location.href + '"]').first();
+            var parent_li = $this.parent("li");
+            $this.find('i').addClass('text-blue');
+            parent_li.addClass('active');
+
+            parent_ul = parent_li.parent('ul');
+            if (parent_ul.is('.treeview-menu')){
+                parent_ul.addClass('menu-open').show();
+                var checkElement = parent_li.parent().parent("li.treeview");
+                checkElement.addClass('menu-open');
+            }
+        })();
+
+
+    </script>
     <!-- /.sidebar-menu -->
 </section>
 <!-- /.sidebar -->

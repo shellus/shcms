@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <![endif]-->
 
   <!-- jQuery 2.2.3 -->
-  <script src="{{ asset('/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
 
   <!-- Scripts -->
   <script>
@@ -63,7 +63,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-green-light sidebar-mini layout-boxed">
+<body class="hold-transition skin-green-light sidebar-mini hold-transition">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -343,9 +343,9 @@ desired effect
 
 
 <!-- Bootstrap 3.3.6 -->
-<script src="{{ asset('/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/bower_components/AdminLTE/bootstrap/js/bootstrap.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('/bower_components/AdminLTE/dist/js/app.min.js') }}"></script>
+<script src="{{ asset('/bower_components/AdminLTE/dist/js/app.js') }}"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
