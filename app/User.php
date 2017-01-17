@@ -73,6 +73,12 @@ class User extends Authenticatable
         }
         return $this -> avatar -> url;
     }
+    public function getRoleNameAttribute(){
+        if(!$this->roles){
+            return '无用户组';
+        }
+        return $this->roles->first()->display_name;
+    }
 
     public function roles()
     {
