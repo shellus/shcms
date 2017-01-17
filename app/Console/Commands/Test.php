@@ -36,6 +36,6 @@ class Test extends Command
      */
     public function handle()
     {
-        
+        \Storage::put()
     }
 }
