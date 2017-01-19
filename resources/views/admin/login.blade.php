@@ -191,7 +191,7 @@
                             <div class="space"></div>
                             <div class="form-group">
                                 <label class="col-sm-4 text-center">
-                                    <input name="remember_time" value="2592000" type="checkbox" class="ace">
+                                    <input name="remember" type="checkbox" class="ace">
                                     <span class="lbl">  记住我</span>
                                 </label>
                                 <div class="col-sm-8 text-right">
