@@ -7,6 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="user-id" content="{{ Auth::check()?Auth::user()->getAuthIdentifier():'' }}">
 
     <title>{{ config('app.name', 'Laravel') }} - {{ config('app.sub_name') }}</title>
 
@@ -20,13 +21,22 @@
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/bower_components/jquery-editable-select/dist/jquery-editable-select.min.js"></script>
+    <script src="/bower_components/socket.io-client/dist/socket.io.min.js"></script>
 
     <!-- Scripts -->
     <script>
-        window.laravel = {};
-        window.laravel.csrf_token = document.getElementsByName('csrf-token')[0].content;
-        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : window.laravel.csrf_token } });
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+
+        window.Laravel.userId = document.getElementsByName('user-id')[0].content
+
+        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : window.Laravel.csrfToken } });
     </script>
+
+
+    <script src="/js/echo.js"></script>
+    <script src="/js/app.js"></script>
 
     @yield('header')
 </head>
@@ -127,7 +137,6 @@
 
     </footer>
 </div>
-<script src="/js/app.js"></script>
 
 @yield('footer')
 </body>
