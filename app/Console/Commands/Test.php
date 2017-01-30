@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Console\Commands;
+
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+
 
 class Test extends Command
 {
+    use CommandHelper;
     /**
      * The name and signature of the console command.
      *
@@ -36,6 +40,6 @@ class Test extends Command
      */
     public function handle()
     {
-        \Storage::put()
+
     }
 }

@@ -25,7 +25,7 @@ class ArticleLexicalAnalysis extends Command
     /**
      * 数据开始处理的版本
      */
-    const ARTICLE_BEGIN_VERSION = 0;
+    const ARTICLE_BEGIN_VERSION = 1;
     /**
      * Create a new command instance.
      */
@@ -55,20 +55,13 @@ class ArticleLexicalAnalysis extends Command
 
             }catch (\Exception $e){
 
-                try
-                {
+                $this -> info('exception and unlock article is .' . $article -> id);
                     // 解锁
                     /** @var Article $article */
                         $article -> update([
                             'version'   => self::ARTICLE_BEGIN_VERSION,
                         ]);
-                }catch (\Throwable $t){
-                    dd('unlock fail？？？');
-                }
-                $this -> error('Error: ' . $e->getMessage());
-                $this -> error('File: ' . $e->getFile());
-                $this -> error('Line: ' . $e->getLine());
-                sleep(5);
+                throw $e;
             }
 
         }while(Article::whereVersion(self::ARTICLE_BEGIN_VERSION) -> count() > 0);

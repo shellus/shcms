@@ -28,7 +28,7 @@ trait CommandHelper
 
             if ($article !== null){
                 $this -> info('fetch article lock is ' . $article -> id);
-                $bool = Article::where('version', '=', 0) -> where('id', '=', $article -> id) -> update(['version' => self::ARTICLE_BEGIN_VERSION + 1]);
+                $bool = Article::where('version', '=', self::ARTICLE_BEGIN_VERSION) -> where('id', '=', $article -> id) -> update(['version' => self::ARTICLE_BEGIN_VERSION + 1]);
 
                 if($bool){
                     // hack
