@@ -16,6 +16,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        \View::addNamespace('admin',resource_path('/views/admin/'));
+
+
         $log_file = storage_path('logs'.DIRECTORY_SEPARATOR.'sql.log');
         $sqlLogger = new Logger('sql', [new StreamHandler($log_file)]);
 

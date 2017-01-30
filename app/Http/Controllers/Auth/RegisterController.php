@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Service\UserService;
 use App\User;
 use Illuminate\Support\Str;
 use Validator;
@@ -83,12 +84,6 @@ class RegisterController extends Controller
      */
     public function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'register_ip' => \Request::ip(),
-            'api_token' => Str::random(60),
-        ]);
+        return UserService::create($data);
     }
 }
