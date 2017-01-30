@@ -97,19 +97,6 @@
             </div>
         </div>
     </nav>
-    @if(!Request::secure() && env('ENABLE_SSL', false))
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <strong>提示!</strong> 本站已全站支持SSL，为了您的数据安全，请使用 <a href="{{ secure_url(URL::route('index', [], false)) }}">HTTPS</a> 访问本站！
-                </div>
-
-            </div>
-        </div>
-    </div>
-    @endif
     @yield('content')
 
     <footer class="text-center">
