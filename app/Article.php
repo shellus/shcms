@@ -37,12 +37,14 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\KeyWords[] $keyWords
  * @method static \Illuminate\Database\Query\Builder|\App\Article whereCustomId($value)
+ * @property string $slug
+ * @method static \Illuminate\Database\Query\Builder|\App\Article whereSlug($value)
  */
 class Article extends Model
 {
     protected $next = null;
     protected $fillable = [
-        'title','body', 'user_id','referrer_title', 'referrer','version','to_local',
+        'title','body', 'user_id','slug', 'referrer','version','to_local',
     ];
     private $previous;
 
@@ -118,7 +120,7 @@ class Article extends Model
     }
     public function comments()
     {
-        return $this->belongsToMany('App\Comment');
+        return $this->hasMany('App\Comment');
     }
     public function votes()
     {

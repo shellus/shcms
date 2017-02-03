@@ -15,10 +15,12 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('article_id') -> unsigned();
-            $table->integer('user_id') -> unsigned();
-            $table->integer('parent_id') -> unsigned() -> nullable(); // 回复某人
-            $table->string('body');
+            $table->integer('article_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable(); // 回复某人
+            $table->tinyInteger('is_awesome')->unsigned()->default(0);
+            $table->string('slug') -> nullable()->index();
+            $table->longText('body');
             $table->timestamps();
 
             $table->foreign('article_id')->references('id')->on('articles')

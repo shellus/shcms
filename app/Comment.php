@@ -22,10 +22,24 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereUserId($value)
  * @mixin \Eloquent
+ * @property string $slug
+ * @property-read \App\Article $article
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Comment whereSlug($value)
+ * @property bool $is_awesome
+ * @method static \Illuminate\Database\Query\Builder|\App\Comment whereIsAwesome($value)
  */
 class Comment extends Model
 {
     protected $fillable = [
-        'body', 'user_id'
+        'body', 'user_id', 'article_id', 'slug', 'is_awesome',
     ];
+    public function article()
+    {
+        return $this->belongsTo('App\Article');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -18,8 +18,9 @@ class AddCategorieLogo extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->integer('logo_id') -> nullable() -> unsigned();
-            $table->foreign('logo_id')->references('id')->on('files');
+            $table->integer('logo_id')->nullable()->unsigned();
+            $table->foreign('logo_id')->references('id')->on('files')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

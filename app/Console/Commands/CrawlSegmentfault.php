@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Article;
+use App\Comment;
 use App\Service\UserService;
 use App\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -43,46 +45,71 @@ class CrawlSegmentfault extends Command
      */
     public function handle()
     {
-        $body = $this->request('https://segmentfault.com/');
-        $dom = new Crawler($body);
-
-        $new_index_list = $dom->filter('.stream-list .title a')->each(function (Crawler $node, $i) use (&$list) {
-            return $node->attr('href');
-        });
-
         if (\Storage::exists('index_list.diff')) {
-            $oldIndexList = \GuzzleHttp\json_decode(\Storage::get('index_list.diff'));
+            $oldIndexList = \GuzzleHttp\json_decode(\Storage::get('index_list.diff'),true);
         } else {
             $oldIndexList = [];
         }
 
+        $body = $this->request('https://segmentfault.com/');
+        $dom = new Crawler($body);
+
+        $dom->filter('.stream-list .stream-list__item')->each(function (Crawler $node, $i) use (&$new_index_list) {
+            $url = $node->filter('.title a')->attr('href');
+            $answersCount = intval($node->filter('.qa-rank .answers')->html());
+            $solved = $node->filter('.qa-rank .solved')->count();
+            $md5 = md5($url . $answersCount . $solved);
+            $new_index_list[$md5] = $url;
+        });
+
+
+
         $index_list = array_diff($new_index_list, $oldIndexList);
         foreach ($index_list as $questionPageUrl) {
             $question = $this->getQuestionPage('https://segmentfault.com' . $questionPageUrl);
-            $article = new Article();
-            $article->title = $question['title'];
-            $article->body = $question['question'];
-
-
-            $u = explode('/', $question['userUrl']);
-            $user_id = end($u);;
-            $userEmail = $user_id . '@segmentfault.com';
-
-            if (!($user = User::where(['email' => $userEmail])->first())) {
-                $user = UserService::create([
-                    'name' => utf8_to_unicode_str($question['userName']),
-                    'email' => $userEmail,
-                    'password' => Str::random(),
-                ]);
-            };
-
-            $article->user_id = $user->id;
-
-            $article->save();
+            $this->storeQuestion($question);
         }
-        if ($index_list){
+        if ($index_list) {
             $diffJson = \GuzzleHttp\json_encode($new_index_list, JSON_PRETTY_PRINT);
             \Storage::put('index_list.diff', $diffJson);
+        }
+    }
+
+    public function storeQuestion($question)
+    {
+
+        $user = UserService::firstOrCreate(['email' => $question['user']['email']], $question['user']);
+        if($user->wasRecentlyCreated){
+            \Log::info('add question user: ' . $user->email);
+        }
+        unset($question['user']);
+        $question['user_id'] = $user->id;
+
+        $article = Article::firstOrCreate(Arr::only($question,['slug']), $question);
+        if($article->wasRecentlyCreated){
+            \Log::info('add question: ' . $article->slug);
+        }
+        foreach ($question['answers'] as $answer) {
+
+            $answerUser = UserService::firstOrCreate(Arr::only($answer['user'],['email']), $answer['user']);
+            if($answerUser->wasRecentlyCreated){
+                \Log::info('add answer user: ' . $answerUser->email);
+            }
+
+            unset($answer['user']);
+            $answer['user_id'] = $answerUser->id;
+            $answer['article_id'] = $article->id;
+            $comment = Comment::firstOrCreate(Arr::only($answer,['slug']), $answer);
+
+            if($answer['is_awesome'] != $comment->is_awesome){
+                $comment->is_awesome = $answer['is_awesome'];
+                $comment->save();
+                \Log::info('answer change awesome: ' . $comment->slug);
+            }
+            if($comment->wasRecentlyCreated){
+                \Log::info('add answer: ' . $comment->slug);
+            }
+
         }
     }
 
@@ -90,27 +117,48 @@ class CrawlSegmentfault extends Command
     {
         $body = $this->request($questionPageUrl);
         $dom = new Crawler($body);
-        $question = $dom->filter('.question')->html();
 
-        $a['url'] = $questionPageUrl;
-        $a['id'] = $dom->filter('#questionTitle')->attr('data-id');
-        $a['title'] = $dom->filter('#questionTitle>a')->text();
-        $a['question'] = $question;
+        $question['url'] = $questionPageUrl;
+        $question['slug'] = 'segmentfault-'.$dom->filter('#questionTitle')->attr('data-id');
+        $question['title'] = $dom->filter('#questionTitle>a')->text();
+        $question['body'] = $dom->filter('.question')->html();;
 
-        $a['userName'] = $dom->filter('.question__author a strong')->first()->text();
-        $a['userUrl'] = $dom->filter('.question__author a')->first()->attr('href');
 
-        $a['answers'] = [];
-        $dom->filter('.widget-answers__item[id]')->each(function (Crawler $node, $i) use (&$a) {
-            $a['answers'][] = [
-                'id' => $node->attr('id'),
-                'userName' => $node->filter('.answer__info--author-name')->first()->text(),
-                'userUrl' => $node->filter('.answer__info--author-name')->first()->attr('href'),
-                'userRank' => $node->filter('.answer__info--author-rank')->first()->text(),
+
+        $userName = $dom->filter('.question__author a strong')->first()->text();
+        $userUrl = $dom->filter('.question__author a')->first()->attr('href');
+
+        $u = explode('/', $userUrl);
+        $user_id = end($u);;
+        $userEmail = $user_id . '@segmentfault.com';
+
+        $question['user'] = [
+            'name' => utf8_to_unicode_str($userName),
+            'email' => $userEmail,
+            'password' => Str::random(),
+        ];
+
+        $question['answers'] = $dom->filter('.widget-answers__item[id]')->each(function (Crawler $node, $i) {
+            $userName = $node->filter('.answer__info--author-name')->first()->text();
+            $userUrl = $node->filter('.answer__info--author-name')->first()->attr('href');
+
+            $u = explode('/', $userUrl);
+            $user_id = end($u);
+            $userEmail = $user_id . '@segmentfault.com';
+
+            return [
+                'slug' => 'segmentfault-'.$node->attr('id'),
                 'time' => $node->filter('.list-inline>li')->first()->filter('a')->text(),
-                'answer' => $node->filter('.answer')->first()->html(),
+                'body' => $node->filter('.answer')->first()->html(),
+                'is_awesome' => $node->filter('.accepted-check-icon')->count(),
+                'user' => [
+                    'name' => utf8_to_unicode_str($userName),
+                    'email' => $userEmail,
+                    'password' => Str::random(),
+                    'rank' => $node->filter('.answer__info--author-rank')->first()->text(),
+                ],
             ];
         });
-        return $a;
+        return $question;
     }
 }

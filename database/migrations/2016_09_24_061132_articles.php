@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+
 /*
 select
 	`c`.`title` AS `category_title`,
@@ -19,6 +20,7 @@ select
 		left join `categories` `c` on `c`.`id` = `ac`.`category_id`
 		left join `users` `u` on `u`.`id` = `a`.`user_id`
  */
+
 class Articles extends Migration
 {
     /**
@@ -30,10 +32,11 @@ class Articles extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('slug')->nullable()->index();
             $table->string('title');
             $table->longText('body');
-            $table->integer('user_id') ->default(0) -> unsigned();
-            $table->tinyInteger('version') ->default(0) -> unsigned();
+            $table->integer('user_id')->default(0)->unsigned();
+            $table->tinyInteger('version')->default(0)->unsigned();
             $table->timestamps();
 
 
