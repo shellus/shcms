@@ -101,3 +101,25 @@ function isCrawler() {
     }
     return false;
 };
+
+/**
+ * 转义大于3字节的UTF-8字符，因为数据库只接受3字节的字符
+ * @param $utf8
+ * @return string
+ */
+function utf8_to_unicode_str($utf8)
+{
+    $return = '';
+
+    for ($i = 0; $i < mb_strlen($utf8); $i++) {
+
+        $char = mb_substr($utf8, $i, 1);
+
+        // 3字节是汉字，不转换，4字节才是 emoji
+        if (strlen($char) > 3) {
+            $char = trim(json_encode($char), '"');
+        }
+        $return .= $char;
+    }
+    return $return;
+}

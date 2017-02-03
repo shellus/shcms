@@ -9,6 +9,7 @@ class UserController extends Controller
 {
     public function updateAvatar(Request $request)
     {
+        //TODO 扩展名限制，防止上传可执行脚本
         $user = \Auth::user();
         $file = $request->file('avatar');
         if(!$file->isValid()){

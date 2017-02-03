@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
@@ -40,6 +41,11 @@ class Test extends Command
      */
     public function handle()
     {
+        $count = 500000;
+        $min = 0.1;
+        $max = 666;
+
+        $overCount = \DB::table('articles')->where('money','!=','0')->count();
 
     }
 }
