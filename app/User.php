@@ -35,6 +35,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property-read \App\File $avatar
  * @property-read mixed $avatar_url
  * @method static \Illuminate\Database\Query\Builder|\App\User whereAvatarId($value)
+ * @property-read mixed $role_name
  */
 class User extends Authenticatable
 {

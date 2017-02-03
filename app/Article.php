@@ -33,6 +33,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  * @property-read mixed $display_title
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\ArticleVote[] $votes
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\ReadingHistory[] $readingHistories
+ * @property string $custom_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\KeyWords[] $keyWords
+ * @method static \Illuminate\Database\Query\Builder|\App\Article whereCustomId($value)
  */
 class Article extends Model
 {
@@ -112,7 +116,10 @@ class Article extends Model
     public function currentUserVote(){
         return $this -> votes() -> whereUserId(\Auth::user()->id) -> sum('vote');
     }
-
+    public function comments()
+    {
+        return $this->belongsToMany('App\Comment');
+    }
     public function votes()
     {
         return $this->hasMany('App\ArticleVote');
