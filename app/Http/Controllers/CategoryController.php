@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\File;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,22 +22,24 @@ class CategoryController extends Controller
 
         return view('category.index', compact('categories'));
     }
+
     public function updateLogo(Request $request)
     {
-        if (\Auth::user()->cant('manage_contents')){
+        if (\Auth::user()->cant('manage_contents')) {
             abort(403);
         }
         $category = Category::findOrFail($request['category_id']);
         $file = $request->file('logo');
-        if(!$file->isValid()){
-            return $this->fail('上传失败' . $file -> getErrorMessage());
+        if (!$file->isValid()) {
+            return $this->fail('上传失败' . $file->getErrorMessage());
         }
-        $save_path = 'category_logo/' . $category -> id;
+        $save_path = 'category_logo/' . $category->id;
         $file_model = File::createFormUploadFile($file, $save_path);
-        $category -> logo() ->associate($file_model);
-        $category -> save();
+        $category->logo()->associate($file_model);
+        $category->save();
         return $this->success('分类LOGO上传成功');
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,7 +53,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,14 +64,17 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $articles = Category::find($id) -> articles() -> paginate(20, ['articles.id', 'articles.title']);
+        $articles = Category::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20, ['articles.id', 'articles.title']);
 
-
+        $articles->load(['comments' => function ($query) {
+            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
+            $query->groupBy('article_id');
+        }]);
 
         return view('article.index', ['articles' => $articles]);
     }
@@ -76,7 +82,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -87,8 +93,8 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -99,7 +105,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

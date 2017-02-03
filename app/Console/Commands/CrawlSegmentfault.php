@@ -19,7 +19,7 @@ class CrawlSegmentfault extends Command
      *
      * @var string
      */
-    protected $signature = 'CrawlSegmentfault';
+    protected $signature = 'CrawlSegmentfault {url?}';
 
     /**
      * The console command description.
@@ -45,27 +45,33 @@ class CrawlSegmentfault extends Command
      */
     public function handle()
     {
+        if ($this->argument('url')){
+            $question = $this->getQuestionPage($this->argument('url'));
+            $this->storeQuestion($question);
+            return ;
+        }
         if (\Storage::exists('index_list.diff')) {
             $oldIndexList = \GuzzleHttp\json_decode(\Storage::get('index_list.diff'),true);
         } else {
             $oldIndexList = [];
         }
 
-        $body = $this->request('https://segmentfault.com/');
+        $body = $this->request('https://segmentfault.com/questions');
         $dom = new Crawler($body);
 
         $dom->filter('.stream-list .stream-list__item')->each(function (Crawler $node, $i) use (&$new_index_list) {
             $url = $node->filter('.title a')->attr('href');
             $answersCount = intval($node->filter('.qa-rank .answers')->html());
             $solved = $node->filter('.qa-rank .solved')->count();
-            $md5 = md5($url . $answersCount . $solved);
+            $md5 = "$url-$answersCount-$solved";
             $new_index_list[$md5] = $url;
         });
 
 
 
-        $index_list = array_diff($new_index_list, $oldIndexList);
-        foreach ($index_list as $questionPageUrl) {
+        $index_list = array_diff_key($new_index_list, $oldIndexList);
+        foreach ($index_list as $k => $questionPageUrl) {
+            \Log::info('diff: ' . $k . ':' . $questionPageUrl);
             $question = $this->getQuestionPage('https://segmentfault.com' . $questionPageUrl);
             $this->storeQuestion($question);
         }
@@ -91,6 +97,7 @@ class CrawlSegmentfault extends Command
         }
         foreach ($question['answers'] as $answer) {
 
+
             $answerUser = UserService::firstOrCreate(Arr::only($answer['user'],['email']), $answer['user']);
             if($answerUser->wasRecentlyCreated){
                 \Log::info('add answer user: ' . $answerUser->email);
@@ -100,7 +107,6 @@ class CrawlSegmentfault extends Command
             $answer['user_id'] = $answerUser->id;
             $answer['article_id'] = $article->id;
             $comment = Comment::firstOrCreate(Arr::only($answer,['slug']), $answer);
-
             if($answer['is_awesome'] != $comment->is_awesome){
                 $comment->is_awesome = $answer['is_awesome'];
                 $comment->save();
@@ -121,7 +127,7 @@ class CrawlSegmentfault extends Command
         $question['url'] = $questionPageUrl;
         $question['slug'] = 'segmentfault-'.$dom->filter('#questionTitle')->attr('data-id');
         $question['title'] = $dom->filter('#questionTitle>a')->text();
-        $question['body'] = $dom->filter('.question')->html();;
+        $question['body'] = trim($dom->filter('.question')->html());
 
 
 
@@ -149,7 +155,7 @@ class CrawlSegmentfault extends Command
             return [
                 'slug' => 'segmentfault-'.$node->attr('id'),
                 'time' => $node->filter('.list-inline>li')->first()->filter('a')->text(),
-                'body' => $node->filter('.answer')->first()->html(),
+                'body' => trim($node->filter('.answer')->first()->html()),
                 'is_awesome' => $node->filter('.accepted-check-icon')->count(),
                 'user' => [
                     'name' => utf8_to_unicode_str($userName),

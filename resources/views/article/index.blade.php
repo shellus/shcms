@@ -8,18 +8,26 @@
                         @include('components.search-form')
                         <ul id="articles" class="list-unstyled">
                             @foreach($articles as $article)
-                                <li>
+                                <li style="padding-bottom: 5px">
                                     <div>
-                                        <a title="{{ $article -> title }}" href="{{ $article -> showUrl() }}"><h3>{{ $article -> display_title }}</h3></a>
+
+                                        <h4>
+                                            <span style="padding: 4px 8px; margin-right: 8px;" class="bg-info">
+                                                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                                {{ $article->comments_count() }}
+                                            </span>
+
+                                        <a class="" title="{{ $article -> title }}" href="{{ $article -> showUrl() }}">
+                                            {{ $article -> display_title }}
+                                        </a>
+                                        </h4>
                                     </div>
-                                    <div>
-                                        {!! trim(strip_tags(mb_substr($article -> body,0,120))) !!}
-                                    </div>
-                                    <a title="{{ $article -> title }}" href="{{ $article -> showUrl() }}">阅读全文</a>
-                                    <hr>
                                 </li>
                             @endforeach
                         </ul>
+                    </div>
+                    <div class="text-center">
+                        {{ $articles->links() }}
                     </div>
                     <br>
                 </div>

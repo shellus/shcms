@@ -12,7 +12,6 @@
 */
 // TODO 拆分admin为独立模块
 Route::get('/', 'IndexController@index')->name('admin');
-Route::get('/test', 'TestController@index');
 Route::get('/login', 'AuthController@showLoginForm');
 Route::post('/login', 'AuthController@login');
 

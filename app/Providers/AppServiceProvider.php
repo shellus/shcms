@@ -19,9 +19,18 @@ class AppServiceProvider extends ServiceProvider
 
         \View::addNamespace('admin',resource_path('/views/admin/'));
 
+        $sqlLogFileName = 'sql';
+        switch (config('app.log')){
+            case 'single':
 
-        $log_file = storage_path('logs'.DIRECTORY_SEPARATOR.'sql.log');
-        $sqlLogger = new Logger('sql', [new StreamHandler($log_file)]);
+                break;
+            case 'daily':
+                $sqlLogFileName = $sqlLogFileName . date('Y-m-d');
+                break;
+        }
+        $sqlLogFileName = storage_path('logs'.DIRECTORY_SEPARATOR.$sqlLogFileName.'.log');
+
+        $sqlLogger = new Logger('sql', [new StreamHandler($sqlLogFileName)]);
 
         $user = \Auth::user();
         if (config('app.log_level') == 'debug'){

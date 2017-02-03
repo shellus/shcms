@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\CrawlBuildUrls::class,
         Commands\CrawlSegmentfault::class,
         Commands\ArticleLexicalAnalysis::class,
+        Commands\FixArticleDefaultCategory::class,
         Commands\Ws::class,
         Commands\Test::class,
     ];

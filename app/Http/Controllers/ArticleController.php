@@ -87,9 +87,9 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show(Article $article)
     {
-        return view('article.show',['article' => Article::find($id)]);
+        return view('article.show',['article' => $article]);
     }
 
     /**

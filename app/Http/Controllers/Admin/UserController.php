@@ -27,7 +27,7 @@ class UserController extends Controller
         $this->view = new \View();
 
 
-        $this->view->offsetSet('trans',$this->trans);
+//        $this->view->offsetSet('trans',$this->trans);
     }
 
     public function index()

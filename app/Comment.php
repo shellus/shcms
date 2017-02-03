@@ -31,6 +31,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+    // 触发的关联关系updated_at时间戳
+    protected $touches = ['article'];
+
     protected $fillable = [
         'body', 'user_id', 'article_id', 'slug', 'is_awesome',
     ];
