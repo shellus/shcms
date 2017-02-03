@@ -18,7 +18,8 @@ class UserService
      * @param $data
      * @return User
      */
-    public static function create($data){
+    public static function create($data)
+    {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -26,5 +27,19 @@ class UserService
             'register_ip' => \Request::ip(),
             'api_token' => Str::random(60),
         ]);
+    }
+
+    /**
+     * @param $attributes
+     * @param array $values
+     * @return User
+     */
+    public static function firstOrCreate($attributes, $values = array())
+    {
+        $user = User::where($attributes)->first();
+        if(!$user){
+            $user = self::create($values);
+        }
+        return $user;
     }
 }
