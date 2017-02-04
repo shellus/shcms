@@ -126,8 +126,8 @@ class CrawlSegmentfault extends Command
 
         $question['url'] = $questionPageUrl;
         $question['slug'] = 'segmentfault-'.$dom->filter('#questionTitle')->attr('data-id');
-        $question['title'] = $dom->filter('#questionTitle>a')->text();
-        $question['body'] = trim($dom->filter('.question')->html());
+        $question['title'] = utf8_to_unicode_str($dom->filter('#questionTitle>a')->text());
+        $question['body'] = utf8_to_unicode_str(trim($dom->filter('.question')->html()));
 
 
 
@@ -155,7 +155,7 @@ class CrawlSegmentfault extends Command
             return [
                 'slug' => 'segmentfault-'.$node->attr('id'),
                 'time' => $node->filter('.list-inline>li')->first()->filter('a')->text(),
-                'body' => trim($node->filter('.answer')->first()->html()),
+                'body' => utf8_to_unicode_str(trim($node->filter('.answer')->first()->html())),
                 'is_awesome' => $node->filter('.accepted-check-icon')->count(),
                 'user' => [
                     'name' => utf8_to_unicode_str($userName),

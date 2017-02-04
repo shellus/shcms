@@ -69,11 +69,11 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $articles = Category::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20, ['articles.id', 'articles.title']);
+        $articles = Category::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
 
         $articles->load(['comments' => function ($query) {
-            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
-            $query->groupBy('article_id');
+//            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
+//            $query->groupBy('article_id');
         }]);
 
         return view('article.index', ['articles' => $articles]);

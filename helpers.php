@@ -102,6 +102,16 @@ function isCrawler() {
     return false;
 };
 
+
+/**
+ * @param $needle
+ * @param $replacement
+ * @param $haystack
+ * @return string
+ */
+function mb_str_replace($needle, $replacement, $haystack) {
+    return implode($replacement, mb_split($needle, $haystack));
+}
 /**
  * 转义大于3字节的UTF-8字符，因为数据库只接受3字节的字符
  * @param $utf8
@@ -109,17 +119,20 @@ function isCrawler() {
  */
 function utf8_to_unicode_str($utf8)
 {
-    $return = '';
-
+    $multibyteArr = [];
     for ($i = 0; $i < mb_strlen($utf8); $i++) {
 
         $char = mb_substr($utf8, $i, 1);
 
         // 3字节是汉字，不转换，4字节才是 emoji
         if (strlen($char) > 3) {
-            $char = trim(json_encode($char), '"');
+            $multibyteArr[] = $char;
         }
-        $return .= $char;
     }
-    return $return;
+    $multibyteArr = array_unique($multibyteArr);
+    foreach ($multibyteArr as $char){
+        $new_char = trim(json_encode($char), '"');
+        $utf8 = mb_str_replace($char, $new_char, $utf8);
+    }
+    return $utf8;
 }

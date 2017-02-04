@@ -8,19 +8,33 @@
                         @include('components.search-form')
                         <ul id="articles" class="list-unstyled">
                             @foreach($articles as $article)
-                                <li style="padding-bottom: 5px">
+                                <li style="padding-bottom: 8px">
                                     <div>
 
                                         <h4>
-                                            <span style="padding: 4px 8px; margin-right: 8px;" class="bg-info">
-                                                <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                                {{ $article->comments_count() }}
-                                            </span>
-
                                         <a class="" title="{{ $article -> title }}" href="{{ $article -> showUrl() }}">
                                             {{ $article -> display_title }}
                                         </a>
                                         </h4>
+                                        <span style="padding: 4px 8px; margin-right: 8px;" class="bg-info">
+                                                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                            {{ $article->comments->count() }}
+                                            </span>
+
+                                        <small>
+                                            <i class="fa fa-user-o text-warning" aria-hidden="true"></i>
+                                            <a href="#">{{ $article->user->name }}</a>
+                                        </small>
+                                        <small>{{ $article->created_at->diffForHumans() }} 发布</small>
+
+                                        @if($article->comments->count())
+                                            ||
+                                            <small>
+                                                <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                                <a href="#">{{ $article->comments->first()->user->name }}</a>
+                                            </small>
+                                            <small>{{ $article->comments->first()->created_at->diffForHumans() }} 回复</small>
+                                        @endif
                                     </div>
                                 </li>
                             @endforeach
