@@ -45,13 +45,13 @@ class CrawlSegmentfault extends Command
      */
     public function handle()
     {
-        if ($this->argument('url')){
+        if ($this->argument('url')) {
             $question = $this->getQuestionPage($this->argument('url'));
             $this->storeQuestion($question);
-            return ;
+            return;
         }
         if (\Storage::exists('index_list.diff')) {
-            $oldIndexList = \GuzzleHttp\json_decode(\Storage::get('index_list.diff'),true);
+            $oldIndexList = \GuzzleHttp\json_decode(\Storage::get('index_list.diff'), true);
         } else {
             $oldIndexList = [];
         }
@@ -66,7 +66,6 @@ class CrawlSegmentfault extends Command
             $md5 = "$url-$answersCount-$solved";
             $new_index_list[$md5] = $url;
         });
-
 
 
         $index_list = array_diff_key($new_index_list, $oldIndexList);
@@ -85,35 +84,35 @@ class CrawlSegmentfault extends Command
     {
 
         $user = UserService::firstOrCreate(['email' => $question['user']['email']], $question['user']);
-        if($user->wasRecentlyCreated){
+        if ($user->wasRecentlyCreated) {
             \Log::info('add question user: ' . $user->email);
         }
         unset($question['user']);
         $question['user_id'] = $user->id;
 
-        $article = Article::firstOrCreate(Arr::only($question,['slug']), $question);
-        if($article->wasRecentlyCreated){
+        $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
+        if ($article->wasRecentlyCreated) {
             \Log::info('add question: ' . $article->slug);
+            \Event::fire(new \App\Events\CrawlSegmentfaultQuestion($question));
         }
         foreach ($question['answers'] as $answer) {
-
-
-            $answerUser = UserService::firstOrCreate(Arr::only($answer['user'],['email']), $answer['user']);
-            if($answerUser->wasRecentlyCreated){
+            $answerUser = UserService::firstOrCreate(Arr::only($answer['user'], ['email']), $answer['user']);
+            if ($answerUser->wasRecentlyCreated) {
                 \Log::info('add answer user: ' . $answerUser->email);
             }
 
             unset($answer['user']);
             $answer['user_id'] = $answerUser->id;
             $answer['article_id'] = $article->id;
-            $comment = Comment::firstOrCreate(Arr::only($answer,['slug']), $answer);
-            if($answer['is_awesome'] != $comment->is_awesome){
+            $comment = Comment::firstOrCreate(Arr::only($answer, ['slug']), $answer);
+            if ($answer['is_awesome'] != $comment->is_awesome) {
                 $comment->is_awesome = $answer['is_awesome'];
                 $comment->save();
                 \Log::info('answer change awesome: ' . $comment->slug);
             }
-            if($comment->wasRecentlyCreated){
+            if ($comment->wasRecentlyCreated) {
                 \Log::info('add answer: ' . $comment->slug);
+                \Event::fire(new \App\Events\CrawlSegmentfaultAnswer($question, $answer));
             }
 
         }
@@ -125,10 +124,9 @@ class CrawlSegmentfault extends Command
         $dom = new Crawler($body);
 
         $question['url'] = $questionPageUrl;
-        $question['slug'] = 'segmentfault-'.$dom->filter('#questionTitle')->attr('data-id');
+        $question['slug'] = 'segmentfault-' . $dom->filter('#questionTitle')->attr('data-id');
         $question['title'] = utf8_to_unicode_str($dom->filter('#questionTitle>a')->text());
         $question['body'] = utf8_to_unicode_str(trim($dom->filter('.question')->html()));
-
 
 
         $userName = $dom->filter('.question__author a strong')->first()->text();
@@ -153,7 +151,7 @@ class CrawlSegmentfault extends Command
             $userEmail = $user_id . '@segmentfault.com';
 
             return [
-                'slug' => 'segmentfault-'.$node->attr('id'),
+                'slug' => 'segmentfault-' . $node->attr('id'),
                 'time' => $node->filter('.list-inline>li')->first()->filter('a')->text(),
                 'body' => utf8_to_unicode_str(trim($node->filter('.answer')->first()->html())),
                 'is_awesome' => $node->filter('.accepted-check-icon')->count(),

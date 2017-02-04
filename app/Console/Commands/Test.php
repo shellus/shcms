@@ -54,7 +54,6 @@ class Test extends Command
         $count = 500000;
         $min = 0.1;
         $max = 666;
-
         $overCount = \DB::table('articles')->where('money','!=','0')->count();
 
     }

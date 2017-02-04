@@ -74,8 +74,8 @@ class CategoryController extends Controller
         $articles->load(['comments' => function ($query) {
 //            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
 //            $query->groupBy('article_id');
+            $query->orderBy('created_at','DESC');
         }]);
-
         return view('article.index', ['articles' => $articles]);
     }
 

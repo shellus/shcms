@@ -89,10 +89,32 @@
                 <hr>
 
 
-                <div id="article-body">
+                <section id="article-body">
                     {!! $article -> body !!}
-                </div>
+                </section>
                 <hr>
+                <ul class="comments">
+                    @foreach($article['comments'] as $comment)
+
+                        <li style="border-bottom: darkcyan solid 1px;">
+
+                            <section style="padding: 10px;">
+                                {!! $comment->body !!}
+                            </section>
+                            <div class="author">
+                                <a href="#">
+                                    <img style="padding: 5px;" class="img-circle" width="50" height="50"
+                                         src="{{ $comment->user->avatarUrl }}">
+                                    {{ $comment->user->name }}</a>
+                                <small>{{ $comment->created_at->diffForHumans() }} 回复</small>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+                <div class="goto-comment-editor">
+                    <h4>回复</h4>
+                    <form action="{{ route('') }}"></form>
+                </div>
             </div>
         </div>
 
@@ -178,11 +200,11 @@
 
         }
 
-        var ishttps = 'https:' == document.location.protocol ? true: false;
+        var ishttps = 'https:' == document.location.protocol ? true : false;
 
-        if(ishttps){
+        if (ishttps) {
             var conn = new WebSocket('wss://' + document.domain + '/websocket');
-        }else {
+        } else {
             var conn = new WebSocket('ws://' + document.domain + ':8080');
         }
 
