@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Support\Arr;
+use Illuminate\Validation\ValidationException;
 
 class Controller extends BaseController
 {
@@ -17,10 +19,12 @@ class Controller extends BaseController
         $statusCodes = [
             'fail' => 500,
             'success' => 200,
+            'unauthenticated'=>401,
+            'validationException'=>422,
 
         ];
-        if (\Request::isJson()){
-            return JsonResponse::create([
+        if (\Request::expectsJson()){
+            return response()->json([
                 'status' => $status,
                 'message' => $message,
                 'data' => $data,
@@ -30,6 +34,19 @@ class Controller extends BaseController
         }
 
     }
+
+    protected function buildFailedValidationResponse(Request $request, array $errors)
+    {
+        if ($request->expectsJson()) {
+            return $this->validationException($errors);
+        }
+
+        return redirect()->to($this->getRedirectUrl())
+            ->withInput($request->input())
+            ->withErrors($errors, $this->errorBag());
+    }
+    public function validationException($errors){return $this->message('validationException', Arr::first(Arr::first($errors)), $errors);}
+    public function unauthenticated($data = null){return $this->message('unauthenticated', '你需要先登录', $data);}
     protected function fail($m, $data = null){return $this->message('fail', $m, $data);}
     protected function success($m, $data = null){return $this->message('success', $m, $data);}
 }

@@ -11,6 +11,22 @@
 |
 */
 
+Route::group([
+    'middleware' => 'auth',
+], function ($router) {
+    Route::post('/article/vote', 'ArticleController@vote');
+    Route::resource('article.comment', 'CommentController');
+
+    Route::post('/category/update-logo', 'CategoryController@updateLogo');
+
+    Route::post('/user/update-avatar', 'UserController@updateAvatar');
+    Route::get('/home', 'HomeController@index') -> name('home');
+
+    Route::get('/favorite/show-add-article-to-favorite', 'FavoriteController@showAddArticleToFavorite') -> name('show-add-article-to-favorite');
+    Route::post('/favorite/add-article-to-favorite', 'FavoriteController@addArticleToFavorite') -> name('add-article-to-favorite');
+    Route::resource('/favorite', 'FavoriteController');
+});
+
 Route::get('/', 'IndexController@index') -> name('index');
 Route::get('/test', 'TestController@index');
 
@@ -32,30 +48,9 @@ $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 /********************* End *********************/
 
-
-Route::group([
-    'middleware' => 'auth',
-], function ($router) {
-    Route::get('/article/search', 'ArticleController@search');
-    Route::get('/article/reading', 'ArticleController@reading');
-
-    Route::post('/article/vote', 'ArticleController@vote');
-
-    Route::resource('/article', 'ArticleController');
-
-    Route::post('/category/update-logo', 'CategoryController@updateLogo');
-    Route::resource('/category', 'CategoryController');
-
-
-    Route::post('/user/update-avatar', 'UserController@updateAvatar');
-    Route::get('/home', 'HomeController@index') -> name('home');
-
-    Route::get('/favorite/show-add-article-to-favorite', 'FavoriteController@showAddArticleToFavorite') -> name('show-add-article-to-favorite');
-
-    Route::post('/favorite/add-article-to-favorite', 'FavoriteController@addArticleToFavorite') -> name('add-article-to-favorite');
-
-    Route::resource('/favorite', 'FavoriteController');
-});
-
+Route::get('/article/search', 'ArticleController@search');
+Route::get('/article/reading', 'ArticleController@reading');
+Route::resource('/article', 'ArticleController');
+Route::resource('/category', 'CategoryController');
 
 

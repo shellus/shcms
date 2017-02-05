@@ -42,7 +42,8 @@
                 <div class="row action-list">
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="VoteBar"
+                         data-currentUserVote="{{ \Auth::check() ? $article -> currentUserVote():0 }}">
                         <div style="position: absolute; left: -35px; top: 65px;" class="zm-votebar goog-scrollfloater"
                              data-za-module="VoteBar">
                             <div>
@@ -77,7 +78,7 @@
                             </div>
                         </div>
 
-                        @if(\Auth::user()->can('manage_contents'))
+                        @if(\Auth::check() && \Auth::user()->can('manage_contents'))
                             <div>
                                 <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
                                 <a href="{{ route('article.edit', $article -> id) }}">删除</a>
@@ -113,7 +114,14 @@
                 </ul>
                 <div class="goto-comment-editor">
                     <h4>回复</h4>
-                    <form action="{{ route('') }}"></form>
+                    <form id="comment-editor" method="post" action="{{ route('article.comment.store', $article) }}">
+                        {{ csrf_field() }}
+
+                        <div class="form-group">
+                                <textarea class="form-control" name="body"></textarea>
+                        </div>
+                        <button>提交</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -149,8 +157,30 @@
 
 @section('footer')
     <script>
+        $(document).on('submit', '#comment-editor', function(event){
+            var form = $(event.target);
+            var url = form.attr('action');
+            var method = form.attr('method');
+            var request_data = form.serializeArray();
+            $.ajax(url, {
+                type: method,
+                dataType: 'json',
+                data: request_data,
+            }).always(function(xhrOrData,status){
+                var response_data = [];
+                if (status == 'success'){
+                    response_data = xhrOrData;
+                }else{
+                    response_data = xhrOrData.responseJSON;
+                }
+                alert(response_data.message);
+            });
+            return false;
+        })
+    </script>
+    <script>
 
-        var currentUserVote = {{ $article -> currentUserVote() }};
+        var currentUserVote = $('#VoteBar').data('currentUserVote');
 
         renderVote(currentUserVote);
 
