@@ -69,7 +69,8 @@ class CrawlSegmentfault extends Command
 
 
         $index_list = array_diff_key($new_index_list, $oldIndexList);
-        foreach ($index_list as $k => $questionPageUrl) {
+
+        foreach (array_reverse($index_list) as $k => $questionPageUrl) {
             \Log::info('diff: ' . $k . ':' . $questionPageUrl);
             $question = $this->getQuestionPage('https://segmentfault.com' . $questionPageUrl);
             $this->storeQuestion($question);
