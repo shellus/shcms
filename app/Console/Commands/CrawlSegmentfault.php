@@ -87,7 +87,6 @@ class CrawlSegmentfault extends Command
         if ($user->wasRecentlyCreated) {
             \Log::info('add question user: ' . $user->email);
         }
-        unset($question['user']);
         $question['user_id'] = $user->id;
 
         $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
@@ -101,7 +100,6 @@ class CrawlSegmentfault extends Command
                 \Log::info('add answer user: ' . $answerUser->email);
             }
 
-            unset($answer['user']);
             $answer['user_id'] = $answerUser->id;
             $answer['article_id'] = $article->id;
             $comment = Comment::firstOrCreate(Arr::only($answer, ['slug']), $answer);

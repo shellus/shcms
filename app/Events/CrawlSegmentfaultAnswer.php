@@ -22,8 +22,8 @@ class CrawlSegmentfaultAnswer extends CrawlSegmentfault
      */
     public function __construct($question, $answer)
     {
-        $this->title = mb_convert_encoding("回答：" . $question['title'], 'GBK');
-        $this->body = mb_convert_encoding(strip_tags($answer['body']), 'GBK');
+        $this->title = "回答：" . $question['title'];
+        $this->body = $answer['user']['name'] .': '.strip_tags($answer['body']);
         $this->url = $question['url'];
         //
     }

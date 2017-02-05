@@ -6,7 +6,7 @@ use App\Events\CrawlSegmentfault;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CrawlSegmentfaultLister
+class CrawlSegmentfaultLister implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -27,8 +27,8 @@ class CrawlSegmentfaultLister
     public function handle(CrawlSegmentfault $event)
     {
 
-        if (env('APP_ENV') === 'local'){
-            exec('notify -t '.$event->getTitle().' -m "'.$event->getBody().'" -s --open '.$event->getUrl().'');
+        if (config('app.env') === 'local'){
+            exec(mb_convert_encoding('notify -t '.$event->getTitle().' -m "'.$event->getBody().'" -s --open '.$event->getUrl().'', 'GBK'));
         }
 
     }
