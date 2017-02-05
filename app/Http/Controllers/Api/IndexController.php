@@ -11,12 +11,12 @@ class IndexController extends Controller
 {
     public function systemInfo(){
         return [
-            'site_name' => env('APP_NAME'),
-            'site_sub_name' => env('APP_SUB_NAME'),
-            'version' => env('APP_VERSION'),
-            'env' => env('APP_ENV'),
-            'debug' => env('APP_DEBUG'),
-            'database' => env('DB_DATABASE'),
+            'site_name' => config('app.name'),
+            'site_sub_name' => config('app.sub_name'),
+            'version' => config('app.version'),
+            'env' => config('app.env'),
+            'debug' => config('app.debug'),
+            'database' => config('database.connections.mysql.database'),
         ];
     }
 }

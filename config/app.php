@@ -20,6 +20,7 @@ return [
 
     'allow_register' => env('ALLOW_REGISTER', true),
 
+    'upload_file_allow_extensions' => ['jpg','png','gif'],
     /*
     |--------------------------------------------------------------------------
     | Application Environment
