@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\UploadedFileExtensionNotAllow;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -35,7 +36,10 @@ class File extends Model
 
 
     public static function createFormUploadFile(\Illuminate\Http\UploadedFile $file, $save_path = ''){
-        $random_filename = Str::random() . '.' . $file->getClientOriginalExtension();
+        if(in_array($extension = $file->getClientOriginalExtension(), config('app.upload_file_allow_extensions', []))){
+            throw new UploadedFileExtensionNotAllow("extension: $extension is not allow");
+        }
+        $random_filename = Str::random() . '.' . $extension;
         $full_path = $save_path . '/' . $random_filename;
         $f_context = fopen($file -> getPathname(), 'r');
         $result = \Storage::disk('public')->put($full_path, $f_context);
@@ -54,13 +58,17 @@ class File extends Model
     /**
      * @param $imageBinary
      * @param string $path
-     * @param string $ext
+     * @param string $extension
      * @return File
      * @throws \Exception
      */
-    public static function createFormBinary($imageBinary, $path = '', $ext = 'jpg'){
+    public static function createFormBinary($imageBinary, $path = '', $extension = 'jpg'){
+
+        if(in_array($extension, config('app.upload_file_allow_extensions', []))){
+            throw new UploadedFileExtensionNotAllow("extension: $extension is not allow");
+        }
         $save_path = $path;
-        $filename = Str::random() . '.' . $ext;
+        $filename = Str::random() . '.' . $extension;
         $full_path = $save_path . '/' . $filename;
         $result = \Storage::disk('public')->put($full_path, $imageBinary);
         if(!$result){
