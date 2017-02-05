@@ -88,7 +88,7 @@ class CrawlSegmentfault extends Command
             \Log::info('add question user: ' . $user->email);
         }
         $question['user_id'] = $user->id;
-
+        $question['body'] = "\r\n" . trim(\Purifier::clean($question['body'])) . "\r\n";
         $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
         if ($article->wasRecentlyCreated) {
             \Log::info('add question: ' . $article->slug);
@@ -102,6 +102,7 @@ class CrawlSegmentfault extends Command
 
             $answer['user_id'] = $answerUser->id;
             $answer['article_id'] = $article->id;
+            $answer['body'] = "\r\n" . trim(\Purifier::clean($answer['body'])) . "\r\n";
             $comment = Comment::firstOrCreate(Arr::only($answer, ['slug']), $answer);
             if ($answer['is_awesome'] != $comment->is_awesome) {
                 $comment->is_awesome = $answer['is_awesome'];

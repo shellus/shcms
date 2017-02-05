@@ -3,16 +3,17 @@
 namespace App\Console\Commands;
 
 use App\Article;
+use App\Comment;
 use Illuminate\Console\Command;
 
-class FixArticleDefaultCategory extends Command
+class FixArticle extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'FixArticleDefaultCategory';
+    protected $signature = 'FixArticle';
 
     /**
      * The console command description.
@@ -41,7 +42,15 @@ class FixArticleDefaultCategory extends Command
         Article::chunk(100, function ($articles){
             /** @var Article $article */
             foreach ($articles as $article){
-                $article->category();
+                $article->body = "\r\n" . trim(\Purifier::clean($article->body)) . "\r\n";
+                $article->save();
+            }
+        });
+        Comment::chunk(100, function ($articles){
+            /** @var Article $article */
+            foreach ($articles as $article){
+                $article->body = "\r\n" . trim(\Purifier::clean($article->body)) . "\r\n";
+                $article->save();
             }
         });
     }

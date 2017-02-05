@@ -10,8 +10,8 @@
 
                     @if(config('app.allow_register'))
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                        @include('hacker_alert')
                         {{ csrf_field() }}
-
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">用户名</label>
 

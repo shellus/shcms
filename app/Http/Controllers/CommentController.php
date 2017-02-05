@@ -40,6 +40,8 @@ class CommentController extends Controller
         $this->validate($request,[
             'body'=>'required',
         ]);
+
+        $request['body'] = "\r\n" . trim(\Purifier::clean($request['body'])) . "\r\n";
         $request['user_id'] = \Auth::user()->id;
         $article->comments()->create($request->all());
         return $this->success('回复成功');

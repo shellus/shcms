@@ -115,8 +115,8 @@
                 <div class="goto-comment-editor">
                     <h4>回复</h4>
                     <form id="comment-editor" method="post" action="{{ route('article.comment.store', $article) }}">
+                        @include('hacker_alert')
                         {{ csrf_field() }}
-
                         <div class="form-group">
                                 <textarea class="form-control" name="body"></textarea>
                         </div>

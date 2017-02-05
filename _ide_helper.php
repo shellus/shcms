@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.29 on 2017-02-03.
+ * Generated for Laravel 5.3.29 on 2017-02-06.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -9,6 +9,33 @@
 
 namespace {
     exit("This file should not be included, only analyzed by your IDE");
+
+    class Purifier extends \Mews\Purifier\Facades\Purifier{
+        
+        /**
+         * 
+         *
+         * @param $dirty
+         * @param null $config
+         * @return mixed 
+         * @static 
+         */
+        public static function clean($dirty, $config = null){
+            return \Mews\Purifier\Purifier::clean($dirty, $config);
+        }
+        
+        /**
+         * Get HTMLPurifier instance.
+         *
+         * @return \HTMLPurifier 
+         * @static 
+         */
+        public static function getInstance(){
+            return \Mews\Purifier\Purifier::getInstance();
+        }
+        
+    }
+
 
     class Entrust extends \Zizaco\Entrust\EntrustFacade{
         

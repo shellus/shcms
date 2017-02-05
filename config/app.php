@@ -21,6 +21,7 @@ return [
     'allow_register' => env('ALLOW_REGISTER', true),
 
     'upload_file_allow_extensions' => ['jpg','png','gif'],
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -187,6 +188,9 @@ return [
 
         // debugBar
         Barryvdh\Debugbar\ServiceProvider::class,
+
+        // HTML过滤
+        Mews\Purifier\PurifierServiceProvider::class,
         //
 
         /*
@@ -213,6 +217,8 @@ return [
     */
 
     'aliases' => [
+
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
 
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
