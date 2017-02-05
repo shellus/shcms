@@ -50,8 +50,8 @@ class CrawlSegmentfault extends Command
             $this->storeQuestion($question);
             return;
         }
-        if (\Storage::exists('index_list.diff')) {
-            $oldIndexList = \GuzzleHttp\json_decode(\Storage::get('index_list.diff'), true);
+        if (\Storage::disk('storage')->exists('index_list.diff')) {
+            $oldIndexList = \GuzzleHttp\json_decode(\Storage::disk('storage')->get('index_list.diff'), true);
         } else {
             $oldIndexList = [];
         }
@@ -76,7 +76,7 @@ class CrawlSegmentfault extends Command
         }
         if ($index_list) {
             $diffJson = \GuzzleHttp\json_encode($new_index_list, JSON_PRETTY_PRINT);
-            \Storage::put('index_list.diff', $diffJson);
+            \Storage::disk('storage')->put('index_list.diff', $diffJson);
         }
     }
 
@@ -88,7 +88,7 @@ class CrawlSegmentfault extends Command
             \Log::info('add question user: ' . $user->email);
         }
         $question['user_id'] = $user->id;
-        $question['body'] = "\r\n" . trim(\Purifier::clean($question['body'])) . "\r\n";
+        $question['body'] = $this->filterBody($question['body']);
         $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
         if ($article->wasRecentlyCreated) {
             \Log::info('add question: ' . $article->slug);
@@ -102,7 +102,7 @@ class CrawlSegmentfault extends Command
 
             $answer['user_id'] = $answerUser->id;
             $answer['article_id'] = $article->id;
-            $answer['body'] = "\r\n" . trim(\Purifier::clean($answer['body'])) . "\r\n";
+            $answer['body'] = $this->filterBody($answer['body']);
             $comment = Comment::firstOrCreate(Arr::only($answer, ['slug']), $answer);
             if ($answer['is_awesome'] != $comment->is_awesome) {
                 $comment->is_awesome = $answer['is_awesome'];
@@ -116,7 +116,24 @@ class CrawlSegmentfault extends Command
 
         }
     }
+    public static function filterBody($body){
+        $dom = new Crawler();
+        $dom->addHtmlContent($body);
+        $dom->filter('img[data-src]')->reduce(function (Crawler $node){
+            $node->getNode(0)->setAttribute('src', 'https://segmentfault.com/'.$node->attr('data-src'));
+            $node->getNode(0)->removeAttribute('data-src');
+        });
+        try{
+            // 神奇的玩意，会自动加上body标签
+            $body = $dom->filter('body')->html();
+        }catch (\InvalidArgumentException $e){
+            $body = '';
+        }
 
+        // 过滤非法标签
+        $body = "\r\n" . trim(\Purifier::clean($body)) . "\r\n";
+        return $body;
+    }
     public function getQuestionPage($questionPageUrl)
     {
         $body = $this->request($questionPageUrl);

@@ -13,7 +13,7 @@ class FixArticle extends Command
      *
      * @var string
      */
-    protected $signature = 'FixArticle';
+    protected $signature = 'FixArticle {id?}';
 
     /**
      * The console command description.
@@ -39,17 +39,25 @@ class FixArticle extends Command
      */
     public function handle()
     {
+        if($id = $this->argument('id')){
+            $article = Article::find($id);
+            $article->body = CrawlSegmentfault::filterBody($article->body);
+            $article->save();
+            return;
+        }
         Article::chunk(100, function ($articles){
             /** @var Article $article */
             foreach ($articles as $article){
-                $article->body = "\r\n" . trim(\Purifier::clean($article->body)) . "\r\n";
+                $article->body = CrawlSegmentfault::filterBody($article->body);
+                $article->timestamps = false;
                 $article->save();
             }
         });
         Comment::chunk(100, function ($articles){
             /** @var Article $article */
             foreach ($articles as $article){
-                $article->body = "\r\n" . trim(\Purifier::clean($article->body)) . "\r\n";
+                $article->body = CrawlSegmentfault::filterBody($article->body);
+                $article->timestamps = false;
                 $article->save();
             }
         });
