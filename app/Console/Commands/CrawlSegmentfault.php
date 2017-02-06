@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Article;
 use App\Comment;
+use App\Service\ArticleService;
 use App\Service\UserService;
 use App\User;
 use Illuminate\Console\Command;
@@ -89,7 +90,7 @@ class CrawlSegmentfault extends Command
             \Log::info('add question user: ' . $user->email);
         }
         $question['user_id'] = $user->id;
-        $question['body'] = $this->filterBody($question['body']);
+        $question['body'] = ArticleService::filterSegmentfaultBody($question['body']);
         $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
         if ($article->wasRecentlyCreated) {
             \Log::info('add question: ' . $article->slug);
@@ -103,7 +104,7 @@ class CrawlSegmentfault extends Command
 
             $answer['user_id'] = $answerUser->id;
             $answer['article_id'] = $article->id;
-            $answer['body'] = $this->filterBody($answer['body']);
+            $answer['body'] = ArticleService::filterSegmentfaultBody($answer['body']);
             $comment = Comment::firstOrCreate(Arr::only($answer, ['slug']), $answer);
             if ($answer['is_awesome'] != $comment->is_awesome) {
                 $comment->is_awesome = $answer['is_awesome'];
@@ -116,24 +117,6 @@ class CrawlSegmentfault extends Command
             }
 
         }
-    }
-    public static function filterBody($body){
-        $dom = new Crawler();
-        $dom->addHtmlContent($body);
-        $dom->filter('img[data-src]')->reduce(function (Crawler $node){
-            $node->getNode(0)->setAttribute('src', 'https://segmentfault.com/'.$node->attr('data-src'));
-            $node->getNode(0)->removeAttribute('data-src');
-        });
-        try{
-            // 神奇的玩意，会自动加上body标签
-            $body = $dom->filter('body')->html();
-        }catch (\InvalidArgumentException $e){
-            $body = '';
-        }
-
-        // 过滤非法标签
-        $body = "\r\n" . trim(\Purifier::clean($body)) . "\r\n";
-        return $body;
     }
     public function getQuestionPage($questionPageUrl)
     {

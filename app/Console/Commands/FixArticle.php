@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Article;
 use App\Comment;
+use App\Service\ArticleService;
 use Illuminate\Console\Command;
 
 class FixArticle extends Command
@@ -48,7 +49,7 @@ class FixArticle extends Command
         Article::chunk(100, function ($articles){
             /** @var Article $article */
             foreach ($articles as $article){
-                $article->body = CrawlSegmentfault::filterBody($article->body);
+                $article->body = ArticleService::filterSegmentfaultBody($article->body);
                 $article->timestamps = false;
                 $article->save();
             }
@@ -56,7 +57,7 @@ class FixArticle extends Command
         Comment::chunk(100, function ($articles){
             /** @var Article $article */
             foreach ($articles as $article){
-                $article->body = CrawlSegmentfault::filterBody($article->body);
+                $article->body = ArticleService::filterSegmentfaultBody($article->body);
                 $article->timestamps = false;
                 $article->save();
             }
