@@ -65,8 +65,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        @if(\Auth::check())
                         <div>
-                            <a data-toggle="modal" data-target="#modal"
+                            <a data-toggle="modal" data-target="#modal" class="btn btn-link"
                                href="{{ route('show-add-article-to-favorite',['article_id' => $article -> id]) }}">收藏</a>
                             <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
                                  aria-labelledby="mySmallModalLabel">
@@ -77,11 +78,16 @@
                                 </div>
                             </div>
                         </div>
-
+                        @endif
                         @if(\Auth::check() && \Auth::user()->can('manage_contents'))
                             <div>
-                                <a href="{{ route('article.edit', $article -> id) }}">编辑</a>
-                                <a href="{{ route('article.edit', $article -> id) }}">删除</a>
+                                <form class="form-inline" action="{{ route('article.destroy', $article -> id) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <a class="btn btn-link" href="{{ route('article.edit', $article -> id) }}">编辑</a>
+                                    <button class="btn btn-link">删除</button>
+                                </form>
+
                             </div>
                         @endif
 
@@ -112,17 +118,25 @@
                         </li>
                     @endforeach
                 </ul>
+
                 <div class="goto-comment-editor">
                     <h4>回复</h4>
                     <form id="comment-editor" method="post" action="{{ route('article.comment.store', $article) }}">
                         @include('hacker_alert')
                         {{ csrf_field() }}
                         <div class="form-group">
-                                <textarea class="form-control" name="body"></textarea>
+                            <label class="hidden" for="field-body"></label>
+                            @if(\Auth::check())
+                                <textarea id="field-body" style="height: 120px;resize:none;" class="form-control" name="body"></textarea>
+                            @else
+                                <div id="field-body" style="height: 120px;" class="form-control" name="body">登陆后才可以回复哦</div>
+                            @endif
                         </div>
+
                         <button>提交</button>
                     </form>
                 </div>
+
             </div>
         </div>
 
@@ -156,6 +170,7 @@
 
 
 @section('footer')
+    {{--// todo 这里为啥要Ajax？？？？--}}
     <script>
         $(document).on('submit', '#comment-editor', function(event){
             var form = $(event.target);
@@ -174,6 +189,9 @@
                     response_data = xhrOrData.responseJSON;
                 }
                 alert(response_data.message);
+                if(response_data.status == 'success'){
+                    location.reload();
+                }
             });
             return false;
         })
