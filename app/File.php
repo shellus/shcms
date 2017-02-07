@@ -39,9 +39,9 @@ class File extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        self::deleting(function(self $model){
+        self::deleted(function(self $model){
             $full_path = $model->save_path . '/' . $model->filename;
-            $isDeleted = \Storage::disk('public')->delete($full_path);
+            $isDeleted = \Storage::disk('uploads')->delete($full_path);
             if(!$isDeleted){
                 \Log::error("file: $full_path delete fail");
             }else{
@@ -65,6 +65,7 @@ class File extends Model
         $save_path = 'avatar/user_' . $user -> getKey();
         $file_model = File::createFormUploadFile($file, $save_path);
 
+
         // 如果用户当前已有头像
         if ($user -> avatar()->exists()){
             $user -> avatar -> delete();
@@ -84,7 +85,7 @@ class File extends Model
 
         $random_filename = Str::random() . '.' . $extension;
 
-        $full_path = $file->storeAs($save_path, $random_filename);
+        $full_path = $file->storeAs($save_path, $random_filename,'uploads');
 
         if($full_path === false){
             throw new UploadedFileSaveFail();
@@ -93,37 +94,12 @@ class File extends Model
             'filename' => $random_filename,
             'save_path' => $save_path,
             'display_filename' => $file->getClientOriginalName(),
-            'size' => \Storage::disk('public')->size($full_path),
-            'mime_type' => \Storage::disk('public')->mimeType($full_path),
-        ]);
-    }
-    /**
-     * @param $imageBinary
-     * @param string $path
-     * @param string $extension
-     * @return static
-     * @throws UploadedFileSaveFail
-     */
-    public static function createFormBinary($imageBinary, $path = '', $extension = 'jpg'){
-        self::checkExtension($extension);
-        $save_path = $path;
-        $filename = Str::random() . '.' . $extension;
-        $full_path = $save_path . '/' . $filename;
-        $result = \Storage::disk('public')->put($full_path, $imageBinary);
-        if($result === false){
-            throw new UploadedFileSaveFail();
-        }
-        return self::create([
-            'filename' => $filename,
-            'save_path' => $save_path,
-            'full_path' => $full_path,
-            'title' => $filename,
-            'size' => \Storage::disk('public')->size($full_path),
-            'mime_type' => \Storage::disk('public')->mimeType($full_path),
+            'size' => \Storage::disk('uploads')->size($full_path),
+            'mime_type' => \Storage::disk('uploads')->mimeType($full_path),
         ]);
     }
 
     public function getUrlAttribute(){
-        return '/uploads'.'/'.$this -> save_path .'/'. $this -> filename;
+        return \Storage::disk('uploads')->url($this -> save_path .'/'. $this -> filename);
     }
 }
