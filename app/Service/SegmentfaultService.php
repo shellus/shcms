@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use App\File;
 use App\User;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -39,9 +40,8 @@ class SegmentfaultService
         $url = 'https://segmentfault.com/u/' . $name;
         $body = HttpService::request($url);
         $src = (new Crawler($body))->filter('.profile__heading--avatar')->attr('src');
-        $src = 'https://sfault-avatar.b0.upaiyun.com/420/319/4203192301-57d5c83791e0a_huge256.jpg';
+        $file = HttpService::requestToFile($src);
 
-        HttpService::requestToFile($src);
-
+        File::updateUserAvatarByUploadedFile($user,$file);
     }
 }
