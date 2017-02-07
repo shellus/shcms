@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Article;
 use App\Category;
+use App\Service\HttpService;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Symfony\Component\DomCrawler\Crawler;
@@ -39,27 +40,25 @@ class CrawlBuildUrls extends Command
     public function buildPageUrls()
     {
         $url = "https://www.228yu.com/htm/novellist9/{i}.htm";
-        for ($i = 1; $i <= 119; $i++){
-            $this -> pageUrls[] = str_replace('{i}', $i, $url);
+        for ($i = 1; $i <= 119; $i++) {
+            $this->pageUrls[] = str_replace('{i}', $i, $url);
         }
     }
+
     public function buildUrls()
     {
-        $this->output->progressStart(count($this -> pageUrls));
+        $this->output->progressStart(count($this->pageUrls));
 
-        foreach ($this -> pageUrls as $index => $pageUrl){
+        foreach ($this->pageUrls as $index => $pageUrl) {
             $this->pageUrl = [$index => $pageUrl];
-            $urls = $this -> getItem($pageUrl);
-            foreach ($urls as $url){
-                try
-                {
+            $urls = $this->getItem($pageUrl);
+            foreach ($urls as $url) {
+                try {
                     $article = Article::create($url);
-                    $article -> categories() -> attach(Category::find(8));
-                }
-                catch (\Exception $e)
-                {
+                    $article->categories()->attach(Category::find(8));
+                } catch (\Exception $e) {
                     dump($e);
-            $this -> info(\GuzzleHttp\json_encode($this->pageUrl));
+                    $this->info(\GuzzleHttp\json_encode($this->pageUrl));
                 }
 
             }
@@ -69,32 +68,36 @@ class CrawlBuildUrls extends Command
 
         $this->output->progressFinish();
     }
-    
-    public function getItem($link){
-        $body = $this ->request($link);
-        $crawler = new Crawler($body);
-        $lis = $crawler -> filter('.textList li');
 
-        $urls = $lis ->each(function (Crawler $node, $i) {
+    public function getItem($link)
+    {
+        $body = HttpService::request($link);
+        $crawler = new Crawler($body);
+        $lis = $crawler->filter('.textList li');
+
+        $urls = $lis->each(function (Crawler $node, $i) {
 
             // 清除日期
-            $node ->filter('a span') -> first() -> getNode(0) -> nodeValue = '';
+            $node->filter('a span')->first()->getNode(0)->nodeValue = '';
 
             return [
                 'title' => '',
                 'body' => '',
-                'referrer_title' => $node -> text(),
-                'referrer' => $node ->filter('a') -> first() ->attr('href'),
+                'referrer_title' => $node->text(),
+                'referrer' => $node->filter('a')->first()->attr('href'),
                 'to_local' => 0,
             ];
         });
         return $urls;
     }
-    private function request($url){
+
+    private function request($url)
+    {
         $client = new Client();
         $res = $client->request('GET', $url);
-        return $res->getBody() -> getContents();
+        return $res->getBody()->getContents();
     }
+
     /**
      * Execute the console command.
      *
@@ -102,7 +105,7 @@ class CrawlBuildUrls extends Command
      */
     public function handle()
     {
-        $this -> buildPageUrls();
-        $this -> buildUrls();
+        $this->buildPageUrls();
+        $this->buildUrls();
     }
 }

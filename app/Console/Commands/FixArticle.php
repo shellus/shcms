@@ -40,23 +40,23 @@ class FixArticle extends Command
      */
     public function handle()
     {
-        if($id = $this->argument('id')){
+        if ($id = $this->argument('id')) {
             $article = Article::find($id);
             $article->body = CrawlSegmentfault::filterBody($article->body);
             $article->save();
             return;
         }
-        Article::chunk(100, function ($articles){
+        Article::chunk(100, function ($articles) {
             /** @var Article $article */
-            foreach ($articles as $article){
+            foreach ($articles as $article) {
                 $article->body = ArticleService::filterSegmentfaultBody($article->body);
                 $article->timestamps = false;
                 $article->save();
             }
         });
-        Comment::chunk(100, function ($articles){
+        Comment::chunk(100, function ($articles) {
             /** @var Article $article */
-            foreach ($articles as $article){
+            foreach ($articles as $article) {
                 $article->body = ArticleService::filterSegmentfaultBody($article->body);
                 $article->timestamps = false;
                 $article->save();

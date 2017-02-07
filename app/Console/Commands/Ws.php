@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 namespace App\Console\Commands;
+
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use App\WebSocket\AirtcleController;
@@ -51,8 +52,8 @@ class Ws extends Command
             8080
         );
 
-        $this -> info('ws server start runtime');
+        $this->info('ws server start runtime');
         $server->run();
-        $this -> warn('ws server runtime close');
+        $this->warn('ws server runtime close');
     }
 }

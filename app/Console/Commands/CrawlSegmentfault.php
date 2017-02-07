@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Article;
 use App\Comment;
+use App\Service\HttpService;
 use App\Service\SegmentfaultService;
 use App\Service\UserService;
 use Illuminate\Console\Command;
@@ -56,7 +57,7 @@ class CrawlSegmentfault extends Command
             $oldIndexList = [];
         }
 
-        $body = $this->request('https://segmentfault.com/questions');
+        $body = HttpService::request('https://segmentfault.com/questions');
         $dom = new Crawler($body);
 
         $dom->filter('.stream-list .stream-list__item')->each(function (Crawler $node, $i) use (&$new_index_list) {
@@ -117,9 +118,10 @@ class CrawlSegmentfault extends Command
 
         }
     }
+
     public function getQuestionPage($questionPageUrl)
     {
-        $body = $this->request($questionPageUrl);
+        $body = HttpService::request($questionPageUrl);
         $dom = new Crawler($body);
 
         $question['url'] = $questionPageUrl;
