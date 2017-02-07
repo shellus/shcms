@@ -8,7 +8,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlArticle extends Command
 {
-    use CommandHelper;
     /**
      * The name and signature of the console command.
      *

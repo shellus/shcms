@@ -8,7 +8,6 @@ use App\Article;
 
 class ArticleLexicalAnalysis extends Command
 {
-    use CommandHelper;
     /**
      * The name and signature of the console command.
      *

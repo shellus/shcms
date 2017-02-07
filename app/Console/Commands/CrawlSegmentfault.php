@@ -14,7 +14,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlSegmentfault extends Command
 {
-    use CommandHelper;
     /**
      * The name and signature of the console command.
      *

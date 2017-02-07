@@ -14,7 +14,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class Test extends Command
 {
-    use CommandHelper;
     /**
      * The name and signature of the console command.
      *
