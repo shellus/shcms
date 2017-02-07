@@ -4,9 +4,8 @@ namespace App\Console\Commands;
 
 use App\Article;
 use App\Comment;
-use App\Service\ArticleService;
+use App\Service\SegmentfaultService;
 use App\Service\UserService;
-use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -90,7 +89,7 @@ class CrawlSegmentfault extends Command
             \Log::info('add question user: ' . $user->email);
         }
         $question['user_id'] = $user->id;
-        $question['body'] = ArticleService::filterSegmentfaultBody($question['body']);
+        $question['body'] = SegmentfaultService::filterBody($question['body']);
         $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
         if ($article->wasRecentlyCreated) {
             \Log::info('add question: ' . $article->slug);
@@ -104,7 +103,7 @@ class CrawlSegmentfault extends Command
 
             $answer['user_id'] = $answerUser->id;
             $answer['article_id'] = $article->id;
-            $answer['body'] = ArticleService::filterSegmentfaultBody($answer['body']);
+            $answer['body'] = SegmentfaultService::filterBody($answer['body']);
             $comment = Comment::firstOrCreate(Arr::only($answer, ['slug']), $answer);
             if ($answer['is_awesome'] != $comment->is_awesome) {
                 $comment->is_awesome = $answer['is_awesome'];
