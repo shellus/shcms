@@ -65,6 +65,9 @@ class User extends Authenticatable
 //    ];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function avatar(){
         return $this->belongsTo('App\File');
     }

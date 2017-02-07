@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Exceptions\UploadedFileExtensionNotAllow;
+use App\Exceptions\UploadedFileSaveFail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 /**
@@ -34,18 +36,58 @@ class File extends Model
         'filename','save_path','full_path','display_filename','size','mime_type',
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        self::deleting(function(self $model){
+            $full_path = $model->save_path . '/' . $model->filename;
+            $isDeleted = \Storage::disk('public')->delete($full_path);
+            if(!$isDeleted){
+                \Log::error("file: $full_path delete fail");
+            }else{
+                \Log::info("file: $full_path delete success");
+            }
 
-    public static function createFormUploadFile(\Illuminate\Http\UploadedFile $file, $save_path = ''){
-        if(in_array($extension = $file->getClientOriginalExtension(), config('app.upload_file_allow_extensions', []))){
+        });
+    }
+
+
+    private static function checkExtension($extension){
+        if(!in_array($extension, config('app.upload_file_allow_extensions', []))){
             throw new UploadedFileExtensionNotAllow("extension: $extension is not allow");
         }
+    }
+    /**
+     * @param User $user
+     * @param UploadedFile $file
+     */
+    public static function updateUserAvatarByUploadedFile(User $user, UploadedFile $file){
+        $save_path = 'avatar/user_' . $user -> getKey();
+        $file_model = File::createFormUploadFile($file, $save_path);
+
+        // 如果用户当前已有头像
+        if ($user -> avatar()->exists()){
+            $user -> avatar -> delete();
+        }
+
+        $user -> avatar() ->associate($file_model);
+        $user -> save();
+    }
+    /**
+     * @param UploadedFile $file
+     * @param string $save_path
+     * @return static
+     * @throws UploadedFileSaveFail
+     */
+    public static function createFormUploadFile(UploadedFile $file, $save_path = ''){
+        self::checkExtension($extension = $file->getClientOriginalExtension());
+
         $random_filename = Str::random() . '.' . $extension;
-        $full_path = $save_path . '/' . $random_filename;
-        $f_context = fopen($file -> getPathname(), 'r');
-        $result = \Storage::disk('public')->put($full_path, $f_context);
-        fclose($f_context);
-        if(!$result){
-            throw new \Exception('storage save fail!');
+
+        $full_path = $file->storeAs($save_path, $random_filename);
+
+        if($full_path === false){
+            throw new UploadedFileSaveFail();
         }
         return self::create([
             'filename' => $random_filename,
@@ -59,20 +101,17 @@ class File extends Model
      * @param $imageBinary
      * @param string $path
      * @param string $extension
-     * @return File
-     * @throws \Exception
+     * @return static
+     * @throws UploadedFileSaveFail
      */
     public static function createFormBinary($imageBinary, $path = '', $extension = 'jpg'){
-
-        if(in_array($extension, config('app.upload_file_allow_extensions', []))){
-            throw new UploadedFileExtensionNotAllow("extension: $extension is not allow");
-        }
+        self::checkExtension($extension);
         $save_path = $path;
         $filename = Str::random() . '.' . $extension;
         $full_path = $save_path . '/' . $filename;
         $result = \Storage::disk('public')->put($full_path, $imageBinary);
-        if(!$result){
-            throw new \Exception('storage save fail!');
+        if($result === false){
+            throw new UploadedFileSaveFail();
         }
         return self::create([
             'filename' => $filename,
