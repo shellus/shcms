@@ -9,17 +9,11 @@
 namespace App\Console\Commands;
 
 use App\Article;
-use GuzzleHttp\Client;
+
 
 trait CommandHelper
 {
-    private function request($url){
-        $client = new Client();
-        \Log::debug("CommandHelper begin request url \"$url\"");
-        $res = $client->request('GET', $url, ['connect_timeout' => 10]);
-        \Log::debug("CommandHelper request url \"$url\" done, length ".$res->getBody() -> getSize()."");
-        return $res->getBody() -> getContents();
-    }
+
     // 乐观锁实现
     protected function getLockArticle(){
 
