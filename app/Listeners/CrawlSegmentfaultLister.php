@@ -26,9 +26,12 @@ class CrawlSegmentfaultLister implements ShouldQueue
      */
     public function handle(CrawlSegmentfault $event)
     {
+        $body = mb_str_replace('\r\n','',$event->getBody());
+        $body = mb_str_replace('\n','',$body);
+        $body = mb_substr($body,0,100);
 
         if (config('app.env') === 'local'){
-            exec(mb_convert_encoding('notify -t '.$event->getTitle().' -m "'.$event->getBody().'" -s --open '.$event->getUrl().'', 'GBK'));
+            exec(mb_convert_encoding('notify -t '.$event->getTitle().' -m "'.$body.'" -s --open '.$event->getUrl().'', 'GBK'));
         }
 
     }

@@ -23,7 +23,7 @@ class CrawlSegmentfaultQuestion extends CrawlSegmentfault
     public function __construct($question)
     {
         $this->title = "提问：" . $question['title'];
-        $this->body = $question['user']['name'] .': '.strip_tags($question['body']);
+        $this->body = $question['user']['name'] .': '.trim(strip_tags($question['body']));
         $this->url = $question['url'];
         //
     }
