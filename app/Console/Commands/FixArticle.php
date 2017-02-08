@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use App\Article;
 use App\Comment;
 use App\Service\ArticleService;
+use App\Service\SegmentfaultService;
+use App\User;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Console\Command;
 
 class FixArticle extends Command
@@ -46,21 +49,11 @@ class FixArticle extends Command
             $article->save();
             return;
         }
-        Article::chunk(100, function ($articles) {
-            /** @var Article $article */
-            foreach ($articles as $article) {
-                $article->body = ArticleService::filterSegmentfaultBody($article->body);
-                $article->timestamps = false;
-                $article->save();
-            }
-        });
-        Comment::chunk(100, function ($articles) {
-            /** @var Article $article */
-            foreach ($articles as $article) {
-                $article->body = ArticleService::filterSegmentfaultBody($article->body);
-                $article->timestamps = false;
-                $article->save();
-            }
-        });
+        $users = User::where('email', 'LIKE', '%@segmentfault.com')->whereNull('avatar_id')->get();
+
+        foreach ($users as $user) {
+            SegmentfaultService::crawlAvatar($user);
+            $this->info(User::whereNotNull('avatar_id')->count() . '/' . User::count());
+        }
     }
 }

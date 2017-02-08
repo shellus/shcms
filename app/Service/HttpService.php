@@ -9,25 +9,45 @@
 namespace App\Service;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Symfony\Component\DomCrawler\Crawler;
 
 class HttpService
 {
-    public static function request($url)
+    public static function request($method, $uri = '', array $options = [])
     {
+        $maxRetry = 3;
+        $retry=0;
+        $continuetry = true;
+        $defaultOptions = ['connect_timeout' => 10];
+
         $client = new Client();
-        \Log::debug("CommandHelper begin request url \"$url\"");
-        $res = $client->request('GET', $url, ['connect_timeout' => 10]);
-        \Log::debug("CommandHelper request url \"$url\" done, length " . $res->getBody()->getSize() . "");
-        return $res->getBody()->getContents();
+
+        \Log::debug("HttpService begin request url \"$uri\"");
+
+        do{
+            try{
+                $res = $client->request($method, $uri, array_merge($defaultOptions, $options));
+            }catch (ConnectException $e){
+                $retry++;
+                \Log::error("HttpService ConnectException retry $retry url $uri");
+                if ($retry >= $maxRetry){
+                    throw $e;
+                }
+            }
+        }while(empty($res));
+
+
+        \Log::debug("HttpService request url \"$uri\" done, length " . $res->getBody()->getSize() . "");
+        return $res;
 
     }
 
     public static function requestToCrawler($url)
     {
-        $body = self::request($url);
+        $body = self::request('GET',$url)->getBody()->getContents();
         return new Crawler($body);
     }
 
@@ -46,10 +66,9 @@ class HttpService
         $real_filename = implode('.', $pathInfo);
         $real_path = sys_get_temp_dir() .DIRECTORY_SEPARATOR. $real_filename;
 
-        $client = new Client();
-        \Log::debug("CommandHelper begin request url \"$url\"");
-        $res = $client->request('GET', $url, ['connect_timeout' => 10, 'sink'=> $real_path]);
-        \Log::debug("CommandHelper request url \"$url\" done, length " . $res->getBody()->getSize() . "");
+
+        $res = HttpService::request('GET', $url, ['sink'=> $real_path]);
+
         $mimeType = $res->getHeader('Content-Type');
         $size = $res->getBody()->getSize();
 

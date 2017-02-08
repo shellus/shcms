@@ -10,6 +10,7 @@ namespace App\Service;
 
 use App\File;
 use App\User;
+use GuzzleHttp\Exception\ConnectException;
 use Symfony\Component\DomCrawler\Crawler;
 
 class SegmentfaultService
@@ -38,7 +39,12 @@ class SegmentfaultService
     {
         list($name, $t) = explode('@', $user->email);
         $url = 'https://segmentfault.com/u/' . $name;
-        $body = HttpService::request($url);
+        try{
+            $body = HttpService::request('GET', $url)->getBody()->getContents();
+        }catch (ConnectException $e){
+            \Log::error('user avatar error:' . $user->email);
+            return;
+        }
         $src = (new Crawler($body))->filter('.profile__heading--avatar')->attr('src');
         $file = HttpService::requestToFile($src);
 

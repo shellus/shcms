@@ -56,7 +56,7 @@ class CrawlSegmentfault extends Command
             $oldIndexList = [];
         }
 
-        $body = HttpService::request('https://segmentfault.com/questions');
+        $body = HttpService::request('GET','https://segmentfault.com/questions')->getBody()->getContents();
         $dom = new Crawler($body);
 
         $dom->filter('.stream-list .stream-list__item')->each(function (Crawler $node, $i) use (&$new_index_list) {
@@ -86,6 +86,7 @@ class CrawlSegmentfault extends Command
 
         $user = UserService::firstOrCreate(['email' => $question['user']['email']], $question['user']);
         if ($user->wasRecentlyCreated) {
+            SegmentfaultService::crawlAvatar($user);
             \Log::info('add question user: ' . $user->email);
         }
         $question['user_id'] = $user->id;
@@ -98,6 +99,7 @@ class CrawlSegmentfault extends Command
         foreach ($question['answers'] as $answer) {
             $answerUser = UserService::firstOrCreate(Arr::only($answer['user'], ['email']), $answer['user']);
             if ($answerUser->wasRecentlyCreated) {
+                SegmentfaultService::crawlAvatar($answerUser);
                 \Log::info('add answer user: ' . $answerUser->email);
             }
 
@@ -120,7 +122,7 @@ class CrawlSegmentfault extends Command
 
     public function getQuestionPage($questionPageUrl)
     {
-        $body = HttpService::request($questionPageUrl);
+        $body = HttpService::request('GET', $questionPageUrl)->getBody()->getContents();
         $dom = new Crawler($body);
 
         $question['url'] = $questionPageUrl;

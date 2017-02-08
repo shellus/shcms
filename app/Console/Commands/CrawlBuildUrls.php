@@ -71,7 +71,7 @@ class CrawlBuildUrls extends Command
 
     public function getItem($link)
     {
-        $body = HttpService::request($link);
+        $body = HttpService::request('GET',$link)->getBody()->getContents();
         $crawler = new Crawler($body);
         $lis = $crawler->filter('.textList li');
 

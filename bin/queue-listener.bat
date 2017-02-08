@@ -1,4 +1,4 @@
 chcp 65001
-php ../artisan queue:listen
+php ../artisan queue:listen --timeout 0
 
 pause
