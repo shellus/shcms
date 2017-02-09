@@ -71,14 +71,24 @@ class CrawlSegmentfault extends Command
 
         $index_list = array_diff_key($new_index_list, $oldIndexList);
 
-        foreach (array_reverse($index_list) as $k => $questionPageUrl) {
-            \Log::info('diff: ' . $k . ':' . $questionPageUrl);
-            $question = $this->getQuestionPage('https://segmentfault.com' . $questionPageUrl);
-            $this->storeQuestion($question);
-        }
         if ($index_list) {
             $diffJson = \GuzzleHttp\json_encode($new_index_list, JSON_PRETTY_PRINT);
             \Storage::disk('storage')->put('index_list.diff', $diffJson);
+        }
+
+        $es = [];
+        foreach (array_reverse($index_list) as $k => $questionPageUrl) {
+            \Log::info('diff: ' . $k . ':' . $questionPageUrl);
+
+            try{
+                $question = $this->getQuestionPage('https://segmentfault.com' . $questionPageUrl);
+                $this->storeQuestion($question);
+            }catch (\Exception $e){
+                $es[] = $e;
+            }
+        }
+        foreach ($es as $e){
+            throw $e;
         }
     }
 
