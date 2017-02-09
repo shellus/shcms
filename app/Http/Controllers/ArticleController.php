@@ -63,7 +63,7 @@ class ArticleController extends Controller
     }
 
     public function tagIndex($id){
-        $articles = Tag::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
+        $articles = Tag::where(is_numeric($id)?'id':'slug',$id)->firstOrFail()->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
 
         $articles->load(['comments' => function ($query) {
 //            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');

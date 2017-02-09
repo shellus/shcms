@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Article;
 use App\Comment;
+use App\Service\ArticleService;
 use App\Service\HttpService;
 use App\Service\SegmentfaultService;
 use App\Service\UserService;
@@ -209,11 +210,14 @@ class CrawlSegmentfault extends Command
             \Log::info('add question: ' . $article->slug);
             \Event::fire(new \App\Events\CrawlSegmentfaultQuestion($question));
         }
+
         foreach ($question['tags'] as $tag_str) {
-            if (!$article->tags()->firstOrCreate(['title' => $tag_str])) {
-                $article->tags()->attach(Tag::firstOrCreate(['title' => $tag_str]));
+            if (!$article->tags()->whereTitle($tag_str)->exists()) {
+                $tag = Tag::firstOrCreate(['title' => $tag_str], ['title' => $tag_str, 'slug'=>ArticleService::filterTagSlug($tag_str)]);
+                $article->tags()->attach($tag);
             }
         }
+
         return $article;
     }
     /**

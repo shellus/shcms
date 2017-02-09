@@ -14,11 +14,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Tag extends Category
 {
-    protected $table='categories';
+    protected $table = 'categories';
+
     protected static function boot()
     {
-        static::addGlobalScope('tag', function (Builder $builder)
-        {
+        static::addGlobalScope('tag', function (Builder $builder) {
             return $builder->where('type', '=', 'tag');
         });
     }
@@ -28,7 +28,9 @@ class Tag extends Category
         $attributes['type'] = 'tag';
         parent::__construct($attributes);
     }
-    public function showUrl(){
-        return route('tag.show', [$this -> id]);
+
+    public function showUrl()
+    {
+        return route('tag.show', [$this->slug ? $this->slug : $this->id]);
     }
 }
