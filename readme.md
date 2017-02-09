@@ -56,7 +56,10 @@ php artisan migrate
 php artisan db:seed
 
 ```
-
+添加cron条目
+```bash
+* * * * * php /path/to/shcms/artisan schedule:run
+```
 可选的优化
 ```bash
 php artisan config:cache
