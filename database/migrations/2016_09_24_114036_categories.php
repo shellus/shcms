@@ -16,8 +16,8 @@ class Categories extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('slug');
-            $table->string('description');  // 指导资源分类者的标签介绍
+            $table->string('slug')->default('');
+            $table->string('description')->default('');  // 指导资源分类者的标签介绍
             $table->integer('parent_id')->default(0)->unsigned();
             $table->timestamps();
 

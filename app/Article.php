@@ -166,7 +166,10 @@ class Article extends Model
         }
         return $model;
     }
-
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps();
+    }
     public function categories()
     {
         return $this->belongsToMany('App\Category')->withTimestamps();

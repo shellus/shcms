@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Category
@@ -30,9 +31,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
+
+
     protected $fillable = [
-        'title','description','parent_id','slug',
+        'title','description','parent_id','slug','type',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('category', function (Builder $builder)
+        {
+            return $builder->where('type', '=', 'category');
+        });
+
+    }
 
     public function articles()
     {

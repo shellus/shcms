@@ -7,6 +7,7 @@ use App\Comment;
 use App\Service\HttpService;
 use App\Service\SegmentfaultService;
 use App\Service\UserService;
+use App\Tag;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -91,10 +92,15 @@ class CrawlSegmentfault extends Command
         }
         $question['user_id'] = $user->id;
         $question['body'] = SegmentfaultService::filterBody($question['body']);
+
+        /** @var Article $article */
         $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
         if ($article->wasRecentlyCreated) {
             \Log::info('add question: ' . $article->slug);
             \Event::fire(new \App\Events\CrawlSegmentfaultQuestion($question));
+        }
+        foreach ($question['tags'] as $tag_str) {
+            $article->tags()->attach(Tag::firstOrCreate(['title'=>$tag_str]));
         }
         foreach ($question['answers'] as $answer) {
             $answerUser = UserService::firstOrCreate(Arr::only($answer['user'], ['email']), $answer['user']);
@@ -129,7 +135,9 @@ class CrawlSegmentfault extends Command
         $question['slug'] = 'segmentfault-' . $dom->filter('#questionTitle')->attr('data-id');
         $question['title'] = utf8_to_unicode_str($dom->filter('#questionTitle>a')->text());
         $question['body'] = utf8_to_unicode_str(trim($dom->filter('.question')->html()));
-
+        $question['tags'] = $dom->filter('.taglist--inline li a')->each(function(Crawler $node, $i){
+            return $node->attr('data-original-title');
+        });
 
         $userName = $dom->filter('.question__author a strong')->first()->text();
         $userUrl = $dom->filter('.question__author a')->first()->attr('href');
