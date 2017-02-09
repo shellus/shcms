@@ -73,7 +73,7 @@ class ArticleController extends Controller
         return view('article.index', ['articles' => $articles]);
     }
     public function categoryIndex($id){
-        $articles = Category::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
+        $articles = Category::where(is_numeric($id)?'id':'slug',$id)->firstOrFail()->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
 
         $articles->load(['comments' => function ($query) {
 //            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
