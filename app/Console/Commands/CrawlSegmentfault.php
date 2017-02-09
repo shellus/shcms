@@ -75,7 +75,6 @@ class CrawlSegmentfault extends Command
             $diffJson = \GuzzleHttp\json_encode($new_index_list, JSON_PRETTY_PRINT);
             \Storage::disk('storage')->put('index_list.diff', $diffJson);
         }
-
         $es = [];
         foreach (array_reverse($index_list) as $k => $questionPageUrl) {
             \Log::info('diff: ' . $k . ':' . $questionPageUrl);
@@ -110,7 +109,9 @@ class CrawlSegmentfault extends Command
             \Event::fire(new \App\Events\CrawlSegmentfaultQuestion($question));
         }
         foreach ($question['tags'] as $tag_str) {
-            $article->tags()->attach(Tag::firstOrCreate(['title'=>$tag_str]));
+            if(!$article->tags()->firstOrCreate(['title'=>$tag_str])){
+                $article->tags()->attach(Tag::firstOrCreate(['title'=>$tag_str]));
+            }
         }
         foreach ($question['answers'] as $answer) {
             $answerUser = UserService::firstOrCreate(Arr::only($answer['user'], ['email']), $answer['user']);
