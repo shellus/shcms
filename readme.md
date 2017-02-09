@@ -60,6 +60,10 @@ php artisan db:seed
 ```bash
 * * * * * php /path/to/shcms/artisan schedule:run
 ```
+添加开机启动(开发环境可以手动运行 bin/queue-listener.bat )
+```bash
+php /path/to/shcms/artisan queue:listen --timeout 0
+```
 可选的优化
 ```bash
 php artisan config:cache
