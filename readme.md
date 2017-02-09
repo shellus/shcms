@@ -6,8 +6,6 @@
 
 ## 在线DEMO
 
-香港1M带宽
-
 http://shcms.endaosi.com/
 
 ## 特色
@@ -47,11 +45,9 @@ cp .env.example .env
 
 2. 设置网站名称和副标题 `APP_NAME, APP_SUB_NAME`
 
-3. 声明是否已经开启SSL `ENABLE_SSL`（这将在非HTTPS访问时警告用户使用HTTPS安全浏览）
+3. 修改`APP_URL`，改为可访问到的url，否则邮件中和cli中无法获取正确的url。
 
-4. 修改 `APP_ENV` 为你的运行环境代号
-
-
+生成app_key和填充数据库
 ```bash
 php artisan key:generate
 
@@ -59,14 +55,15 @@ php artisan migrate
 
 php artisan db:seed
 
-php vendor/bin/phpunit
+```
 
+可选的优化
+```bash
 php artisan config:cache
 
 php artisan route:cache
 
 php artisan optimize
-
 ```
 
 如果你需要支持文章阅读时长统计，那么你需要运行 `php artisan ws` 这将使用8080端口, 你可以使用 `supervisor` 来运行它
@@ -77,7 +74,7 @@ sudo apt install -y supervisor
 sudo vim /etc/supervisor/conf.d/ws.conf
 ```
 
-ws.conf 推荐配置
+supervisor 推荐配置
 
 ```bash
 [program:ws]
