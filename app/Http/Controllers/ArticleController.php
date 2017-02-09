@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\ArticleVote;
+use App\Category;
 use App\SearchHistory;
+use App\Tag;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -58,6 +60,27 @@ class ArticleController extends Controller
     public function index()
     {
         //
+    }
+
+    public function tagIndex($id){
+        $articles = Tag::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
+
+        $articles->load(['comments' => function ($query) {
+//            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
+//            $query->groupBy('article_id');
+            $query->orderBy('created_at','DESC');
+        }]);
+        return view('article.index', ['articles' => $articles]);
+    }
+    public function categoryIndex($id){
+        $articles = Category::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
+
+        $articles->load(['comments' => function ($query) {
+//            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
+//            $query->groupBy('article_id');
+            $query->orderBy('created_at','DESC');
+        }]);
+        return view('article.index', ['articles' => $articles]);
     }
 
     /**

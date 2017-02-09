@@ -17,10 +17,14 @@ class Categories extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->default('');
+            $table->string('type')->default('category'); // or 'tag'
             $table->string('description')->default('');  // 指导资源分类者的标签介绍
             $table->integer('parent_id')->default(0)->unsigned();
+            $table->integer('logo_id')->nullable()->unsigned();
             $table->timestamps();
 
+            $table->foreign('logo_id')->references('id')->on('files')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

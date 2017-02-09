@@ -37,7 +37,21 @@
                         <span>长度: </span>
                         <span>{{ mb_strlen($article -> body) }} 字</span>
                     </div>
+                    <div class="col-xs-4">
+                        <span hidden>标签: </span>
+                        <ul class="tags list-inline">
+                            @foreach($article->tags as $tag)
+                                <li>
+                                    <a href="{{ $tag->showUrl() }}">
+                                    <span class="label label-success">
+                                        {{ $tag->title }}
+                                    </span></a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
+
 
                 <div class="row action-list">
 
@@ -66,22 +80,23 @@
                     </div>
                     <div class="col-md-6">
                         @if(\Auth::check())
-                        <div>
-                            <a data-toggle="modal" data-target="#modal" class="btn btn-link"
-                               href="{{ route('show-add-article-to-favorite',['article_id' => $article -> id]) }}">收藏</a>
-                            <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
-                                 aria-labelledby="mySmallModalLabel">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
+                            <div>
+                                <a data-toggle="modal" data-target="#modal" class="btn btn-link"
+                                   href="{{ route('show-add-article-to-favorite',['article_id' => $article -> id]) }}">收藏</a>
+                                <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+                                     aria-labelledby="mySmallModalLabel">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
                         @if(\Auth::check() && \Auth::user()->can('manage_contents'))
                             <div>
-                                <form class="form-inline" action="{{ route('article.destroy', $article -> id) }}" method="POST">
+                                <form class="form-inline" action="{{ route('article.destroy', $article -> id) }}"
+                                      method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <a class="btn btn-link" href="{{ route('article.edit', $article -> id) }}">编辑</a>
@@ -93,14 +108,20 @@
 
                     </div>
                 </div>
-                <hr>
 
 
                 <section id="article-body">
                     {!! $article -> body !!}
                 </section>
+                <div class="article-author">
+                    <a href="#">
+                        <img style="padding: 5px;" class="img-circle" width="50" height="50"
+                             src="{{ $article->user->avatarUrl }}">
+                        {{ $article->user->name }}</a>
+                    <small>{{ $article->created_at->diffForHumans() }} 发布</small>
+                </div>
                 <hr>
-                <ul class="comments">
+                <ul class="comments list-unstyled">
                     @foreach($article['comments'] as $comment)
 
                         <li style="border-bottom: darkcyan solid 1px;">
@@ -127,9 +148,11 @@
                         <div class="form-group">
                             <label class="hidden" for="field-body"></label>
                             @if(\Auth::check())
-                                <textarea id="field-body" style="height: 120px;resize:none;" class="form-control" name="body"></textarea>
+                                <textarea id="field-body" style="height: 120px;resize:none;" class="form-control"
+                                          name="body"></textarea>
                             @else
-                                <div id="field-body" style="height: 120px;" class="form-control" name="body">登陆后才可以回复哦</div>
+                                <div id="field-body" style="height: 120px;" class="form-control" name="body">登陆后才可以回复哦
+                                </div>
                             @endif
                         </div>
 
@@ -172,7 +195,7 @@
 @section('footer')
     {{--// todo 这里为啥要Ajax？？？？--}}
     <script>
-        $(document).on('submit', '#comment-editor', function(event){
+        $(document).on('submit', '#comment-editor', function (event) {
             var form = $(event.target);
             var url = form.attr('action');
             var method = form.attr('method');
@@ -181,15 +204,15 @@
                 type: method,
                 dataType: 'json',
                 data: request_data,
-            }).always(function(xhrOrData,status){
+            }).always(function (xhrOrData, status) {
                 var response_data = [];
-                if (status == 'success'){
+                if (status == 'success') {
                     response_data = xhrOrData;
-                }else{
+                } else {
                     response_data = xhrOrData.responseJSON;
                 }
                 alert(response_data.message);
-                if(response_data.status == 'success'){
+                if (response_data.status == 'success') {
                     location.reload();
                 }
             });

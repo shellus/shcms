@@ -50,7 +50,7 @@ class Category extends Model
 
     public function articles()
     {
-        return $this->belongsToMany('App\Article')->withTimestamps();
+        return $this->belongsToMany('App\Article', 'article_category', 'category_id', 'article_id')->withTimestamps();
     }
 
     public function showUrl(){

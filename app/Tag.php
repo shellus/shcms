@@ -28,5 +28,7 @@ class Tag extends Category
         $attributes['type'] = 'tag';
         parent::__construct($attributes);
     }
-
+    public function showUrl(){
+        return route('tag.show', [$this -> id]);
+    }
 }

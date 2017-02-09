@@ -24,7 +24,7 @@ class ArticleCategory extends Migration
             $table->foreign('category_id')->references('id')->on('categories')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->index(['article_id', 'category_id']);
+            $table->unique(['article_id', 'category_id']);
         });
     }
 
