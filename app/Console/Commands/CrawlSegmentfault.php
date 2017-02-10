@@ -69,13 +69,9 @@ class CrawlSegmentfault extends Command
         // 和上次的问题列表的差集，得出改变的问题列表
         $questionList = array_diff_key($new_index_list, $oldQuestionList);
 
-        // 如果有改变，就存取来作为下次对比差异用
-        if ($questionList) {
-            $diffJson = \GuzzleHttp\json_encode($new_index_list, JSON_PRETTY_PRINT);
-            \Storage::disk('storage')->put('questionList.diff', $diffJson);
-        }
 
-        // 循环获取每一个问题的数据
+
+        // 循环抓取每一个问题的数据
         $es = [];
         // array_reverse是因为要反向获取，不然顺序是倒的。
         foreach (array_reverse($questionList) as $k => $questionPageUrl) {
@@ -86,6 +82,12 @@ class CrawlSegmentfault extends Command
             } catch (\Exception $e) {
                 $es[] = $e;
             }
+        }
+
+        // 如果有改变，就存取来作为下次对比差异用
+        if ($questionList) {
+            $diffJson = \GuzzleHttp\json_encode($new_index_list, JSON_PRETTY_PRINT);
+            \Storage::disk('storage')->put('questionList.diff', $diffJson);
         }
 
         // 问题存起来集中爆发，防止中断循环
