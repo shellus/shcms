@@ -23,6 +23,16 @@ class MoveCommentToArticle extends Migration
             $table->foreign('article_id')->references('id')->on('articles')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
+
+        $comment_datas = \DB::table('comments')->get();
+        foreach ($comment_datas as $comment_data){
+            $data = (array)$comment_data;
+            unset($data['id']);
+            unset($data['parent_id']);
+            $data['type'] = 'comment';
+            \DB::table('articles')->insert($data);
+        }
+        Schema::dropIfExists('comments');
     }
 
     /**
