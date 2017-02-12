@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Articles
@@ -45,16 +46,29 @@ class Article extends Model
 {
     protected $next = null;
     protected $fillable = [
-        'title', 'body', 'user_id', 'slug', 'referrer', 'version', 'to_local',
+        'title', 'body', 'user_id', 'slug', 'version', 'type',
     ];
     private $previous;
 
     public function __construct(array $attributes = [])
     {
+        if (empty($attributes['type'])) $attributes['type'] = 'article';
         parent::__construct($attributes);
-        self::created(function (self $article) {
-            return $article->category();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('type', function (Builder $builder) {
+            return $builder->where('type', '=', 'article');
         });
+        static::created(function (self $article) {
+            if ($article['type'] === 'article') {
+                $article->category();
+            }
+        });
+
     }
 
     public function getDisplayTitleAttribute()
@@ -135,12 +149,14 @@ class Article extends Model
 
     public function comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Comment', 'article_id', 'id');
     }
+
     public function user()
     {
         return $this->belongsTo('App\User');
     }
+
     public function votes()
     {
         return $this->hasMany('App\ArticleVote');
@@ -166,16 +182,20 @@ class Article extends Model
         }
         return $model;
     }
+
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps();
     }
+
     public function categories()
     {
         return $this->belongsToMany('App\Category')->withTimestamps();
     }
-    public function comments_count(){
-        if ($this->comments->count()){
+
+    public function comments_count()
+    {
+        if ($this->comments->count()) {
             return $this->comments[0]->comments_count;
         }
         return 0;

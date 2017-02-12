@@ -43,17 +43,13 @@ class FixArticle extends Command
      */
     public function handle()
     {
-        if ($id = $this->argument('id')) {
-            $article = Article::find($id);
-            $article->body = CrawlSegmentfault::filterBody($article->body);
-            $article->save();
-            return;
-        }
-        $users = User::where('email', 'LIKE', '%@segmentfault.com')->whereNull('avatar_id')->get();
-
-        foreach ($users as $user) {
-            SegmentfaultService::crawlAvatar($user);
-            $this->info(User::whereNotNull('avatar_id')->count() . '/' . User::count());
+        $comment_datas = \DB::table('comments')->get();
+        foreach ($comment_datas as $comment_data){
+            $data = (array)$comment_data;
+            unset($data['id']);
+            unset($data['parent_id']);
+            $data['type'] = 'comment';
+            \DB::table('articles')->insert($data);
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Builder;
 /**
  * App\Comment
  *
@@ -29,20 +29,32 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $is_awesome
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereIsAwesome($value)
  */
-class Comment extends Model
+class Comment extends Article
 {
+    protected $table = 'articles';
+
+    public function __construct(array $attributes = [])
+    {
+        if (empty($attributes['type'])) $attributes['type'] = 'comment';
+        parent::__construct($attributes);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('type', function (Builder $builder)
+        {
+            return $builder->where('type', '=', 'comment');
+        });
+
+    }
+
     // 触发的关联关系updated_at时间戳
     protected $touches = ['article'];
 
-    protected $fillable = [
-        'body', 'user_id', 'article_id', 'slug', 'is_awesome',
-    ];
     public function article()
     {
         return $this->belongsTo('App\Article');
-    }
-    public function user()
-    {
-        return $this->belongsTo('App\User');
     }
 }
