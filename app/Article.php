@@ -46,7 +46,7 @@ class Article extends Model
 {
     protected $next = null;
     protected $fillable = [
-        'title', 'body', 'user_id', 'slug', 'version', 'type',
+        'title', 'body', 'user_id', 'slug', 'version', 'type', 'article_id',
     ];
     private $previous;
 
