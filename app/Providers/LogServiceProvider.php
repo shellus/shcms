@@ -27,8 +27,7 @@ class LogServiceProvider extends ServiceProvider
         $log_file = storage_path('logs' . DIRECTORY_SEPARATOR . $log_name . '.log');
         $sqlLogger = new Logger($log_name, [new StreamHandler($log_file)]);
         $this->app->instance('LogicLog', $sqlLogger);
-        //use
-//        app('LogicLog') -> info('LogicLog::info success!');
+        //usage: app('LogicLog') -> info('LogicLog::info success!');
     }
 
     private function bootSqlLog()
