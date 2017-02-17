@@ -32,7 +32,7 @@ class CrawlSegmentfaultLister implements ShouldQueue
         $title = $event->getTitle();
 
         if (config('app.env') === 'local'){
-            $os = '';
+            $os = 'utf-8';
             //TODO 操作系统更改编码
             stristr(PHP_OS, 'DAR')   && $os = 'utf-8';
             stristr(PHP_OS, 'WIN')   && $os = 'GBK';
