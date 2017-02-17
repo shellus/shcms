@@ -17,11 +17,15 @@ class ArticleController extends Controller
     public function search(Request $request){
 
 
-        SearchHistory::firstOrCreate([
-            'word' => $request['s'],
-            'page' => $request -> get('page', 1),
-            'user_id' => \Auth::user() -> id,
-        ]);
+        // 只对登录用户记录搜索历史
+        if (\Auth::check()){
+            SearchHistory::firstOrCreate([
+                'word' => $request['s'],
+                'page' => $request -> get('page', 1),
+                'user_id' => \Auth::user() -> id,
+            ]);
+        }
+
 
         $articles = Article::search($request['s'],$request['c']);
 
