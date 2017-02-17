@@ -54,7 +54,7 @@ class Category extends Model
     }
 
     public function showUrl(){
-        return route('category.show', [$this -> id]);
+        return route('category.show', [$this->slug ? $this->slug : $this->id]);
     }
     public function logo(){
         return $this->belongsTo('App\File');

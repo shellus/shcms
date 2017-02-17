@@ -15,6 +15,11 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class SegmentfaultService
 {
+    /**
+     * 处理Segmentfault的问题、回答主体内容，去掉emoji表情等。
+     * @param $body
+     * @return string
+     */
     public static function filterBody($body)
     {
         $dom = new Crawler();
@@ -35,6 +40,10 @@ class SegmentfaultService
         return $body;
     }
 
+    /**
+     * 抓取Segmentfault用户头像
+     * @param User $user
+     */
     public static function crawlAvatar(User $user)
     {
         list($name, $t) = explode('@', $user->email);

@@ -16,17 +16,24 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class HttpService
 {
+    /**
+     * 封装的HTTP请求方法。应用内所有HTTP请求都要使用这个，方便统计数据和查看程序运行状态
+     * @param $method
+     * @param string $uri
+     * @param array $options
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
     public static function request($method, $uri = '', array $options = [])
     {
         $maxRetry = 3;
         $retry=0;
-        $continuetry = true;
         $defaultOptions = ['connect_timeout' => 10];
 
         $client = new Client();
 
         \Log::debug("HttpService begin request url \"$uri\"");
 
+        // 自动重试 $maxRetry 次
         do{
             try{
                 $res = $client->request($method, $uri, array_merge($defaultOptions, $options));
@@ -45,12 +52,25 @@ class HttpService
 
     }
 
-    public static function requestToCrawler($url)
+    /**
+     * 从url生成DOM。
+     * @param $method
+     * @param string $uri
+     * @param array $options
+     * @return Crawler
+     * @internal param $url
+     */
+    public static function requestToCrawler($method, $uri = '', array $options = [])
     {
-        $body = self::request('GET',$url)->getBody()->getContents();
+        $body = self::request($method, $uri, $options)->getBody()->getContents();
         return new Crawler($body);
     }
 
+    /**
+     * 下载到文件
+     * @param $url
+     * @return UploadedFile
+     */
     public static function requestToFile($url)
     {
         $urlInfo = parse_url($url);

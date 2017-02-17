@@ -17,11 +17,15 @@ class ArticleController extends Controller
     public function search(Request $request){
 
 
-        SearchHistory::firstOrCreate([
-            'word' => $request['s'],
-            'page' => $request -> get('page', 1),
-            'user_id' => \Auth::user() -> id,
-        ]);
+        // 只对登录用户记录搜索历史
+        if (\Auth::check()){
+            SearchHistory::firstOrCreate([
+                'word' => $request['s'],
+                'page' => $request -> get('page', 1),
+                'user_id' => \Auth::user() -> id,
+            ]);
+        }
+
 
         $articles = Article::search($request['s'],$request['c']);
 
@@ -63,7 +67,7 @@ class ArticleController extends Controller
     }
 
     public function tagIndex($id){
-        $articles = Tag::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
+        $articles = Tag::where(is_numeric($id)?'id':'slug',$id)->firstOrFail()->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
 
         $articles->load(['comments' => function ($query) {
 //            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
@@ -73,7 +77,7 @@ class ArticleController extends Controller
         return view('article.index', ['articles' => $articles]);
     }
     public function categoryIndex($id){
-        $articles = Category::findOrFail($id)->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
+        $articles = Category::where(is_numeric($id)?'id':'slug',$id)->firstOrFail()->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
 
         $articles->load(['comments' => function ($query) {
 //            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');

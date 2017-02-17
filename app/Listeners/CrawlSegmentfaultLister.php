@@ -29,6 +29,7 @@ class CrawlSegmentfaultLister implements ShouldQueue
         $body = mb_str_replace('\r\n','',$event->getBody());
         $body = mb_str_replace('\n','',$body);
         $body = mb_substr($body,0,100);
+        $title = $event->getTitle();
 
         if (config('app.env') === 'local'){
             $os = '';
@@ -38,5 +39,6 @@ class CrawlSegmentfaultLister implements ShouldQueue
             stristr(PHP_OS, 'LINUX') && $os = 'utf-8';
             // 窗口输出
             exec(mb_convert_encoding('notify -t '.$event->getTitle().' -m "'.$body.'" -s --open '.$event->getUrl().'', $os));
+        }
     }
 }
