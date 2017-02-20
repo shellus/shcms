@@ -47,12 +47,8 @@ cp .env.example .env
 
 3. 修改`APP_URL`，改为可访问到的url，否则邮件中和cli中无法获取正确的url。
 
-创建数据库
+4. 创建数据库`shcms`
 
-```sql
-CREATE DATABASE homestead CHARSET utf8;
-
-```
 
 生成app_key和填充数据库
 ```bash
