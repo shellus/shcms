@@ -21,7 +21,7 @@ class CrawlSegmentfault extends Command
      *
      * @var string
      */
-    protected $signature = 'CrawlSegmentfault {url?}';
+    protected $signature = 'CrawlSegmentfault {url?} {--question-url=} {--questions-url=https://segmentfault.com/questions}';
 
     /**
      * The console command description.
@@ -46,8 +46,17 @@ class CrawlSegmentfault extends Command
      */
     public function handle()
     {
+
+        if ($this->option('question-url')){
+            $question = $this->parse($this->option('question-url'));
+            $this->store($question);
+            return;
+        }
+
+
+
         // 获取最新问题
-        $body = HttpService::request('GET', 'https://segmentfault.com/questions')->getBody()->getContents();
+        $body = HttpService::request('GET', $this->option('questions-url'))->getBody()->getContents();
         $dom = new Crawler($body);
 
         // 从DOM取出问题url列表，并用问题url.回答数量.是否采纳做一个md5.用来对比某个问题是否已经更新，需要再次去采集
@@ -239,7 +248,6 @@ class CrawlSegmentfault extends Command
         $answer['user_id'] = $answerUser->id;
         $answer['article_id'] = $article->id;
         $answer['body'] = SegmentfaultService::filterBody($answer['body']);
-
         /** @var Comment $comment */
         $comment = Comment::firstOrCreate(Arr::only($answer, ['slug']), $answer);
 

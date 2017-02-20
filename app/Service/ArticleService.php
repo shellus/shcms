@@ -20,7 +20,7 @@ class ArticleService
      */
     public static function filterTagSlug($slug)
     {
-        $map = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $map = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.-';
         $map = str_split($map);
         for ($i = 0; $i < strlen($slug); $i++) {
             if (!array_search(substr($slug,$i,1),$map)){
