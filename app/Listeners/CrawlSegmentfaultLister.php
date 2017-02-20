@@ -31,9 +31,11 @@ class CrawlSegmentfaultLister implements ShouldQueue
         $body = mb_substr($body,0,100);
         $title = $event->getTitle();
 
-        if (config('app.env') === 'local'){
-            exec(mb_convert_encoding('notify -t '.$title.' -m "'.$body.'" -s --open '.$event->getUrl().'', 'GBK'));
-        }
 
+        if (config('app.env') === 'local'){
+            // TODD 除Windows系列都设定其为UTF-8编码
+            $os = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'GBK' : 'UTF-8';
+            exec(mb_convert_encoding('notify -t '.$title.' -m "'.$body.'" -s --open '.$event->getUrl().'', $os));
+        }
     }
 }
