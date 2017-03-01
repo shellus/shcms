@@ -218,6 +218,7 @@ return [
     */
 
     'aliases' => [
+        'LogicLog' => App\Facades\LogicLog::class,
 
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
 
