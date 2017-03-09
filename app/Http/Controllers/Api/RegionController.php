@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Region;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RegionController extends Controller
 {
@@ -13,7 +15,8 @@ class RegionController extends Controller
      */
     public function index()
     {
-        return $regions = Region::whereParentId(\Request::get('parent_id'))->get();
+        $regions = Region::whereParentId(\Request::get('parent_id'))->get();
+        return $this->success(null, $regions);
     }
 
     /**

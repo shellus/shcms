@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
 //})->middleware('auth:api');
 
 Route::resource('/article','Api\ArticleController');
-
+Route::resource('/region', 'Api\RegionController');
 
 Route::get('/system-info','Api\IndexController@systemInfo');
 

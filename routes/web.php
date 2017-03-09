@@ -58,5 +58,3 @@ Route::resource('/category', 'CategoryController');
 Route::get('/tag/{id}', 'ArticleController@tagIndex');
 Route::resource('/tag', 'TagController');
 
-
-Route::resource('/region', 'RegionController');
