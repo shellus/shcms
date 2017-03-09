@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @property-read mixed $logo_url
  * @property integer $logo_id
  * @method static \Illuminate\Database\Query\Builder|\App\Category whereLogoId($value)
+ * @property string $type
+ * @method static \Illuminate\Database\Query\Builder|\App\Category whereType($value)
  */
 class Category extends Model
 {

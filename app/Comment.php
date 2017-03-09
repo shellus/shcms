@@ -28,6 +28,19 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereSlug($value)
  * @property bool $is_awesome
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereIsAwesome($value)
+ * @property string $title
+ * @property bool $version
+ * @property string $type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Category[] $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
+ * @property-read mixed $display_title
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\KeyWords[] $keyWords
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ReadingHistory[] $readingHistories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Tag[] $tags
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ArticleVote[] $votes
+ * @method static \Illuminate\Database\Query\Builder|\App\Comment whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Comment whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Comment whereVersion($value)
  */
 class Comment extends Article
 {

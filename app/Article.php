@@ -41,6 +41,14 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\Article whereCustomId($value)
  * @property string $slug
  * @method static \Illuminate\Database\Query\Builder|\App\Article whereSlug($value)
+ * @property int $article_id
+ * @property string $type
+ * @property bool $is_awesome
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Tag[] $tags
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Article whereArticleId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Article whereIsAwesome($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Article whereType($value)
  */
 class Article extends Model
 {
