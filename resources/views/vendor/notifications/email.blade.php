@@ -12,6 +12,31 @@
                 width: 100% !important;
             }
         }
+
+        .button {
+            display: block;
+            display: inline-block;
+            width: 200px;
+            min-height: 20px;
+            padding: 10px;
+            background-color: #3869D4;
+            border-radius: 3px;
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 25px;
+            text-align: center;
+            text-decoration: none;
+            -webkit-text-size-adjust: none;
+        }
+
+        .email-masthead-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2F3133;
+            text-decoration: none;
+            text-shadow: 0 1px 0 white;
+        }
+
     </style>
 </head>
 
@@ -71,6 +96,7 @@ $style = [
                 <tr>
                     <td style="{{ $style['email-masthead'] }}">
                         <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ url('/') }}"
+                           class="email-masthead-name"
                            target="_blank">
                             {{ config('app.name') }}
                         </a>
