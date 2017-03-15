@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $categories = Tag::withCount('articles')->orderBy('articles_count','DESC')->paginate(\Request::get('pn', 30));
 
+        return view('category.index', compact('categories'));
+    }
     /**
      * Show the form for creating a new resource.
      *

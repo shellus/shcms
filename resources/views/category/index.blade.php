@@ -3,8 +3,7 @@
     <style>
         #articles{
             line-height: 2em;
-            height: 400px;
-            overflow: hidden;
+            min-height: 400px;
         }
     </style>
 @endsection
@@ -27,12 +26,13 @@
                                     <a href="{{ $category -> showUrl() }}">
                                     <img width="64" height="64" src="{{ $category->logoUrl }}" class="img-circle">
                                         <div class="text-center">
-                                            {{ $category['title'] }}
+                                            {{ $category['title'] }}({{ $category['articles_count'] }})
                                         </div>
                                     </a>
                                 </li>
                             @endforeach
                         </ul>
+                        {{ $categories->links() }}
                     </div>
                 </div>
             </div>
