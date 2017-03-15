@@ -9,7 +9,7 @@
                 <div class="panel-body">
 
                     @if(config('app.allow_register'))
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         @include('hacker_alert')
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

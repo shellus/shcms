@@ -1,19 +1,23 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class StaticPageTest extends TestCase
+class ExampleTest extends TestCase
 {
     /**
-     * A basic functional test example.
+     * A basic test example.
      *
      * @return void
      */
-    public function testIndexTitle()
+    public function testBasicTest()
     {
-        $this->visit(route('index'))
-             ->see(env('APP_NAME'));
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
     }
 }

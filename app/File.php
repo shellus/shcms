@@ -84,7 +84,6 @@ class File extends Model
         self::checkExtension($extension = $file->getClientOriginalExtension());
 
         $random_filename = Str::random() . '.' . $extension;
-
         $full_path = $file->storeAs($save_path, $random_filename,'uploads');
 
         if($full_path === false){

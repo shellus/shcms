@@ -2,7 +2,7 @@
 
 ![image](http://cdn.endaosi.com/image/shcms-logo.png)
 
-一个基于laravel5.3最佳实践的cms程序，使用众多现代web开发特性。
+一个基于laravel5.4最佳实践的cms程序，使用众多现代web开发特性。
 
 ## 在线DEMO
 
