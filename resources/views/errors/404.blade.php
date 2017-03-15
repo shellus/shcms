@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>服务器正在维护</title>
+        <title>页面未找到</title>
 
         {{--<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">--}}
 
@@ -40,7 +40,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">服务器正在维护，请稍后访问</div>
+                <div class="title">很抱歉，找不到您要寻找的网页。</div>
             </div>
         </div>
     </body>
