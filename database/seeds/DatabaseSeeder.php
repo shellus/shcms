@@ -11,9 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // 测试redis是否就绪
         try{
-            \PRedis::get('test');
+            // 这句没有任何字面意义，是用来检查是否配置好支持tag的缓存驱动
+            Cache::tags(['check'])->get('RBAC');
         }catch (\Predis\Connection\ConnectionException $e){
             $this->command->error('Unable to connect to redis ' . config('database.redis.default.host') . ':'
                 . config('database.redis.default.port'));
