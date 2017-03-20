@@ -27,7 +27,7 @@ Route::group([
     Route::resource('/favorite', 'FavoriteController');
 });
 
-Route::get('/', 'IndexController@index') -> name('index');
+Route::get('/', 'IndexController@index') -> name('index_old');
 Route::get('/test', 'TestController@index');
 
 
@@ -42,6 +42,7 @@ Route::resource('/article', 'ArticleController');
 
 Route::get('/category/{id}', 'ArticleController@categoryIndex');
 
+Route::get('/category/default', 'CategoryController@show')->name('index');
 Route::resource('/category', 'CategoryController', ['name' => 'category']);
 
 Route::get('/tag/{id}', 'ArticleController@tagIndex');
