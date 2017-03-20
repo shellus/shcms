@@ -41,7 +41,8 @@ Route::get('/article/reading', 'ArticleController@reading');
 Route::resource('/article', 'ArticleController');
 
 Route::get('/category/{id}', 'ArticleController@categoryIndex');
-Route::resource('/category', 'CategoryController');
+
+Route::resource('/category', 'CategoryController', ['name' => 'category']);
 
 Route::get('/tag/{id}', 'ArticleController@tagIndex');
 Route::resource('/tag', 'TagController');

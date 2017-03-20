@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     public function index(Request $request){
-        $articles = Article::getByRandom(20);
-        return view('index', ['articles' => $articles]);
+        return \Response::redirectToRoute('category.show',['default']);
+//        $articles = Article::getByRandom(20);
+//        return view('index', ['articles' => $articles]);
     }
 }
