@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     public function index(Request $request){
-        abort(404);
+
+        return response()->redirectToRoute('article.index');
     }
 }

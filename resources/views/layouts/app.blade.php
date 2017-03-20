@@ -25,7 +25,7 @@
     <script>
         window.laravel = {};
         window.laravel.csrf_token = document.getElementsByName('csrf-token')[0].content;
-        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : window.laravel.csrf_token } });
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': window.laravel.csrf_token}});
     </script>
 
     @yield('header')
@@ -37,7 +37,8 @@
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -54,7 +55,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="{{ url('/category') }}" >
+                        <a href="{{ url('/category') }}">
                             分类
                         </a>
                     </li>
@@ -68,25 +69,27 @@
                         <li><a href="{{ url('/register') }}">注册</a></li>
                     @else
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="{{ url('/home') }}" >
+                                    <a href="{{ url('/home') }}">
                                         用户中心
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{{ url('/logout') }}"
-                                        onclick="event.preventDefault();
+                                       onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                                         注销
                                     </a>
 
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                                          style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
@@ -98,6 +101,16 @@
         </div>
     </nav>
     <div class="main" style="margin-bottom: 20px;">
+        {{--<div class="container">--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-md-8 col-md-offset-2">--}}
+                    {{--<ol class="breadcrumb">--}}
+                        {{--<li><a href="{{ route('index') }}">首页</a></li>--}}
+                        {{--@stack('breadcrumbs')--}}
+                    {{--</ol>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
         @yield('content')
     </div>
     <hr>
@@ -125,8 +138,11 @@
                 </dl>
                 <dl class="col-sm-2 site-link">
                     <dt>常用链接</dt>
-                    <dd><a href="//chrome.google.com/webstore/detail/segmentfault-%E7%AC%94%E8%AE%B0/pjklfdmleagfaekibdccmhlhellefcfo" target="_blank">笔记插件: Chrome</a></dd>
-                    <dd><a href="//addons.mozilla.org/zh-CN/firefox/addon/sf-note-ext/" target="_blank">笔记插件: Firefox</a></dd>
+                    <dd>
+                        <a href="//chrome.google.com/webstore/detail/segmentfault-%E7%AC%94%E8%AE%B0/pjklfdmleagfaekibdccmhlhellefcfo"
+                           target="_blank">笔记插件: Chrome</a></dd>
+                    <dd><a href="//addons.mozilla.org/zh-CN/firefox/addon/sf-note-ext/" target="_blank">笔记插件:
+                            Firefox</a></dd>
                     <dd>订阅：<a href="/feeds">问答</a> / <a href="/feeds/blogs">文章</a></dd>
                     <dd><a href="//mirrors.segmentfault.com/" target="_blank">文档镜像</a></dd>
                     <dd><a href="//segmentfault.com/blog/interview" target="_blank">社区访谈</a></dd>
@@ -147,20 +163,27 @@
                 </dl>
                 <dl class="col-sm-4 site-link" id="license">
                     <dt>内容许可</dt>
-                    <dd>除特别说明外，用户内容均采用 <a rel="license" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a> 进行许可
+                    <dd>除特别说明外，用户内容均采用 <a rel="license" target="_blank"
+                                          href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎
+                            4.0 国际许可协议</a> 进行许可
                     </dd>
-                    <dd>本站由 <a target="_blank" href="https://www.upyun.com/?utm_source=segmentfault&amp;utm_medium=link&amp;utm_campaign=upyun&amp;md=segmentfault">又拍云</a> 提供 CDN 存储服务
+                    <dd>本站由 <a target="_blank"
+                               href="https://www.upyun.com/?utm_source=segmentfault&amp;utm_medium=link&amp;utm_campaign=upyun&amp;md=segmentfault">又拍云</a>
+                        提供 CDN 存储服务
                     </dd>
                 </dl>
             </div>
             <div class="copyright text-center">
                 Copyright © 2011-2017 SegmentFault. 当前呈现版本 17.01.23<br>
                 <a href="http://www.miibeian.gov.cn/" rel="nofollow">浙ICP备 15005796号-2</a> &nbsp;
-                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602002000" rel="nofollow">浙公网安备 33010602002000号</a>
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602002000"
+                   rel="nofollow">浙公网安备 33010602002000号</a>
             </div>
             <p class="text-center">
-                <a class="js__view--selector hidden-sm hidden-md hidden-lg" data-action="mobile" href="javascript:;">移动版</a>
-                <a class="js__view--selector hidden-sm hidden-md hidden-lg" data-action="desktop" href="javascript:;">桌面版</a>
+                <a class="js__view--selector hidden-sm hidden-md hidden-lg" data-action="mobile"
+                   href="javascript:;">移动版</a>
+                <a class="js__view--selector hidden-sm hidden-md hidden-lg" data-action="desktop"
+                   href="javascript:;">桌面版</a>
             </p>
         </div>
     </footer>

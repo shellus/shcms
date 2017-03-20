@@ -46,6 +46,9 @@ class ArticleController extends Controller
      */
     public function index(Request $request, $id = null)
     {
+        $meta = new \stdClass();
+        $meta->title = '';
+
         $article = new Article();
         if (\Route::currentRouteName() == 'article.index'){
 

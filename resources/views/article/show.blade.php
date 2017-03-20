@@ -160,34 +160,33 @@
                     </form>
                 </div>
 
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
                 <div class="row">
-                    <div class="col-xs-6">
-                        上一篇：
-                        @if($article -> previous())
-                            <a href="{{ $article -> previous() -> showUrl() }}">{{ $article -> previous() -> title }}</a>
-                        @else
-                            没有了
-                        @endif
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                上一篇：
+                                @if($article -> previous())
+                                    <a href="{{ $article -> previous() -> showUrl() }}">{{ $article -> previous() -> title }}</a>
+                                @else
+                                    没有了
+                                @endif
 
 
-                    </div>
-                    <div class="col-xs-6 text-right">
-                        下一篇：
-                        @if($article -> next())
-                            <a href="{{ $article -> next() -> showUrl() }}">{{ $article -> next() -> title }}</a>
-                        @else
-                            没有了
-                        @endif
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                下一篇：
+                                @if($article -> next())
+                                    <a href="{{ $article -> next() -> showUrl() }}">{{ $article -> next() -> title }}</a>
+                                @else
+                                    没有了
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
 
