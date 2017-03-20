@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\ArticleController;
+
 Route::group([
     'middleware' => 'auth',
 ], function ($router) {
@@ -27,7 +29,7 @@ Route::group([
     Route::resource('/favorite', 'FavoriteController');
 });
 
-Route::get('/', 'IndexController@index') -> name('index_old');
+Route::get('/', 'IndexController@index') -> name('index');
 Route::get('/test', 'TestController@index');
 
 
@@ -36,15 +38,14 @@ Auth::routes();
 
 /********************* End *********************/
 
-Route::get('/article/search', 'ArticleController@search');
-Route::get('/article/reading', 'ArticleController@reading');
-Route::resource('/article', 'ArticleController');
+//Route::get('/article/search', 'ArticleController@search');
+//Route::get('/article/reading', 'ArticleController@reading');
+Route::resource('/article', ArticleController::class);
 
-Route::get('/category/{id}', 'ArticleController@categoryIndex');
+//Route::get('/{metaType}/{id}', 'ArticleController@index')->where('metaType','(category,tag)');
 
-Route::get('/category/default', 'CategoryController@show')->name('index');
-Route::resource('/category', 'CategoryController', ['name' => 'category']);
-
-Route::get('/tag/{id}', 'ArticleController@tagIndex');
-Route::resource('/tag', 'TagController');
+//Route::get('/category/default', 'CategoryController@show')->name('index');
+Route::get('/category/{id}', ArticleController::class . '@index')->name('category.show');
+Route::get('/tag/{id}', ArticleController::class . '@index')->name('tag.show');
+//Route::resource('/tag', 'TagController');
 

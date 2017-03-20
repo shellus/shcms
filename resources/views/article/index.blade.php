@@ -6,6 +6,7 @@
                 <div class="panel">
                     <div class="panel-body">
                         @include('components.search-form')
+                        @include('components.filter-form')
                         <ul id="articles" class="list-unstyled">
                             @foreach($articles as $article)
                                 <li style="padding-bottom: 8px">

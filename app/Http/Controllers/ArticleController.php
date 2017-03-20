@@ -14,25 +14,6 @@ use App\Http\Requests;
 class ArticleController extends Controller
 {
 
-    public function search(Request $request){
-
-
-        // 只对登录用户记录搜索历史
-        if (\Auth::check()){
-            SearchHistory::firstOrCreate([
-                'word' => $request['s'],
-                'page' => $request -> get('page', 1),
-                'user_id' => \Auth::user() -> id,
-            ]);
-        }
-
-
-        $articles = Article::search($request['s'],$request['c']);
-
-        return view('article.index', ['articles' => $articles]);
-
-    }
-
     public function vote(Requests\UserArticleVoteRequest $request)
     {
         $data = [
@@ -57,34 +38,49 @@ class ArticleController extends Controller
 
 
     /**
-     * Display a listing of the resource.
+     * 文章列表，兼容分类、标签、关键词搜索
      *
+     * @param Request $request
+     * @param null $id
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $id = null)
     {
-        //
-    }
+        $article = new Article();
+        if (\Route::currentRouteName() == 'article.index'){
 
-    public function tagIndex($id){
-        $articles = Tag::where(is_numeric($id)?'id':'slug',$id)->firstOrFail()->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
+        }
+        if (\Route::currentRouteName() == 'category.show'){
+            $meta = Category::where(is_numeric($id)?'id':'slug',$id)->firstOrFail();
+            $article->whereHas('categories', function ($query)use($meta) {
+                $query->where('id', '=', $meta->id);
+            });
+        }
+        if (\Route::currentRouteName() == 'tag.show'){
+            $meta = Tag::where(is_numeric($id)?'id':'slug',$id)->firstOrFail();
+            $article->whereHas('tags', function ($query)use($meta) {
+                $query->where('id', '=', $meta->id);
+            });
+        }
+        // 搜索
+        if (($searchWord = $request->get('s'))){
+            if (\Auth::check()){
+                SearchHistory::firstOrCreate([
+                    'word' => $request['s'],
+                    'page' => $request -> get('page', 1),
+                    'user_id' => \Auth::user() -> id,
+                ]);
+            }
+        }
 
-        $articles->load(['comments' => function ($query) {
-//            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
-//            $query->groupBy('article_id');
-            $query->orderBy('created_at','DESC');
-        }]);
-        return view('article.index', ['articles' => $articles]);
-    }
-    public function categoryIndex($id){
-        $articles = Category::where(is_numeric($id)?'id':'slug',$id)->firstOrFail()->articles()->orderBy('articles.updated_at', 'DESC')->paginate(20);
-
-        $articles->load(['comments' => function ($query) {
-//            $query->selectRaw('min(id) as id, article_id, count(*) as comments_count');
-//            $query->groupBy('article_id');
-            $query->orderBy('created_at','DESC');
-        }]);
-        return view('article.index', ['articles' => $articles]);
+        $titleMap = [
+            'article.index' => '全部文章',
+            'category.show' => '分类 - ' . $meta->title,
+            'tag.show' => '标签 - ' . $meta->title,
+        ];
+        /** @var Article $article */
+        $articles = $article->withSearch($searchWord)->orderBy('updated_at', 'DESC')->paginate(20);
+        return view('article.index', ['articles' => $articles, 'article_title' => $titleMap[\Route::currentRouteName()]]);
     }
 
     /**

@@ -1,4 +1,4 @@
-<form method="GET" action="{{ url('/article/search') }}">
+<form method="GET" action="{{ route('article.index') }}">
     <div class="input-group input-group-lg search-box">
         {{--<input type="hidden" name="c" value="*">--}}
         <input id="search-input" autocomplete="off" type="search" class="form-control" name="s"
