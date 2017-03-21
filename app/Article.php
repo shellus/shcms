@@ -101,7 +101,7 @@ class Article extends Model
     public function withSearch($s = null)
     {
         if ($s !== null){
-            return $this->whereRaw("`title` LIKE ?", ["%" . $s . "%"]);
+            return $this->where("title", 'like', "%" . $s . "%");
         }
         return $this;
 //        if ($c === null) {
