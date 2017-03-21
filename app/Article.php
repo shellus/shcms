@@ -100,7 +100,10 @@ class Article extends Model
      */
     public function withSearch($s = null)
     {
-        return $this->whereRaw("`title` LIKE ?", ["%" . $s . "%"]);
+        if ($s !== null){
+            return $this->whereRaw("`title` LIKE ?", ["%" . $s . "%"]);
+        }
+        return $this;
 //        if ($c === null) {
 //            $c = Category::all(['id'])->mode('id');
 //        }
