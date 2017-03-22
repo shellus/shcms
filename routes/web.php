@@ -16,23 +16,28 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 
 Route::group([
     'middleware' => 'auth',
 ], function ($router) {
-    Route::post('/article/vote', 'ArticleController@vote');
-    Route::resource('article.comment', 'CommentController');
+    Route::post('/article/vote', ArticleController::class . '@vote');
+    Route::resource('article.comment', CommentController::class);
 
-    Route::post('/category/update-logo', 'CategoryController@updateLogo');
+    Route::post('/category/update-logo', CategoryController::class . '@updateLogo');
 
-    Route::post('/user/update-avatar', 'UserController@updateAvatar');
-    Route::get('/home', \App\Http\Controllers\HomeController::class . '@index') -> name('home');
+    Route::post('/user/update-avatar', UserController::class . '@updateAvatar');
+    Route::get('/home', HomeController::class . '@index')->name('home');
 
-    Route::get('/favorite/show-add-article-to-favorite', 'FavoriteController@showAddArticleToFavorite') -> name('show-add-article-to-favorite');
-    Route::post('/favorite/add-article-to-favorite', 'FavoriteController@addArticleToFavorite') -> name('add-article-to-favorite');
-    Route::resource('/favorite', 'FavoriteController');
+    Route::get('/favorite/show-add-article-to-favorite', FavoriteController::class . '@showAddArticleToFavorite')->name('show-add-article-to-favorite');
+    Route::post('/favorite/add-article-to-favorite', FavoriteController::class . '@addArticleToFavorite')->name('add-article-to-favorite');
+    Route::resource('/favorite', FavoriteController::class);
 });
 
 Route::get('/', IndexController::class . '@index')->name('index');

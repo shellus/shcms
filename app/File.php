@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Exceptions\UploadedFileExtensionNotAllow;
+use App\Exceptions\UploadedFileException;
 use App\Exceptions\UploadedFileSaveFail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
@@ -35,26 +35,32 @@ class File extends Model
     protected $fillable = [
         'filename','save_path','full_path','display_filename','size','mime_type',
     ];
+    private static $disk = 'uploads';
 
-    public function __construct(array $attributes = [])
+    protected static function boot()
     {
-        parent::__construct($attributes);
+        parent::boot();
+
         self::deleted(function(self $model){
             $full_path = $model->save_path . '/' . $model->filename;
-            $isDeleted = \Storage::disk('uploads')->delete($full_path);
+            $isDeleted = \Storage::disk(self::$disk)->delete($full_path);
             if(!$isDeleted){
                 \Log::error("file: $full_path delete fail");
             }else{
                 \Log::info("file: $full_path delete success");
             }
-
         });
     }
 
 
     private static function checkExtension($extension){
         if(!in_array($extension, config('app.upload_file_allow_extensions', []))){
-            throw new UploadedFileExtensionNotAllow("extension: $extension is not allow");
+            throw new UploadedFileException("extension: $extension is not allow");
+        }
+    }
+    private static function checkFileSize($size){
+        if($size > config('app.upload_file_size_limit_byte', 50 * pow(1024, 2))){
+            throw new UploadedFileException("File size: $size byte is too big");
         }
     }
     /**
@@ -81,24 +87,31 @@ class File extends Model
      * @throws UploadedFileSaveFail
      */
     public static function createFormUploadFile(UploadedFile $file, $save_path = ''){
+
         self::checkExtension($extension = $file->getClientOriginalExtension());
+        self::checkFileSize($file->getSize());
 
         $random_filename = Str::random() . '.' . $extension;
-        $full_path = $file->storeAs($save_path, $random_filename,'uploads');
+
+        $full_path = $file->storeAs($save_path, $random_filename,['disk'=>self::$disk]);
 
         if($full_path === false){
             throw new UploadedFileSaveFail();
         }
-        return self::create([
+
+        /** @var self $self */
+        $self = self::create([
             'filename' => $random_filename,
             'save_path' => $save_path,
             'display_filename' => $file->getClientOriginalName(),
-            'size' => \Storage::disk('uploads')->size($full_path),
-            'mime_type' => \Storage::disk('uploads')->mimeType($full_path),
+            'size' => $file->getSize(),
+            'mime_type' => $file->getMimeType(),
         ]);
+
+        return $self;
     }
 
     public function getUrlAttribute(){
-        return \Storage::disk('uploads')->url($this -> save_path .'/'. $this -> filename);
+        return \Storage::disk(self::$disk)->url($this -> save_path .'/'. $this -> filename);
     }
 }

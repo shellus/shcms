@@ -9,7 +9,7 @@
 namespace App\Exceptions;
 use Exception;
 
-class UploadedFileExtensionNotAllow extends Exception
+class UploadedFileException extends Exception
 {
 
 }
