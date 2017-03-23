@@ -1,127 +1,32 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Crawl;
 
 use App\Article;
 use App\Comment;
 use App\Service\ArticleService;
-use App\Service\HttpService;
 use App\Service\SegmentfaultService;
 use App\Service\UserService;
 use App\Tag;
-use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
+use Psr\Http\Message\ResponseInterface;
 
-class CrawlSegmentfault extends Command
+class SegmentfaultQuestionPage extends Crawl
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'CrawlSegmentfault {url?} {--question-url=} {--questions-url=https://segmentfault.com/questions}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = '实时抓取Segmentfault的数据，需要每分钟运行一次';
-
-    /**
-     * Create a new command instance.
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
-    {
-
-        if ($this->option('question-url')){
-            $question = $this->parse($this->option('question-url'));
-            $this->store($question);
-            return;
-        }
-
-
-
-        // 获取最新问题
-        $body = HttpService::request('GET', $this->option('questions-url'))->getBody()->getContents();
-        $dom = new Crawler($body);
-
-        // 从DOM取出问题url列表，并用问题url.回答数量.是否采纳做一个md5.用来对比某个问题是否已经更新，需要再次去采集
-        $dom->filter('.stream-list .stream-list__item')->each(function (Crawler $node, $i) use (&$new_index_list) {
-            $url = $node->filter('.title a')->attr('href');
-            $answersCount = intval($node->filter('.qa-rank .answers')->html());
-            $solved = $node->filter('.qa-rank .solved')->count();
-            $md5 = "$url-$answersCount-$solved";
-            $new_index_list[$md5] = $url;
-        });
-
-        // 获取上次抓取列表
-        if (\Storage::disk('storage')->exists('questionList.diff')) {
-            $oldQuestionList = \GuzzleHttp\json_decode(\Storage::disk('storage')->get('questionList.diff'), true);
-        } else {
-            $oldQuestionList = [];
-        }
-
-        // 和上次的问题列表的差集，得出改变的问题列表
-        $questionList = array_diff_key($new_index_list, $oldQuestionList);
-
-
-
-        // 循环抓取每一个问题的数据
-        $es = [];
-        // array_reverse是因为要反向获取，不然顺序是倒的。
-        foreach (array_reverse($questionList) as $k => $questionPageUrl) {
-            \Log::info('diff: ' . $k . ':' . $questionPageUrl);
-            try {
-                $question = $this->parse('https://segmentfault.com' . $questionPageUrl);
-                $this->store($question);
-            } catch (\Exception $e) {
-                $es[] = $e;
-            }
-        }
-
-        // 如果有改变，就存取来作为下次对比差异用
-        if ($questionList) {
-            $diffJson = \GuzzleHttp\json_encode($new_index_list, JSON_PRETTY_PRINT);
-            \Storage::disk('storage')->put('questionList.diff', $diffJson);
-        }
-
-        // 问题存起来集中爆发，防止中断循环
-        // TODO 其实没做好。。。只能爆发第一个错误，进程就崩溃，后面的错误都被丢掉了
-        foreach ($es as $e) {
-            throw $e;
-        }
-
-        // 不返回IDE会报提示。。烦。
-        return;
-    }
+    use EasyCrawl;
 
     /**
      * 从DOM取出需要的数据
-     * @param $questionPageUrl
+     * @param ResponseInterface $response
      * @return mixed
+     * @internal param $questionPageUrl
      */
-    public function parse($questionPageUrl)
+    public function parse(ResponseInterface $response)
     {
-        $body = HttpService::request('GET', $questionPageUrl)->getBody()->getContents();
-        $dom = new Crawler($body);
-
+        $dom = new Crawler($response->getBody()->getContents());
         $question = $this->parseQuestion($dom);
-        $question['url'] = $questionPageUrl;
-
         $question['answers'] = $this->parseAnswers($dom);
         return $question;
     }
@@ -131,7 +36,8 @@ class CrawlSegmentfault extends Command
      * @param Crawler $dom
      * @return mixed
      */
-    protected function parseQuestion($dom){
+    protected function parseQuestion($dom)
+    {
         $question['slug'] = 'segmentfault-' . $dom->filter('#questionTitle')->attr('data-id');
         $question['title'] = utf8_to_unicode_str($dom->filter('#questionTitle>a')->text());
         $question['body'] = utf8_to_unicode_str(trim($dom->filter('.question')->html()));
@@ -160,7 +66,8 @@ class CrawlSegmentfault extends Command
      * @param Crawler $dom
      * @return mixed
      */
-    protected function parseAnswers($dom){
+    protected function parseAnswers($dom)
+    {
         return $dom->filter('.widget-answers__item[id]')->each(function (Crawler $node, $i) {
             $userName = $node->filter('.answer__info--author-name')->first()->text();
             $userUrl = $node->filter('.answer__info--author-name')->first()->attr('href');
@@ -183,11 +90,7 @@ class CrawlSegmentfault extends Command
             ];
         });
     }
-    /**
-     * 储存数据
-     * @param $question
-     */
-    public function store($question)
+    public function store(array $question)
     {
         $article = $this->storeQuestion($question);
         foreach ($question['answers'] as $answer) {
@@ -195,7 +98,6 @@ class CrawlSegmentfault extends Command
             // 是否新添加答案
             if ($comment->wasRecentlyCreated) {
                 \Log::info('add answer: ' . $comment->slug);
-                \Event::fire(new \App\Events\CrawlSegmentfaultAnswer($question, $answer));
             }
         }
     }
@@ -219,18 +121,18 @@ class CrawlSegmentfault extends Command
         $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
         if ($article->wasRecentlyCreated) {
             \Log::info('add question: ' . $article->slug);
-            \Event::fire(new \App\Events\CrawlSegmentfaultQuestion($question));
         }
 
         foreach ($question['tags'] as $tag_str) {
             if (!$article->tags()->whereTitle($tag_str)->exists()) {
-                $tag = Tag::firstOrCreate(['title' => $tag_str], ['title' => $tag_str, 'slug'=>ArticleService::filterTagSlug($tag_str)]);
+                $tag = Tag::firstOrCreate(['title' => $tag_str], ['title' => $tag_str, 'slug' => ArticleService::filterTagSlug($tag_str)]);
                 $article->tags()->attach($tag);
             }
         }
 
         return $article;
     }
+
     /**
      * 储存回答
      * @param $article

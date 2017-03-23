@@ -15,7 +15,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\CrawlArticle::class,
         Commands\CrawlBuildUrls::class,
-        Commands\CrawlSegmentfault::class,
         Commands\ArticleLexicalAnalysis::class,
         Commands\FixArticle::class,
         Commands\Ws::class,
@@ -30,7 +29,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('CrawlSegmentfault')->everyMinute();
+//        $schedule->command('CrawlSegmentfault')->everyMinute();
         // $schedule->command('inspire')
         //          ->hourly();
     }
