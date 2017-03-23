@@ -38,7 +38,7 @@
                                         <i class="fa fa-comment-o" aria-hidden="true"></i>
                                         <a href="#">{{ $article->comments->first()->user->name }}</a>
                                     </small>
-                                    <small>{{ $article->comments->first()->created_at->diffForHumans() }} 回复</small>
+                                    <small>{{ $article->comments->first()->updated_at->diffForHumans() }} 回复</small>
                                 @endif
                             </div>
                         </li>
