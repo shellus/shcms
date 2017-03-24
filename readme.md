@@ -88,9 +88,28 @@ supervisor 推荐配置
 
 ```bash
 [program:ws]
+directory=path/to/shcms/
 command=php artisan ws
 user=www-data
+
+[program:queue-default]
 directory=path/to/shcms/
+process_name=%(program_name)s_%(process_num)02d
+command=php artisan queue:work --queue=default --sleep=3 --tries=1
+autostart=true
+autorestart=true
+user=www-data
+numprocs=1
+
+[program:queue-high]
+directory=path/to/shcms/
+process_name=%(program_name)s_%(process_num)02d
+command=php artisan queue:work --queue=high --sleep=3 --tries=1
+autostart=true
+autorestart=true
+user=www-data
+numprocs=4
+
 ```
 
 然后使新的配置生效
