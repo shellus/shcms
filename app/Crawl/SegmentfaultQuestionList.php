@@ -18,6 +18,8 @@ class SegmentfaultQuestionList extends Crawl
 
     public function parse(ResponseInterface $response)
     {
+        $cacheKey = 'crawl:questions:page:' . $this->urlParam('page', '1');
+
         $dom = new Crawler($response->getBody()->getContents());
 
         $new_index_list = [];
@@ -30,14 +32,14 @@ class SegmentfaultQuestionList extends Crawl
             $new_index_list[$md5] = $url;
         });
         // 获取上次抓取列表
-        $oldQuestionList = \Cache::get('crawl:QuestionList', []);
+        $oldQuestionList = \Cache::get($cacheKey, []);
 
         // 和上次的问题列表的差集，得出改变的问题列表
         $questionList = array_diff_key($new_index_list, $oldQuestionList);
 
         // 如果有改变，就存取来作为下次对比差异用
         if ($questionList) {
-            \Cache::put('crawl:QuestionList', $new_index_list, Carbon::now()->addDay());
+            \Cache::put($cacheKey, $new_index_list, Carbon::now()->addYear());
         }
         return $questionList;
     }

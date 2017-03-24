@@ -57,6 +57,23 @@ abstract class Crawl implements ShouldQueue
     }
 
     /**
+     * 获取url中的查询字符串
+     * @param $name
+     * @param null $defaultValue
+     * @return null
+     */
+    protected function urlParam($name, $defaultValue = null)
+    {
+        $queryString = parse_url($this->url, PHP_URL_QUERY)?:'';
+        parse_str($queryString, $queryArray);
+
+        if (!key_exists($name, $queryArray)) {
+            return $defaultValue;
+        }
+        return $queryArray[$name];
+    }
+
+    /**
      * 验证url是否符合本类需求
      * @param $url
      * @return bool
