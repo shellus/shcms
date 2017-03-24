@@ -45,11 +45,12 @@
                     @endforeach
                 </ul>
                     </div>
+                    <div class="text-center">
+                        {{ $articles->links() }}
+                    </div>
                 </div>
             </div>
-                <div class="text-center">
-                    {{ $articles->links() }}
-                </div>
+
             </div>
         </div>
     </div>

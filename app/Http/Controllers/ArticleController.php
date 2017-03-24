@@ -82,7 +82,13 @@ class ArticleController extends Controller
             'tag.show' => '标签 - ' . $meta->title,
         ];
         /** @var Article $article */
-        $articles = $article->withSearch($searchWord)->orderBy('updated_at', 'DESC')->with('comments.user', 'user')->paginate(20);
+
+
+        $article = $article->withSearch($searchWord);
+
+        $pn = $request->get('pn', 20);
+
+        $articles = $article->orderBy('updated_at', 'DESC')->with('comments.user', 'user')->paginate($pn)->appends($request->query());
         return view('article.index', ['articles' => $articles, 'article_title' => $titleMap[\Route::currentRouteName()]]);
     }
 
