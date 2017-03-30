@@ -80,7 +80,11 @@
                                         用户中心
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a href="{{ route('article.create') }}">
+                                        发布文章
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ url('/logout') }}"
                                        onclick="event.preventDefault();
