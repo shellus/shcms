@@ -14,29 +14,6 @@ use App\Http\Requests;
 class ArticleController extends Controller
 {
 
-    public function vote(Requests\UserArticleVoteRequest $request)
-    {
-        $data = [
-                'user_id' => $request -> user() -> id,
-
-            ] + $request -> only('article_id');
-
-        if($request['action'] == 'up'){
-            $result = ArticleVote::voteUp($data);
-        }else{
-            $result = ArticleVote::voteDown($data);
-        }
-
-        $article = Article::find($request -> get('article_id'));
-        $result['article_up_vote'] = $article -> votes() -> where('vote', '>', 0) -> sum('vote');
-        $result['article_down_vote'] = $article -> votes() -> where('vote', '<', 0) -> sum('vote');
-
-
-
-        return $this -> message($result?'success':'fail',$result?'操作成功':'操作失败', $result);
-    }
-
-
     /**
      * 文章列表，兼容分类、标签、关键词搜索
      *

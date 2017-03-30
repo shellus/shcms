@@ -30,10 +30,6 @@
                         </span>
                     </div>
                     <div class="col-xs-3">
-                        <span>阅读数量: </span>
-                        <span>{{ $article -> readingHistories() -> count() }}</span>
-                    </div>
-                    <div class="col-xs-3">
                         <span>长度: </span>
                         <span>{{ mb_strlen($article -> body) }} 字</span>
                     </div>
@@ -55,44 +51,7 @@
 
                 <div class="row action-list">
 
-
-                    <div class="col-md-6" id="VoteBar"
-                         data-currentUserVote="{{ \Auth::check() ? $article -> currentUserVote():0 }}">
-                        <div style="position: absolute; left: -35px; top: 65px;" class="zm-votebar goog-scrollfloater"
-                             data-za-module="VoteBar">
-                            <div>
-
-                                <button title="喜欢的文章，就给它11个赞吧~" id="vote-up-btn" href="#" class="btn btn-link btn-vote"
-                                        onclick="vote_click(event, this, 1);">
-                                    <i class="glyphicon glyphicon-thumbs-up text-success"></i><br>
-                                    赞(<span id="vote-up-count">{{ $article -> votes() -> where('vote', '>', 0) -> sum('vote') }}</span>)
-                                </button>
-
-                            </div>
-                            <div>
-                                <button id="vote-down-btn" href="#" class="btn btn-link btn-vote"
-                                        onclick="vote_click(event, this, 0);">
-                                    <i class="glyphicon glyphicon-thumbs-down text-warning"></i><br>
-                                    踩(<span id="vote-down-count">{{ $article -> votes() -> where('vote', '<', 0) -> sum('vote') }}</span>)
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-6">
-                        @if(\Auth::check())
-                            <div>
-                                <a data-toggle="modal" data-target="#modal" class="btn btn-link"
-                                   href="{{ route('show-add-article-to-favorite',['article_id' => $article -> id]) }}">收藏</a>
-                                <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
-                                     aria-labelledby="mySmallModalLabel">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
                         @if(\Auth::check() && \Auth::user()->can('manage_contents'))
                             <div>
                                 <form class="form-inline" action="{{ route('article.destroy', $article -> id) }}"

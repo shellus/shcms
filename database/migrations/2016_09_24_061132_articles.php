@@ -33,13 +33,18 @@ class Articles extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->nullable()->index();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->longText('body');
             $table->integer('user_id')->default(0)->unsigned();
-            $table->tinyInteger('version')->default(0)->unsigned();
+            $table->integer('article_id')->nullable()->unsigned();
+            $table->enum('type', ['article', 'comment'])->default('article');
+            $table->tinyInteger('is_awesome')->unsigned()->default(0);
             $table->timestamps();
 
+            $table->index('updated_at');
 
+            $table->foreign('article_id')->references('id')->on('articles')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
         });

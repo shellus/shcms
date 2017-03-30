@@ -154,11 +154,6 @@ class Article extends Model
 //        return $articles;
     }
 
-    public function currentUserVote()
-    {
-        return $this->votes()->whereUserId(\Auth::user()->id)->sum('vote');
-    }
-
     public function comments()
     {
         return $this->hasMany('App\Comment', 'article_id', 'id');
@@ -167,16 +162,6 @@ class Article extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
-    }
-
-    public function votes()
-    {
-        return $this->hasMany('App\ArticleVote');
-    }
-
-    public function readingHistories()
-    {
-        return $this->hasMany('App\ReadingHistory');
     }
 
     public function category()
@@ -211,15 +196,6 @@ class Article extends Model
             return $this->comments[0]->comments_count;
         }
         return 0;
-    }
-
-    /**
-     * 关键词关联，通过中间表
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function keyWords()
-    {
-        return $this->belongsToMany('App\KeyWords')->withTimestamps();
     }
 
     public function showUrl()
