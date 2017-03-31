@@ -136,3 +136,9 @@ function utf8_to_unicode_str($utf8)
     }
     return $utf8;
 }
+
+function byte_format($size,$dec=2)
+{
+    $unit=array("","k","m","g","t","p","e","z","y");
+    return round($size/pow(1024,($i=floor(log($size,1024)))),$dec).''.$unit[$i];
+}
