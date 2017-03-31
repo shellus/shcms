@@ -89,18 +89,6 @@
         </div>
     </nav>
     <div class="main" style="margin-bottom: 20px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-0">
-                        <div class="app-block">
-                            <ol class="breadcrumb">
-                                <li><a href="{{ route('index') }}">首页</a></li>
-                                @stack('breadcrumbs')
-                            </ol>
-                        </div>
-                </div>
-            </div>
-        </div>
         @yield('content')
     </div>
     <hr>

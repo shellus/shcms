@@ -8,6 +8,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-0">
                     <div class="app-block">
+                        @include('components.breadcrumb')
                         @include('components.search-form')
                         <ul id="articles" class="list-unstyled">
                             @foreach($articles as $article)
@@ -92,7 +93,7 @@
             <div class="col-md-4">
                 <div class="app-block">
                     <h3>标签</h3>
-                    @include('components.tag', ['categories' => \App\Tag::withCount('articles')->orderBy('articles_count', 'DESC')->limit(40)->get()])
+                    @include('components.tag', ['categories' => \App\Tag::orderBy('articles_count', 'DESC')->limit(40)->get()])
                 </div>
             </div>
         </div>

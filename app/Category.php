@@ -52,7 +52,7 @@ class Category extends Model
 
     public function articles()
     {
-        return $this->belongsToMany('App\Article', 'article_category', 'category_id', 'article_id')->withTimestamps();
+        return $this->belongsToMany('App\Article', 'article_category', 'category_id', 'article_id')->withTimestamps()->using('ArticleCategory');
     }
 
     public function showUrl(){
@@ -62,7 +62,7 @@ class Category extends Model
         return $this->belongsTo('App\File');
     }
     public function getLogoUrlAttribute(){
-        if(!$this->logo){
+        if(!$this->logo_id){
             return asset('images/no_category/1.png');
         }
         return $this -> logo -> url;

@@ -83,6 +83,7 @@ class ArticleController extends Controller
             'action' => 'create',
             'method' => 'POST',
             'route' => 'article.store',
+            'title' => '发布文章',
         ]);
     }
 
@@ -93,6 +94,7 @@ class ArticleController extends Controller
             'action' => 'edit',
             'method' => 'PUT',
             'route' => 'article.update',
+            'title' => '编辑文章',
         ]);
     }
 
