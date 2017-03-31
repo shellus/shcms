@@ -6,51 +6,63 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ $article_title }}</div>
                     <div class="panel-body">
-                @include('components.search-form')
-                <ul id="articles" class="list-unstyled">
-                    @foreach($articles as $article)
-                        <li style="padding-bottom: 8px">
-                            <div>
-
-                                <h4>
-                                    <a class="" title="{{ $article -> title }}" href="{{ $article -> showUrl() }}">
-                                        {{ $article -> display_title }}
-                                    </a>
-                                </h4>
-                                <span style="padding: 4px 8px; margin-right: 8px;" class="bg-info">
+                        @include('components.search-form')
+                        {{ $article_title }}
+                        <ul id="articles" class="list-unstyled">
+                            @foreach($articles as $article)
+                                <li style="padding-bottom: 8px">
+                                    <div>
+                                        <h4>
+                                            <a class="" title="{{ $article -> title }}"
+                                               href="{{ $article -> showUrl() }}">
+                                                {{ $article -> display_title }}
+                                            </a>
+                                        </h4>
+                                        <span style="padding: 4px 8px; margin-right: 8px;" class="bg-info">
                                                 <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                    {{ $article->comments->count() }}
+                                            {{ $article->comments->count() }}
                                             </span>
 
-                                <small>
-                                    <i class="fa fa-user-o text-warning" aria-hidden="true"></i>
-                                    <a href="#">{{ $article->user->name }}</a>
-                                </small>
-                                <small>{{ $article->created_at->diffForHumans() }} 发布</small>
+                                        <small>
+                                            <i class="fa fa-user-o text-warning" aria-hidden="true"></i>
+                                            <a href="#">{{ $article->user->name }}</a>
+                                        </small>
+                                        <small>{{ $article->created_at->diffForHumans() }} 发布</small>
 
-                                @if($article->comments->count())
-                                    ||
-                                    <small>
-                                        <i class="fa fa-comment-o" aria-hidden="true"></i>
-                                        <a href="#">{{ $article->comments->first()->user->name }}</a>
-                                    </small>
-                                    <small>{{ $article->comments->first()->updated_at->diffForHumans() }} 回复</small>
-                                @endif
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
+                                        @if($article->comments->count())
+                                            ||
+                                            <small>
+                                                <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                                <a href="#">{{ $article->comments->first()->user->name }}</a>
+                                            </small>
+                                            <small>{{ $article->comments->first()->updated_at->diffForHumans() }}回复
+                                            </small>
+                                        @endif
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                     <div class="text-center">
                         {{ $articles->links() }}
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-4">
+                <h3>分类</h3>
+                <ul class="">
+                    @foreach(\App\Category::all() as $category)
+                        <li>
+                            <a href="{{ $category -> showUrl() }}">
+                                    <img width="20" height="20" src="{{ $category->logoUrl }}" class="img-circle">
+                                    {{ $category['title'] }}({{ $category['articles_count'] }})
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>
