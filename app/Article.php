@@ -182,12 +182,12 @@ class Article extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps()->using('ArticleCategory');
+        return $this->belongsToMany('App\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps()->using('App\ArticleCategory');
     }
 
     public function categories()
     {
-        return $this->belongsToMany('App\Category')->withTimestamps()->using('ArticleCategory');
+        return $this->belongsToMany('App\Category')->withTimestamps()->using('App\ArticleCategory');
     }
 
     public function comments_count()

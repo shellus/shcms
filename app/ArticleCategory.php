@@ -2,14 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * 文章分类透视表，需要在写入时更新分类表缓存
  * Class ArticleCategory
  * @package App
  */
-class ArticleCategory extends Model
+class ArticleCategory extends Pivot
 {
     protected static function boot()
     {
