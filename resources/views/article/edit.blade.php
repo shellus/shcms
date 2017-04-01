@@ -18,6 +18,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-0">
                 <div class="app-block">
+                    @include('components.breadcrumb')
                     <form class="" role="form" method="POST" action="{{ route($route, $article->id) }}">
                         <div class="row">
                             <div class="col-md-12 col-md-offset-0">

@@ -31,7 +31,7 @@
     <style>
         .breadcrumb {
             padding: 0;
-            margin-bottom: 0;
+            margin-bottom: 10px;
             list-style: none;
             background-color: inherit;
             border-radius: 0;
@@ -42,7 +42,7 @@
             margin-bottom: 10px;
         }
         .app-search-box{
-            margin-top: 10px;
+
         }
     </style>
     @yield('header')
