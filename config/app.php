@@ -178,6 +178,10 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
 
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        \App\Providers\RepositoryServiceProvider::class,
+
+
         // 代码提示
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 

@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Repositories\Interfaces\ArticleRepository;
+use App\Repositories\Interfaces\CommentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
 
 class CommentController extends Controller
 {
+    protected $repository;
+
+    public function __construct(CommentRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,15 +44,16 @@ class CommentController extends Controller
      * @param Article $article
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Article $article)
+    public function store(Request $request, $id)
     {
         $this->validate($request,[
             'body'=>'required',
         ]);
-
-        $request['body'] = "\r\n" . trim(\Purifier::clean($request['body'])) . "\r\n";
-        $request['user_id'] = \Auth::user()->id;
-        $article->comments()->create($request->all());
+        $data = $request->all();
+        $data['user_id'] = \Auth::user()->id;
+        $data['body'] = "\r\n" . trim(\Purifier::clean($data['body'])) . "\r\n";
+        $data['article_id'] = $id;
+        $this->repository->create($data);
         return $this->success('回复成功');
     }
 

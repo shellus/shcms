@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserArticleVoteRequest extends UserArticleRequest
+class ArticleCreateRequest extends FormRequest
 {
+    // todo 验证数据
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +14,7 @@ class UserArticleVoteRequest extends UserArticleRequest
      */
     public function authorize()
     {
-        return parent::authorize();
+        return false;
     }
 
     /**
@@ -24,7 +25,7 @@ class UserArticleVoteRequest extends UserArticleRequest
     public function rules()
     {
         return [
-            'action' => 'required|in:up,down',
+            //
         ];
     }
 }

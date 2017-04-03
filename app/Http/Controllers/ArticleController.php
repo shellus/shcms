@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\ArticleVote;
 use App\Category;
+use App\Repositories\Interfaces\ArticleRepository;
 use App\SearchHistory;
 use App\Tag;
 use Illuminate\Http\Request;
@@ -13,73 +14,59 @@ use App\Http\Requests;
 
 class ArticleController extends Controller
 {
-
     /**
      * 文章列表，兼容分类、标签、关键词搜索
      *
      * @param Request $request
-     * @param null $id
+     * @param ArticleRepository $repository
+     * @param null $metaId
      * @return \Illuminate\Http\Response
+     * @internal param null $id
      */
-    public function index(Request $request, $id = null)
+    public function index(Request $request, ArticleRepository $repository, $metaId = null)
     {
         $meta = new \stdClass();
         $meta->title = '';
 
-        $article = new Article();
         if (\Route::currentRouteName() == 'article.index') {
 
         }
         if (\Route::currentRouteName() == 'category.show') {
-            $meta = Category::where(is_numeric($id) ? 'id' : 'slug', $id)->firstOrFail();
-            $article->whereHas('categories', function ($query) use ($meta) {
-                $query->where('id', '=', $meta->id);
-            });
+            $meta = Category::where(is_numeric($metaId) ? 'id' : 'slug', $metaId)->firstOrFail();
+            $repository->pushCriteria(new \App\Repositories\Criteria\CategoryCriteria($meta));
         }
         if (\Route::currentRouteName() == 'tag.show') {
-            $meta = Tag::where(is_numeric($id) ? 'id' : 'slug', $id)->firstOrFail();
-            $article->whereHas('tags', function ($query) use ($meta) {
-                $query->where('id', '=', $meta->id);
-            });
+            $meta = Tag::where(is_numeric($metaId) ? 'id' : 'slug', $metaId)->firstOrFail();
+            $repository->pushCriteria(new \App\Repositories\Criteria\TagCriteria($meta));
         }
-        // 搜索
-        if (($searchWord = $request->get('s'))) {
-            if (\Auth::check()) {
-                SearchHistory::firstOrCreate([
-                    'word' => $request['s'],
-                    'page' => $request->get('page', 1),
-                    'user_id' => \Auth::user()->id,
-                ]);
-            }
-        }
+
+
 
         $titleMap = [
             'article.index' => '全部文章',
             'category.show' => '分类 - ' . $meta->title,
             'tag.show' => '标签 - ' . $meta->title,
         ];
-        /** @var Article $article */
-
-
-        $article = $article->withSearch($searchWord);
 
         $pn = $request->get('pn', 20);
 
-        $articles = $article->orderBy('updated_at', 'DESC')->with('comments.user', 'user')->paginate($pn)->appends($request->query());
+        $articles = $repository->orderBy('updated_at', 'DESC')->with('comments.user', 'user')->paginate($pn)->appends($request->query());
+
         return view('article.index', ['articles' => $articles, 'article_title' => $titleMap[\Route::currentRouteName()]]);
     }
 
 
-    public function show(Article $article)
+    public function show(ArticleRepository $repository, $id)
     {
-        $article->load(['comments.user']);
+        $article = $repository->with('comments.user')->find($id);
         return view('article.show', ['article' => $article]);
     }
 
-    public function create()
+    public function create(ArticleRepository $repository)
     {
+        $model = $repository->model();
         return view('article.edit', [
-            'article' => new Article,
+            'article' => new $model,
             'action' => 'create',
             'method' => 'POST',
             'route' => 'article.store',
@@ -87,10 +74,10 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function edit($id)
+    public function edit(ArticleRepository $repository, $id)
     {
         return view('article.edit', [
-            'article' => Article::find($id),
+            'article' => $repository->find($id),
             'action' => 'edit',
             'method' => 'PUT',
             'route' => 'article.update',
@@ -98,21 +85,21 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, ArticleRepository $repository)
     {
-        $article = Article::create($request->all() + ['user_id' => \Auth::id()]);
+        $article = $repository->create($request->all() + ['user_id' => \Auth::id()]);
         return $this->success('发布成功', ['article' => $article]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, ArticleRepository $repository, $id)
     {
-        Article::find($id)->update($request->all());
+        $repository->find($id)->update($request->all());
         return $this->success('保存成功');
     }
 
-    public function destroy(Article $article)
+    public function destroy(ArticleRepository $repository, $id)
     {
-        $article->delete();
+        $repository->delete($id);
         return $this->success('删除成功');
     }
 }

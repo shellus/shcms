@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
-class UserArticleRequest extends UserRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class ArticleUpdateRequest extends FormRequest
 {
+    // todo 验证数据
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -11,7 +14,7 @@ class UserArticleRequest extends UserRequest
      */
     public function authorize()
     {
-        return parent::authorize();
+        return false;
     }
 
     /**
@@ -22,9 +25,7 @@ class UserArticleRequest extends UserRequest
     public function rules()
     {
         return [
-            'article_id' => 'required|integer|exists:articles,id'
+            //
         ];
     }
-
-
 }
