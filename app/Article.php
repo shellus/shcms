@@ -174,6 +174,7 @@ class Article extends Model
                 'title' => '缺省分类',
                 'description' => '系统自动创建的'
             ];
+            /** @var Category $model */
             $model = Category::firstOrCreate(Arr::only($c, ['slug']), $c);
             $this->categories()->attach($model);
         }
@@ -182,12 +183,12 @@ class Article extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps()->using('App\ArticleCategory');
+        return $this->belongsToMany('App\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps();
     }
 
     public function categories()
     {
-        return $this->belongsToMany('App\Category')->withTimestamps()->using('App\ArticleCategory');
+        return $this->belongsToMany('App\Category')->withTimestamps();
     }
 
     public function comments_count()

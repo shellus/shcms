@@ -52,9 +52,12 @@ class Category extends Model
 
     public function articles()
     {
-        return $this->belongsToMany('App\Article', 'article_category', 'category_id', 'article_id')->withTimestamps()->using('App\ArticleCategory');
+        return $this->belongsToMany('App\Article', 'article_category', 'category_id', 'article_id')->withTimestamps();
     }
-
+    public function cacheArticleCount(){
+        $this->articles_count = $this->articles()->count();
+        $this->save();
+    }
     public function showUrl(){
         return route('category.show', [$this->slug ? $this->slug : $this->id]);
     }
