@@ -36,9 +36,34 @@ class ArticleRepositoryEloquent extends BaseRepository implements ArticleReposit
     {
         return \App\SearchHistory::selectRaw('count(*) as rows ,word')->where('page', '=', 1)->orderByRaw('rows desc')->groupBy('word')->limit(30)->get();
     }
+
+    /**
+     * @param array $attributes
+     * @return Article
+     */
     public function create(array $attributes)
     {
         $attributes['type'] = 'article';
-        return parent::create($attributes);
+
+        /** @var Article $result */
+        $result = parent::create($attributes);
+        $result->category();
+        $result->categories->each->buildArticleCountCache();
+        return $result;
+    }
+
+    public function delete($id)
+    {
+        $categories = $this->model->find($id)->categories;
+        /** @var Article $result */
+        $result = parent::delete($id);
+        $categories->each->buildArticleCountCache();
+        return $result;
+    }
+
+    public function attachCategory($articleId, $id, array $attributes = [], $touch = true)
+    {
+        $article = $this->model->find($articleId);
+        $article->categories()->attach($id, $attributes, $touch);
     }
 }

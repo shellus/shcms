@@ -52,7 +52,7 @@ class Category extends Model
 
     public function articles()
     {
-        return $this->belongsToMany('App\Article', 'article_category', 'category_id', 'article_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Article', 'article_category', 'category_id', 'article_id')->withTimestamps();
     }
     public function cacheArticleCount(){
         $this->articles_count = $this->articles()->count();
@@ -69,5 +69,13 @@ class Category extends Model
             return asset('images/no_category/1.png');
         }
         return $this -> logo -> url;
+    }
+
+    /**
+     * 生成这个分类的文章数量缓存
+     */
+    public function buildArticleCountCache(){
+        $this->articles_count = $this->articles()->count();
+        $this->save();
     }
 }
