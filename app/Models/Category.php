@@ -1,81 +1,32 @@
-<?php namespace App\Models;
+<?php
 
-use Illuminate\Database\Eloquent\Model;
+namespace App\Models;
+
 use Illuminate\Database\Eloquent\Builder;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
-/**
- * App\Category
- *
- * @property integer $id
- * @property string $title
- * @property string $slug
- * @property string $description
- * @property integer $parent_id
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereSlug($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereParentId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \App\Models\File $logo
- * @property-read mixed $logo_url
- * @property integer $logo_id
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereLogoId($value)
- * @property string $type
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereType($value)
- * @property int $articles_count
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereArticlesCount($value)
- */
-class Category extends Model
+class Category extends Meta implements Transformable
 {
+    use TransformableTrait;
 
-
-    protected $fillable = [
-        'title','description','parent_id','slug','type',
-    ];
+    protected $table = 'metas';
 
     protected static function boot()
     {
-        parent::boot();
-
-        static::addGlobalScope('category', function (Builder $builder)
-        {
+        static::addGlobalScope('category', function (Builder $builder) {
             return $builder->where('type', '=', 'category');
         });
-
     }
 
-    public function articles()
+    public function __construct(array $attributes = [])
     {
-        return $this->belongsToMany('App\Models\Article', 'article_category', 'category_id', 'article_id')->withTimestamps();
-    }
-    public function cacheArticleCount(){
-        $this->articles_count = $this->articles()->count();
-        $this->save();
-    }
-    public function showUrl(){
-        return route('category.show', [$this->slug ? $this->slug : $this->id]);
-    }
-    public function logo(){
-        return $this->belongsTo('App\Models\File');
-    }
-    public function getLogoUrlAttribute(){
-        if(!$this->logo_id){
-            return asset('images/no_category/1.png');
-        }
-        return $this -> logo -> url;
+        $attributes['type'] = 'category';
+        parent::__construct($attributes);
     }
 
-    /**
-     * 生成这个分类的文章数量缓存
-     */
-    public function buildArticleCountCache(){
-        $this->articles_count = $this->articles()->count();
-        $this->save();
+    public function showUrl()
+    {
+        return route('category.show', [$this->slug ? $this->slug : $this->id]);
     }
 }

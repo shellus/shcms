@@ -87,13 +87,13 @@
             <div class="col-md-4">
                 <div class="app-block">
                     <h3>分类</h3>
-                    @include('components.category', ['categories' => \App\Models\Category::get()])
+                    @include('components.category', ['categories' => app(\App\Repositories\Interfaces\CategoryRepository::class)->all()])
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="app-block">
                     <h3>标签</h3>
-                    @include('components.tag', ['categories' => \App\Models\Tag::orderBy('articles_count', 'DESC')->limit(40)->get()])
+                    @include('components.tag', ['categories' => \App\Service\ArticleService::TagTopList()])
                 </div>
             </div>
         </div>

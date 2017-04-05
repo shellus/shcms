@@ -28,7 +28,7 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
      */
     public function boot()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+
     }
 
     public function create(array $attributes)

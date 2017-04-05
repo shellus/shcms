@@ -2,23 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Meta;
 use App\Repositories\Interfaces\ArticleRepository;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Prettus\Repository\Criteria\RequestCriteria;
 
 class ArticleController extends Controller
 {
+    /** @var ArticleRepository $repository */
+    protected $repository;
+
+    /**
+     * ArticleController constructor.
+     * @param ArticleRepository $repository
+     */
+    public function __construct(ArticleRepository $repository)
+    {
+        $this->repository = $repository->pushCriteria(app(RequestCriteria::class));
+    }
+
     /**
      * 文章列表，兼容分类、标签、关键词搜索
      *
      * @param Request $request
-     * @param ArticleRepository $repository
+     * @param ArticleRepository $this->repository
      * @param null $metaId
      * @return \Illuminate\Http\Response
      * @internal param null $id
      */
-    public function index(Request $request, ArticleRepository $repository, $metaId = null)
+    public function index(Request $request, $metaId = null)
     {
         $meta = new \stdClass();
         $meta->title = '';
@@ -27,12 +40,12 @@ class ArticleController extends Controller
 
         }
         if (\Route::currentRouteName() == 'category.show') {
-            $meta = Category::where(is_numeric($metaId) ? 'id' : 'slug', $metaId)->firstOrFail();
-            $repository->pushCriteria(new \App\Repositories\Criteria\CategoryCriteria($meta));
+            $meta = Meta::where(is_numeric($metaId) ? 'id' : 'slug', $metaId)->firstOrFail();
+            $this->repository->pushCriteria(new \App\Repositories\Criteria\CategoryCriteria($meta));
         }
         if (\Route::currentRouteName() == 'tag.show') {
             $meta = Tag::where(is_numeric($metaId) ? 'id' : 'slug', $metaId)->firstOrFail();
-            $repository->pushCriteria(new \App\Repositories\Criteria\TagCriteria($meta));
+            $this->repository->pushCriteria(new \App\Repositories\Criteria\TagCriteria($meta));
         }
 
 
@@ -45,21 +58,21 @@ class ArticleController extends Controller
 
         $pn = $request->get('pn', 20);
 
-        $articles = $repository->orderBy('updated_at', 'DESC')->with('comments.user', 'user')->paginate($pn)->appends($request->query());
+        $articles = $this->repository->orderBy('updated_at', 'DESC')->with('comments.user')->with('user')->paginate($pn)->appends($request->query());
 
         return view('article.index', ['articles' => $articles, 'article_title' => $titleMap[\Route::currentRouteName()]]);
     }
 
 
-    public function show(ArticleRepository $repository, $id)
+    public function show($id)
     {
-        $article = $repository->with('comments.user')->find($id);
+        $article = $this->repository->with('comments.user')->find($id);
         return view('article.show', ['article' => $article]);
     }
 
-    public function create(ArticleRepository $repository)
+    public function create()
     {
-        $model = $repository->model();
+        $model = $this->repository->model();
         return view('article.edit', [
             'article' => new $model,
             'action' => 'create',
@@ -69,10 +82,10 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function edit(ArticleRepository $repository, $id)
+    public function edit($id)
     {
         return view('article.edit', [
-            'article' => $repository->find($id),
+            'article' => $this->repository->find($id),
             'action' => 'edit',
             'method' => 'PUT',
             'route' => 'article.update',
@@ -80,21 +93,21 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function store(Request $request, ArticleRepository $repository)
+    public function store(Request $request)
     {
-        $article = $repository->create($request->all() + ['user_id' => \Auth::id()]);
+        $article = $this->repository->create($request->all() + ['user_id' => \Auth::id()]);
         return $this->success('发布成功', ['article' => $article]);
     }
 
-    public function update(Request $request, ArticleRepository $repository, $id)
+    public function update(Request $request, $id)
     {
-        $repository->find($id)->update($request->all());
+        $this->repository->find($id)->update($request->all());
         return $this->success('保存成功');
     }
 
-    public function destroy(ArticleRepository $repository, $id)
+    public function destroy($id)
     {
-        $repository->delete($id);
+        $this->repository->delete($id);
         return $this->success('删除成功');
     }
 }

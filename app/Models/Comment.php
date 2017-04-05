@@ -19,7 +19,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  * @property string $type
  * @property bool $is_awesome
  * @property-read \App\Models\Article $article
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Meta[] $categories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
  * @property-read mixed $display_title
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags

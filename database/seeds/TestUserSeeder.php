@@ -20,7 +20,7 @@ class TestUserSeeder extends Seeder
             $name = $first_name . $last_name;
             $email = \Illuminate\Support\Str::random(rand(4,10)) . "@" . $domains[rand(0, count($domains)-1)];
 
-            \App\User::create([
+            \App\Models\User::create([
                 'name'=>$name,
                 'email'=>$email,
                 'password'=>bcrypt(\Illuminate\Support\Str::random()),

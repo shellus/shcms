@@ -2,17 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\File;
-use App\Service\HttpService;
-use App\Service\SegmentfaultService;
 use App\User;
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
-use Symfony\Component\DomCrawler\Crawler;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Test extends Command
+class Test extends Command implements ShouldQueue
 {
     /**
      * The name and signature of the console command.
@@ -45,9 +40,10 @@ class Test extends Command
      */
     public function handle()
     {
-        dd(\Storage::url('avatar/user_1/2VxSm9azApyS99ES.jpg'));
-
-//        SegmentfaultService::crawlAvatar(User::find(2));
+        for($i =0 ; $i < 3000; $i++){
+            $s = new \App\Crawl\SegmentfaultQuestionList(['url'=>"https://segmentfault.com/questions?page=$i"]);
+            dispatch($s);
+        }
 
     }
 }

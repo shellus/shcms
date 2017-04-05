@@ -2,18 +2,22 @@
 
 namespace App\Repositories;
 
-use App\Comment;
+use Prettus\Repository\Traits\CacheableRepository;
+use Prettus\Repository\Contracts\CacheableInterface;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Interfaces\ArticleRepository;
 use App\Models\Article;
 
+
 /**
  * Class ArticleRepositoryEloquent
  * @package namespace App\Repositories;
  */
-class ArticleRepositoryEloquent extends BaseRepository implements ArticleRepository
+class ArticleRepositoryEloquent extends BaseRepository implements ArticleRepository, CacheableInterface
 {
+    use CacheableRepository;
+
     protected $fieldSearchable = [
         'title'=>'like',
     ];
@@ -30,11 +34,6 @@ class ArticleRepositoryEloquent extends BaseRepository implements ArticleReposit
 
     public function boot()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
-    }
-    public static function searchHistoryTopList()
-    {
-        return \App\Models\SearchHistory::selectRaw('count(*) as rows ,word')->where('page', '=', 1)->orderByRaw('rows desc')->groupBy('word')->limit(30)->get();
     }
 
     /**

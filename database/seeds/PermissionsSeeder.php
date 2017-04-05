@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Role;
-use App\Permission;
+use App\Models\Role;
+use App\Models\Permission;
 
 class PermissionsSeeder extends Seeder
 {
@@ -38,6 +38,8 @@ class PermissionsSeeder extends Seeder
         $manageUsers->name = 'manage_users';
         $manageUsers->display_name = '用户管理权限';
         $manageUsers->save();
+
+
 
         // Assign Permission to Role
         $founder->perms()->sync([$manageContent->id,$manageUsers->id]);

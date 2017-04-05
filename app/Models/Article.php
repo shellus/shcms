@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property int $article_id
  * @property string $type
  * @property bool $is_awesome
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Meta[] $categories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
  * @property-read mixed $display_title
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
@@ -68,11 +68,11 @@ class Article extends Model implements Transformable
     }
     public function categories()
     {
-        return $this->belongsToMany('App\Models\Category')->withTimestamps();
+        return $this->belongsToMany('App\Models\Category', 'article_meta', 'article_id', 'meta_id')->withTimestamps();
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Models\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Tag', 'article_meta', 'article_id', 'meta_id')->withTimestamps();
     }
     public function showUrl()
     {
@@ -92,8 +92,8 @@ class Article extends Model implements Transformable
                 'title' => '缺省分类',
                 'description' => '系统自动创建的'
             ];
-            /** @var Category $model */
-            $model = Category::firstOrCreate(Arr::only($c, ['slug']), $c);
+            /** @var Meta $model */
+            $model = Meta::firstOrCreate(Arr::only($c, ['slug']), $c);
             $this->categories()->attach($model);
         }
         return $model;
