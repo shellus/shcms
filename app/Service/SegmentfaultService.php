@@ -8,8 +8,8 @@
 
 namespace App\Service;
 
-use App\File;
-use App\User;
+use App\Models\File;
+use App\Models\User;
 use GuzzleHttp\Exception\ConnectException;
 use Symfony\Component\DomCrawler\Crawler;
 

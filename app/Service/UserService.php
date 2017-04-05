@@ -9,7 +9,7 @@
 namespace App\Service;
 
 
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class UserService
