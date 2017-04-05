@@ -34,7 +34,7 @@ class ArticleRepositoryEloquent extends BaseRepository implements ArticleReposit
     }
     public static function searchHistoryTopList()
     {
-        return \App\SearchHistory::selectRaw('count(*) as rows ,word')->where('page', '=', 1)->orderByRaw('rows desc')->groupBy('word')->limit(30)->get();
+        return \App\Models\SearchHistory::selectRaw('count(*) as rows ,word')->where('page', '=', 1)->orderByRaw('rows desc')->groupBy('word')->limit(30)->get();
     }
 
     /**

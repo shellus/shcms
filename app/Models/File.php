@@ -1,6 +1,4 @@
-<?php
-
-namespace App;
+<?php namespace App\Models;
 
 use App\Exceptions\UploadedFileException;
 use App\Exceptions\UploadedFileSaveFail;
@@ -20,14 +18,14 @@ use Illuminate\Support\Str;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read mixed $url
- * @method static \Illuminate\Database\Query\Builder|\App\File whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\File whereMimeType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\File whereSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\File whereDisplayFilename($value)
- * @method static \Illuminate\Database\Query\Builder|\App\File whereSavePath($value)
- * @method static \Illuminate\Database\Query\Builder|\App\File whereFilename($value)
- * @method static \Illuminate\Database\Query\Builder|\App\File whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\File whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\File whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\File whereMimeType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\File whereSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\File whereDisplayFilename($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\File whereSavePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\File whereFilename($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\File whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\File whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class File extends Model

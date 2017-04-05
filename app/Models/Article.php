@@ -1,8 +1,5 @@
-<?php
+<?php namespace App\Models;
 
-namespace App\Models;
-
-use App\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
@@ -31,7 +28,7 @@ class Article extends Model implements Transformable
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
     public function comments()
     {
@@ -39,11 +36,11 @@ class Article extends Model implements Transformable
     }
     public function categories()
     {
-        return $this->belongsToMany('App\Category')->withTimestamps();
+        return $this->belongsToMany('App\Models\Category')->withTimestamps();
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Tag', 'article_category', 'article_id', 'category_id')->withTimestamps();
     }
     public function showUrl()
     {
