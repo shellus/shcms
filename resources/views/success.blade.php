@@ -11,7 +11,7 @@
                     {{ $message }}
                 </div>
                 <div class="panel-footer">
-                    <a href="javascript:history.back()">返回</a>
+                    <a href="{{ $return_url }}">返回</a>
                 </div>
             </div>
         </div>

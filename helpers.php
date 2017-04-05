@@ -1,10 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: shellus
- * Date: 2016-09-25
- * Time: 4:20
- */
+
+function return_url_field($route){
+    return new \Illuminate\Support\HtmlString('<input type="hidden" name="_return_url" value="'.url($route).'">');
+}
+
+
 function rc4($key, $data)
 {
     // Store the vectors "S" has calculated

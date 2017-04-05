@@ -30,7 +30,7 @@ class Controller extends BaseController
                 'data' => $data,
             ],$statusCodes[$status]);
         }else{
-            return view($status, ['message' => $message]);
+            return view($status, ['message' => $message, 'return_url'=> \Request::get('_return_url')]);
         }
 
     }

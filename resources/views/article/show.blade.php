@@ -60,6 +60,7 @@
                                     {{ method_field('DELETE') }}
                                     <a class="btn btn-link" href="{{ route('article.edit', $article -> id) }}">编辑</a>
                                     <button class="btn btn-link">删除</button>
+                                    {{ return_url_field(route('article.index')) }}
                                 </form>
 
                             </div>

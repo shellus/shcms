@@ -46,6 +46,7 @@
                                     </div>
                                     <div class="col-xs-6 text-right">
                                         <input class="btn btn-default" type="submit" value="保存">
+                                        {{ return_url_field(route('article.index')) }}
                                     </div>
                                 </div>
                             </div>
