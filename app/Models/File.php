@@ -7,7 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 /**
- * App\File
+ * App\Models\File
  *
  * @property integer $id
  * @property string $mime_type

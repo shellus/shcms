@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\Repositories\Interfaces\ArticleRepository;
+use App\Models\Article;
 use App\Repositories\Interfaces\CommentRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\HtmlString;
 
 class CommentController extends Controller
 {

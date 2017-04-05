@@ -7,6 +7,38 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * App\Models\Article
+ *
+ * @property int $id
+ * @property string $slug
+ * @property string $title
+ * @property string $body
+ * @property int $user_id
+ * @property bool $version
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property int $article_id
+ * @property string $type
+ * @property bool $is_awesome
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
+ * @property-read mixed $display_title
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereArticleId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereBody($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereIsAwesome($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereVersion($value)
+ * @mixin \Eloquent
+ */
 class Article extends Model implements Transformable
 {
     use TransformableTrait;

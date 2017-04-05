@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\File;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Category;
+use App\Models\File;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class CategoryController extends Controller
 {

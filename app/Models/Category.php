@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereLogoId($value)
  * @property string $type
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereType($value)
+ * @property int $articles_count
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereArticlesCount($value)
  */
 class Category extends Model
 {
@@ -60,7 +62,7 @@ class Category extends Model
         return route('category.show', [$this->slug ? $this->slug : $this->id]);
     }
     public function logo(){
-        return $this->belongsTo('App\File');
+        return $this->belongsTo('App\Models\File');
     }
     public function getLogoUrlAttribute(){
         if(!$this->logo_id){

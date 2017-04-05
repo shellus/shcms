@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
  * @property-read \App\Models\File $logo
+ * @property int $articles_count
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Tag whereArticlesCount($value)
  */
 class Tag extends Category
 {

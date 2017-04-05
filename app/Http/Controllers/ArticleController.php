@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\ArticleVote;
-use App\Category;
+use App\Models\Category;
 use App\Repositories\Interfaces\ArticleRepository;
-use App\SearchHistory;
-use App\Tag;
+use App\Models\Tag;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class ArticleController extends Controller
 {
