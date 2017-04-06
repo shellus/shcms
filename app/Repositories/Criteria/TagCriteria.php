@@ -1,9 +1,7 @@
-<?php
+<?php namespace App\Repositories\Criteria;
 
-namespace App\Repositories\Criteria;
-
-use Prettus\Repository\Contracts\CriteriaInterface;
-use Prettus\Repository\Contracts\RepositoryInterface;
+use \App\Repositories\CriteriaInterface;
+use \App\Repositories\RepositoryInterface;
 
 /**
  * Class TagCriteria

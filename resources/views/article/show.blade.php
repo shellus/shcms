@@ -48,7 +48,6 @@
                     </div>
                 </div>
 
-
                 <div class="row action-list">
 
                     <div class="col-md-6">

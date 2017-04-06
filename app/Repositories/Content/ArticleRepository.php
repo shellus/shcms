@@ -1,23 +1,16 @@
-<?php
+<?php namespace App\Repositories\Content;
 
-namespace App\Repositories;
-
-use Prettus\Repository\Traits\CacheableRepository;
-use Prettus\Repository\Contracts\CacheableInterface;
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Interfaces\ArticleRepository;
+use App\Repositories\BaseRepository;
 use App\Models\Article;
 
 
 /**
  * Class ArticleRepositoryEloquent
  * @package namespace App\Repositories;
+ * @property Article $model
  */
-class ArticleRepositoryEloquent extends BaseRepository implements ArticleRepository, CacheableInterface
+class ArticleRepository extends BaseRepository
 {
-    use CacheableRepository;
-
     protected $fieldSearchable = [
         'title'=>'like',
     ];
@@ -34,21 +27,6 @@ class ArticleRepositoryEloquent extends BaseRepository implements ArticleReposit
 
     public function boot()
     {
-    }
-
-    /**
-     * @param array $attributes
-     * @return Article
-     */
-    public function create(array $attributes)
-    {
-        $attributes['type'] = 'article';
-
-        /** @var Article $result */
-        $result = parent::create($attributes);
-        $result->category();
-        $result->categories->each->buildArticleCountCache();
-        return $result;
     }
 
     public function delete($id)

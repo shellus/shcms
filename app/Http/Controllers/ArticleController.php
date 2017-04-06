@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meta;
-use App\Repositories\Interfaces\ArticleRepository;
+use App\Repositories\Content\ArticleRepository;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use Prettus\Repository\Criteria\RequestCriteria;
+use App\Repositories\Criteria\RequestCriteria;
 
 class ArticleController extends Controller
 {

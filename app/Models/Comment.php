@@ -1,8 +1,6 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * App\Models\Comment
@@ -37,28 +35,26 @@ use Prettus\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereVersion($value)
  * @mixin \Eloquent
  */
-class Comment extends \App\Models\Article implements Transformable
+class Comment extends Content
 {
-    use TransformableTrait;
+    protected $table = 'contents';
 
-    protected $table = 'articles';
-
-
-    public function __construct(array $attributes = [])
-    {
-        if (empty($attributes['type'])) $attributes['type'] = 'comment';
-        parent::__construct($attributes);
-    }
 
     protected static function boot()
     {
         parent::boot();
-
-        static::addGlobalScope('type', function (Builder $builder)
-        {
+        static::addGlobalScope('type', function (Builder $builder) {
             return $builder->where('type', '=', 'comment');
         });
-
+        static::created(function($model){
+            $model->category();
+            $model->categories->each->buildArticleCountCache();
+        });
+    }
+    public function __construct(array $attributes = [])
+    {
+        $attributes['type'] = 'comment';
+        parent::__construct($attributes);
     }
 
     // 触发的关联关系updated_at时间戳

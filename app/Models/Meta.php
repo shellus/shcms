@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property int $articles_count
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Meta whereArticlesCount($value)
  */
-class Meta extends Model
+abstract class Meta extends Model
 {
     protected $fillable = [
         'title','description','parent_id','slug','type',

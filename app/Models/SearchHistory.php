@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
-class SearchHistory extends Model implements Transformable
+class SearchHistory extends Model
 {
-    use TransformableTrait;
-
     protected $fillable = [
         'word','user_id','page'
     ];

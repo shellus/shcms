@@ -2,12 +2,14 @@
 
 namespace App\Crawl;
 
-use App\Article;
-use App\Comment;
+use App\Models\Article;
+use App\Models\Comment;
+use App\Repositories\Content\ArticleRepository;
+use App\Repositories\Content\CommentRepository;
 use App\Service\ArticleService;
 use App\Service\SegmentfaultService;
 use App\Service\UserService;
-use App\Tag;
+use App\Models\Tag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
@@ -117,8 +119,10 @@ class SegmentfaultQuestionPage extends Crawl
         $question['user_id'] = $user->id;
         $question['body'] = SegmentfaultService::filterBody($question['body']);
 
+        /** @var ArticleRepository $repostiory */
+        $repostiory = app(ArticleRepository::class);
         /** @var Article $article */
-        $article = Article::firstOrCreate(Arr::only($question, ['slug']), $question);
+        $article = $repostiory->firstOrCreate(Arr::only($question, ['slug']), $question);
         if ($article->wasRecentlyCreated) {
             \Log::info('add question: ' . $article->slug);
         }
@@ -150,8 +154,11 @@ class SegmentfaultQuestionPage extends Crawl
         $answer['user_id'] = $answerUser->id;
         $answer['article_id'] = $article->id;
         $answer['body'] = SegmentfaultService::filterBody($answer['body']);
+
+        /** @var ArticleRepository $repostiory */
+        $repostiory = app(CommentRepository::class);
         /** @var Comment $comment */
-        $comment = Comment::firstOrCreate(Arr::only($answer, ['slug']), $answer);
+        $comment = $repostiory->firstOrCreate(Arr::only($answer, ['slug']), $answer);
 
         // 判断最佳答案
         if ($answer['is_awesome'] != $comment->is_awesome) {

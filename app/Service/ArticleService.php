@@ -29,10 +29,4 @@ class ArticleService
         }
         return $slug;
     }
-
-    public static function TagTopList(){
-        return app(\App\Repositories\Interfaces\TagRepository::class)->orderBy('articles_count', 'DESC')
-            ->limit(40)
-            ->all();
-    }
 }

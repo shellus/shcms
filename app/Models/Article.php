@@ -1,10 +1,5 @@
 <?php namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Arr;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -39,65 +34,32 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Article whereVersion($value)
  * @mixin \Eloquent
  */
-class Article extends Model implements Transformable
+class Article extends Content
 {
-    use TransformableTrait;
+    protected $table = 'contents';
 
-    protected $fillable = [
-        'title', 'body', 'user_id', 'slug', 'version', 'type', 'article_id',
-    ];
+
     protected $next;
     private $previous;
 
     protected static function boot()
     {
         parent::boot();
-
         static::addGlobalScope('type', function (Builder $builder) {
             return $builder->where('type', '=', 'article');
         });
+        static::created(function($model){
+            $model->category();
+            $model->categories->each->buildArticleCountCache();
+        });
+    }
+    public function __construct(array $attributes = [])
+    {
+        $attributes['type'] = 'article';
+        parent::__construct($attributes);
     }
 
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-    public function comments()
-    {
-        return $this->hasMany('App\Models\Comment', 'article_id', 'id');
-    }
-    public function categories()
-    {
-        return $this->belongsToMany('App\Models\Category', 'article_meta', 'article_id', 'meta_id')->withTimestamps();
-    }
-    public function tags()
-    {
-        return $this->belongsToMany('App\Models\Tag', 'article_meta', 'article_id', 'meta_id')->withTimestamps();
-    }
-    public function showUrl()
-    {
-        return route('article.show', [$this->id]);
-    }
-    public function getDisplayTitleAttribute()
-    {
-        return $this->title;
-    }
-    public function category()
-    {
-        try {
-            $model = $this->categories()->firstOrFail();
-        } catch (ModelNotFoundException $e) {
-            $c = [
-                'slug' => 'default',
-                'title' => '缺省分类',
-                'description' => '系统自动创建的'
-            ];
-            /** @var Meta $model */
-            $model = Meta::firstOrCreate(Arr::only($c, ['slug']), $c);
-            $this->categories()->attach($model);
-        }
-        return $model;
-    }
+
     public function previous()
     {
         if ($this->previous === null) {
@@ -108,7 +70,6 @@ class Article extends Model implements Transformable
 
     public function next()
     {
-
         if ($this->next === null) {
             $this->next = $this->where('id', '>', $this->id)->first(['id', 'title']);
         }

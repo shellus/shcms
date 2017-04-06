@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
-class Tag extends Meta implements Transformable
+class Tag extends Meta
 {
-    use TransformableTrait;
-
     protected $table = 'metas';
 
     protected static function boot()
