@@ -25,7 +25,7 @@ class CategoryCriteria implements CriteriaInterface
     {
         $meta = $this->meta;
         $model->whereHas('categories', function ($query) use ($meta) {
-            $query->where('categories.id', '=', $meta->id);
+            $query->where('metas.id', '=', $meta->id);
         });
         return $model;
     }

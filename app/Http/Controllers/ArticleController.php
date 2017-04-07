@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Meta;
 use App\Repositories\Content\ArticleRepository;
 use App\Models\Tag;
@@ -40,7 +41,7 @@ class ArticleController extends Controller
 
         }
         if (\Route::currentRouteName() == 'category.show') {
-            $meta = Meta::where(is_numeric($metaId) ? 'id' : 'slug', $metaId)->firstOrFail();
+            $meta = Category::where(is_numeric($metaId) ? 'id' : 'slug', $metaId)->firstOrFail();
             $this->repository->pushCriteria(new \App\Repositories\Criteria\CategoryCriteria($meta));
         }
         if (\Route::currentRouteName() == 'tag.show') {

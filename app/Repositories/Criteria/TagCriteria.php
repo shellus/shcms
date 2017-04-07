@@ -25,7 +25,7 @@ class TagCriteria implements CriteriaInterface
     {
         $meta = $this->meta;
         $model->whereHas('tags', function ($query) use ($meta) {
-            $query->where('categories.id', '=', $meta->id);
+            $query->where('metas.id', '=', $meta->id);
         });
         return $model;
     }
