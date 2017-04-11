@@ -27,4 +27,8 @@ class CategoryRepository extends BaseRepository
     public function boot()
     {
     }
+
+    public function TagTopList(){
+        return $this->model->orderBy('articles_count', 'DESC')->limit(40)->get();
+    }
 }

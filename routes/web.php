@@ -27,7 +27,6 @@ use App\Http\Controllers\UserController;
 Route::group([
     'middleware' => 'auth',
 ], function ($router) {
-    Route::post('/article/vote', ArticleController::class . '@vote');
     Route::resource('article.comment', CommentController::class);
 
     Route::post('/category/update-logo', CategoryController::class . '@updateLogo');
@@ -35,9 +34,6 @@ Route::group([
     Route::post('/user/update-avatar', UserController::class . '@updateAvatar');
     Route::get('/home', HomeController::class . '@index')->name('home');
 
-    Route::get('/favorite/show-add-article-to-favorite', FavoriteController::class . '@showAddArticleToFavorite')->name('show-add-article-to-favorite');
-    Route::post('/favorite/add-article-to-favorite', FavoriteController::class . '@addArticleToFavorite')->name('add-article-to-favorite');
-    Route::resource('/favorite', FavoriteController::class);
 });
 
 Route::get('/', IndexController::class . '@index')->name('index');
@@ -60,8 +56,6 @@ $this->get('password/reset/{token}', ResetPasswordController::class . 'r@showRes
 $this->post('password/reset', ResetPasswordController::class . '@reset');
 
 /********************* End *********************/
-
-Route::get('/article/reading', 'ArticleController@reading');
 
 /** 这是首页 */
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.content')
 @section('header')
     <style>
         #article-field-set {
@@ -14,137 +14,135 @@
     </style>
     <meta name="article-id" content="{{ $article -> id }}">
 @endsection
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h2>{{ $article -> title }}</h2>
+@section('body')
+    <div class="col-md-8 col-md-offset-0">
+        <div class="app-block">
+        <h2>{{ $article -> title }}</h2>
 
-                <div class="row" id="article-field-set">
-                    <div class="col-xs-3">
-                        <span>分类: </span>
-                        <span>
+        <div class="row" id="article-field-set">
+            <div class="col-xs-3">
+                <span>分类: </span>
+                <span>
                             <a href="{{ $article -> category() -> showUrl() }}">
                             {{ $article -> category() -> title }}
                             </a>
                         </span>
-                    </div>
-                    <div class="col-xs-3">
-                        <span>长度: </span>
-                        <span>{{ mb_strlen($article -> body) }} 字</span>
-                    </div>
-                    <div class="col-xs-4">
-                        <span hidden>标签: </span>
-                        <ul class="tags list-inline">
-                            @foreach($article->tags as $tag)
-                                <li>
-                                    <a href="{{ $tag->showUrl() }}">
+            </div>
+            <div class="col-xs-3">
+                <span>长度: </span>
+                <span>{{ mb_strlen($article -> body) }} 字</span>
+            </div>
+            <div class="col-xs-4">
+                <span hidden>标签: </span>
+                <ul class="tags list-inline">
+                    @foreach($article->tags as $tag)
+                        <li>
+                            <a href="{{ $tag->showUrl() }}">
                                     <span class="label label-success">
                                         {{ $tag->title }}
                                     </span></a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="row action-list">
-
-                    <div class="col-md-6">
-                        @if(\Auth::check() && \Auth::user()->can('manage_contents'))
-                            <div>
-                                <form class="form-inline" action="{{ route('article.destroy', $article -> id) }}"
-                                      method="POST">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                    <a class="btn btn-link" href="{{ route('article.edit', $article -> id) }}">编辑</a>
-                                    <button class="btn btn-link">删除</button>
-                                    {{ return_url_field(route('article.index')) }}
-                                </form>
-
-                            </div>
-                        @endif
-
-                    </div>
-                </div>
-
-
-                <section id="article-body">
-                    {!! $article -> body !!}
-                </section>
-                <div class="article-author">
-                    <a href="#">
-                        <img style="padding: 5px;" class="img-circle" width="50" height="50"
-                             src="{{ $article->user->avatarUrl }}">
-                        {{ $article->user->name }}</a>
-                    <small>{{ $article->created_at->diffForHumans() }} 发布</small>
-                </div>
-                <hr>
-                <ul class="comments list-unstyled">
-                    @foreach($article['comments'] as $comment)
-
-                        <li style="border-bottom: darkcyan solid 1px;">
-
-                            <section style="padding: 10px;">
-                                {!! $comment->body !!}
-                            </section>
-                            <div class="author">
-                                <a href="#">
-                                    <img style="padding: 5px;" class="img-circle" width="50" height="50"
-                                         src="{{ $comment->user->avatarUrl }}">
-                                    {{ $comment->user->name }}</a>
-                                <small>{{ $comment->created_at->diffForHumans() }} 回复</small>
-                            </div>
                         </li>
                     @endforeach
                 </ul>
+            </div>
+        </div>
 
-                <div class="goto-comment-editor">
-                    <h4>回复</h4>
-                    <form id="comment-editor" method="post" action="{{ route('article.comment.store', $article) }}">
-                        @include('hacker_alert')
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label class="hidden" for="field-body"></label>
-                            @if(\Auth::check())
-                                <textarea id="field-body" style="height: 120px;resize:none;" class="form-control"
-                                          name="body"></textarea>
-                            @else
-                                <div id="field-body" style="height: 120px;" class="form-control" name="body">登陆后才可以回复哦
-                                </div>
-                            @endif
+        <div class="row action-list">
+
+            <div class="col-md-6">
+                @if(\Auth::check() && \Auth::user()->can('manage_contents'))
+                    <div>
+                        <form class="form-inline" action="{{ route('article.destroy', $article -> id) }}"
+                              method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <a class="btn btn-link" href="{{ route('article.edit', $article -> id) }}">编辑</a>
+                            <button class="btn btn-link">删除</button>
+                            {{ return_url_field(route('article.index')) }}
+                        </form>
+
+                    </div>
+                @endif
+
+            </div>
+        </div>
+
+
+        <section id="article-body">
+            {!! $article -> body !!}
+        </section>
+        <div class="article-author">
+            <a href="#">
+                <img style="padding: 5px;" class="img-circle" width="50" height="50"
+                     src="{{ $article->user->avatarUrl }}">
+                {{ $article->user->name }}</a>
+            <small>{{ $article->created_at->diffForHumans() }} 发布</small>
+        </div>
+        <hr>
+        <ul class="comments list-unstyled">
+            @foreach($article['comments'] as $comment)
+
+                <li style="border-bottom: darkcyan solid 1px;">
+
+                    <section style="padding: 10px;">
+                        {!! $comment->body !!}
+                    </section>
+                    <div class="author">
+                        <a href="#">
+                            <img style="padding: 5px;" class="img-circle" width="50" height="50"
+                                 src="{{ $comment->user->avatarUrl }}">
+                            {{ $comment->user->name }}</a>
+                        <small>{{ $comment->created_at->diffForHumans() }} 回复</small>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+
+        <div class="goto-comment-editor">
+            <h4>回复</h4>
+            <form id="comment-editor" method="post" action="{{ route('article.comment.store', $article) }}">
+                @include('hacker_alert')
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label class="hidden" for="field-body"></label>
+                    @if(\Auth::check())
+                        <textarea id="field-body" style="height: 120px;resize:none;" class="form-control"
+                                  name="body"></textarea>
+                    @else
+                        <div id="field-body" style="height: 120px;" class="form-control" name="body">登陆后才可以回复哦
                         </div>
-
-                        <button>提交</button>
-                    </form>
+                    @endif
                 </div>
 
+                <button>提交</button>
+            </form>
+        </div>
 
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                上一篇：
-                                @if($article -> previous())
-                                    <a href="{{ $article -> previous() -> showUrl() }}">{{ $article -> previous() -> title }}</a>
-                                @else
-                                    没有了
-                                @endif
+                    <div class="col-xs-6">
+                        上一篇：
+                        @if($article -> previous())
+                            <a href="{{ $article -> previous() -> showUrl() }}">{{ $article -> previous() -> title }}</a>
+                        @else
+                            没有了
+                        @endif
 
 
-                            </div>
-                            <div class="col-xs-6 text-right">
-                                下一篇：
-                                @if($article -> next())
-                                    <a href="{{ $article -> next() -> showUrl() }}">{{ $article -> next() -> title }}</a>
-                                @else
-                                    没有了
-                                @endif
-                            </div>
-                        </div>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        下一篇：
+                        @if($article -> next())
+                            <a href="{{ $article -> next() -> showUrl() }}">{{ $article -> next() -> title }}</a>
+                        @else
+                            没有了
+                        @endif
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 @endsection

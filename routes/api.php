@@ -26,8 +26,4 @@ Route::resource('/region', 'Api\RegionController');
 
 Route::get('/system-info','Api\IndexController@systemInfo');
 
-Route::group([
-    'prefix' => 'auth',
-], function ($router) {
-    Route::post('/login','Api\AuthController@postLogin');
-});
+Route::post('/auth/login','Api\AuthController@postLogin');
