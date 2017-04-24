@@ -30,7 +30,7 @@ class Articles extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('contents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->nullable()->index();
             $table->string('title')->nullable();
@@ -43,7 +43,7 @@ class Articles extends Migration
 
             $table->index('updated_at');
 
-            $table->foreign('article_id')->references('id')->on('articles')
+            $table->foreign('article_id')->references('id')->on('contents')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -57,6 +57,6 @@ class Articles extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('contents');
     }
 }

@@ -13,18 +13,18 @@ class ArticleMeta extends Migration
      */
     public function up()
     {
-        Schema::create('article_meta', function (Blueprint $table) {
+        Schema::create('content_meta', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('article_id')->default(0)->unsigned();
+            $table->integer('content_id')->default(0)->unsigned();
             $table->integer('meta_id')->default(0)->unsigned();
             $table->timestamps();
 
-            $table->foreign('article_id')->references('id')->on('articles')
+            $table->foreign('content_id')->references('id')->on('contents')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('meta_id')->references('id')->on('metas')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unique(['article_id', 'meta_id']);
+            $table->unique(['content_id', 'meta_id']);
         });
     }
 
