@@ -13,6 +13,7 @@ use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
+    protected $userService;
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -38,8 +39,9 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserService $userService)
     {
+        $this->userService = $userService;
         $this->middleware('guest');
     }
     /**
@@ -80,10 +82,10 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return User
+     * @return \App\Models\User
      */
     public function create(array $data)
     {
-        return UserService::create($data);
+        return $this->userService->create($data);
     }
 }
