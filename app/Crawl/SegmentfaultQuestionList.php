@@ -3,7 +3,7 @@
 namespace App\Crawl;
 
 use Carbon\Carbon;
-use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Psr7\Response;
 use Symfony\Component\DomCrawler\Crawler;
 
 
@@ -12,11 +12,16 @@ class SegmentfaultQuestionList extends Crawl
     use EasyCrawl;
 
     protected $defaultOptions = [
-        'url' => 'https://segmentfault.com/questions',
-        'baseUrl'=>'https://segmentfault.com',
+        'url-template' => 'https://segmentfault.com/questions?page={page}',
+        'baseUrl' => 'https://segmentfault.com',
     ];
 
-    public function parse(ResponseInterface $response)
+    public function page($page)
+    {
+        $this->url = str_replace('{page}', $page, $this->option('url-template'));
+    }
+
+    public function parse(Response $response)
     {
         $cacheKey = 'crawl:questions:page:' . $this->urlParam('page', '1');
 
@@ -52,7 +57,7 @@ class SegmentfaultQuestionList extends Crawl
         foreach (array_reverse($questionUrls) as $k => $questionPageUrl) {
             $url = $this->option('baseUrl') . $questionPageUrl;
             // 委派队列任务采集子页面
-            dispatch((new SegmentfaultQuestionPage(['url'=>$url]))->onQueue('high'));
+            dispatch((new SegmentfaultQuestionPage(['url' => $url]))->onQueue('high'));
         }
     }
 }

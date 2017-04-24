@@ -8,12 +8,12 @@ use App\Repositories\Content\ArticleRepository;
 use App\Repositories\Content\CommentRepository;
 use App\Service\ArticleService;
 use App\Service\SegmentfaultService;
-use App\Service\UserService;
 use App\Models\Tag;
+use App\Service\UserService;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
-use Psr\Http\Message\ResponseInterface;
 
 class SegmentfaultQuestionPage extends Crawl
 {
@@ -21,11 +21,11 @@ class SegmentfaultQuestionPage extends Crawl
 
     /**
      * 从DOM取出需要的数据
-     * @param ResponseInterface $response
+     * @param Response $response
      * @return mixed
      * @internal param $questionPageUrl
      */
-    public function parse(ResponseInterface $response)
+    public function parse(Response $response)
     {
         $dom = new Crawler($response->getBody()->getContents());
         $question = $this->parseQuestion($dom);
@@ -92,11 +92,13 @@ class SegmentfaultQuestionPage extends Crawl
             ];
         });
     }
+
     public function store(array $question)
     {
-        $article = $this->storeQuestion($question);
+        $userService = app(UserService::class);
+        $article = $this->storeQuestion($question, $userService);
         foreach ($question['answers'] as $answer) {
-            $comment = $this->storeComment($article, $answer);
+            $comment = $this->storeComment($article, $answer, $userService);
             // 是否新添加答案
             if ($comment->wasRecentlyCreated) {
                 \Log::info('add answer: ' . $comment->slug);
@@ -107,11 +109,12 @@ class SegmentfaultQuestionPage extends Crawl
     /**
      * 储存问题
      * @param $question
+     * @param UserService $userService
      * @return Article
      */
-    protected function storeQuestion($question)
+    protected function storeQuestion($question, UserService $userService)
     {
-        $user = UserService::firstOrCreate(['email' => $question['user']['email']], $question['user']);
+        $user = $userService->firstOrCreate(['email' => $question['user']['email']], $question['user']);
         if ($user->wasRecentlyCreated) {
             SegmentfaultService::crawlAvatar($user);
             \Log::info('add question user: ' . $user->email);
@@ -141,11 +144,12 @@ class SegmentfaultQuestionPage extends Crawl
      * 储存回答
      * @param $article
      * @param $answer
+     * @param UserService $userService
      * @return Comment
      */
-    protected function storeComment($article, $answer)
+    protected function storeComment($article, $answer, UserService $userService)
     {
-        $answerUser = UserService::firstOrCreate(Arr::only($answer['user'], ['email']), $answer['user']);
+        $answerUser = $userService->firstOrCreate(Arr::only($answer['user'], ['email']), $answer['user']);
         if ($answerUser->wasRecentlyCreated) {
             SegmentfaultService::crawlAvatar($answerUser);
             \Log::info('add answer user: ' . $answerUser->email);

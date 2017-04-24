@@ -44,11 +44,15 @@ trait EasyCrawl
             throw new RequestFailException($e->getMessage());
         }
     }
-    public function validate(ResponseInterface $response)
+    public function validate(\GuzzleHttp\Psr7\Response $response)
     {
         $code = $response->getStatusCode();
         if (substr($code,0,1) !== '2'){
             throw new InvalidResponseException("Response Http status code: $code");
+        }
+
+        if (($size = $response->getBody()->getSize()) < 1){
+            throw new InvalidResponseException("Response Body size so min: $size");
         }
     }
 }

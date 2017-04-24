@@ -92,14 +92,14 @@ abstract class Crawl implements ShouldQueue
      * @param $body
      * @return bool
      */
-    abstract public function validate(ResponseInterface $body);
+    abstract public function validate(\GuzzleHttp\Psr7\Response $body);
 
     /**
      * 解析页面数据
      * @param $response
      * @return array
      */
-    abstract function parse(ResponseInterface $response);
+    abstract function parse(\GuzzleHttp\Psr7\Response $response);
 
     /**
      * 储存内容
@@ -113,17 +113,20 @@ abstract class Crawl implements ShouldQueue
      */
     public function handle()
     {
-        $this->validateUrl($this->url);
 
-        $response = $this->request($this->url);
+        app()->call([$this, 'validateUrl'], [$this->url]);
 
-        $this->validate($response);
+        /** @var \GuzzleHttp\Psr7\Response $response */
+        $response = app()->call([$this, 'request'], [$this->url]);
 
-        $parseData = $this->parse($response);
+        app()->call([$this, 'validate'], ['response'=>$response]);
 
-        $this->store($parseData);
+
+        $parseData = app()->call([$this, 'parse'], ['response'=>$response]);
+
+        app()->call([$this, 'store'], [$parseData]);
+
         // throw new StoreFailException();
-
     }
 
     /**
