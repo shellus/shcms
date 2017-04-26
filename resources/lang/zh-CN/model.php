@@ -1,6 +1,6 @@
 <?php
 return [
-    'App\User' => [
+    'App\Models\User' => [
         'title' => '用户',
         'name' => 'user',
         'attributes' => [

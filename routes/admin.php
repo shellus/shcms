@@ -18,4 +18,4 @@ Route::post('/login', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout')->name('admin.logout');
 Route::post('/logout', 'AuthController@logout');
 
-Route::resource('/admin/user','UserController', ['as' => 'admin']);
+Route::resource('/user','UserController', ['as' => 'admin']);
