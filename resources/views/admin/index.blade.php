@@ -25,7 +25,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    最近7天有<span class="text-red"> {{ \App\User::where('created_at','>',date('Y-m-d H:i:s', strtotime('-7day')))->count() }} </span>个新用户
+                    最近7天有<span class="text-red"> {{ \App\Models\User::where('created_at','>',date('Y-m-d H:i:s', strtotime('-7day')))->count() }} </span>个新用户
                 </div>
             </div>
 

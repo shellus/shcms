@@ -15,7 +15,7 @@
                     <th>注册时间</th>
                     <th>Actions</th>
                 </tr>
-                <?php $models = \App\User::paginate();?>
+                <?php $models = \App\Models\User::paginate();?>
                 @forelse($models as $model)
                     <tr>
                         <td>{{ $model->id }}.</td>
