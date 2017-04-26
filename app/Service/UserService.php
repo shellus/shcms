@@ -64,4 +64,5 @@ class UserService
         $user->avatar()->associate($file_model);
         $user->save();
     }
+
 }

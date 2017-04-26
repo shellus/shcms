@@ -52,7 +52,7 @@ $this->post('register', RegisterController::class . '@register');
 // Password Reset Routes...
 $this->get('password/reset', ForgotPasswordController::class . '@showLinkRequestForm')->name('password.request');
 $this->post('password/email', ForgotPasswordController::class . '@sendResetLinkEmail')->name('password.email');
-$this->get('password/reset/{token}', ResetPasswordController::class . 'r@showResetForm')->name('password.reset');
+$this->get('password/reset/{token}', ResetPasswordController::class . '@showResetForm')->name('password.reset');
 $this->post('password/reset', ResetPasswordController::class . '@reset');
 
 /********************* End *********************/
