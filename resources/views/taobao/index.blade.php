@@ -100,7 +100,7 @@
 <div class="ui vertical secondary very padded segment">
     <div class="ui container">
         <div class="sub header">
-            双镜头摄像头仅于 iPhone 7 Plus 提供。亮黑色外观仅于 128GB 及以上存储容量的机型提供。
+            卖完回家种田去了，一件不留，全部半卖半送
         </div>
 
         <div class="ui divider"></div>
@@ -109,13 +109,13 @@
             <div class="column">
                 <div class="ui vertical text menu">
                     <div class="item">
-                        <h4>Apple Store 商店</h4>
+                        <h4>这些地方卖得很贵</h4>
                     </div>
                     <a class="item">查找零售店</a>
-                    <a class="item">iPad</a>
-                    <a class="item">iPhone</a>
-                    <a class="item">Watch</a>
-                    <a class="item">iPod</a>
+                    <a class="item">天猫</a>
+                    <a class="item">淘宝</a>
+                    <a class="item">聚美优品</a>
+                    <a class="item">爱逛街</a>
                 </div>
             </div>
             <!-- 段落重复4遍ing -->
