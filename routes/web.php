@@ -63,3 +63,5 @@ Route::resource('/article', ArticleController::class);
 
 Route::get('/category/{id}', ArticleController::class . '@index')->name('category.show');
 Route::get('/tag/{id}', ArticleController::class . '@index')->name('tag.show');
+
+Route::resource('/item', \App\Http\Controllers\ItemController::class);
