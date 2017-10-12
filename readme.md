@@ -1,3 +1,4 @@
+# [项目关闭，不再维护]
 # shcms
 
 ![image](http://cdn.endaosi.com/image/shcms-logo.png)
